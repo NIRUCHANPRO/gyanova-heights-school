@@ -618,17 +618,29 @@
       </div>
 
       <!-- Editable Daily School Bell & Timetable -->
-      <div id="section-timetable" class="dark-royal-card text-white p-6 sm:p-8 rounded-2xl space-y-4">
-        <div class="flex items-center justify-between border-b border-gold-500/30 pb-3">
-          <h3 class="font-serifTitle text-xl font-bold text-gold-400">
-            <i class="fa-solid fa-clock mr-2"></i>
-            <span data-i18n="timetableHeading">Daily School Routine & Bell Timetable</span>
-          </h3>
-          <span class="text-xs bg-gold-500 text-royal-950 font-extrabold px-3 py-1 rounded-full">Nursery - Class 4th</span>
+            <!-- Editable Class-Wise School Bell & Subject Timetable -->
+      <div id="section-timetable" class="dark-royal-card text-white p-5 sm:p-8 rounded-2xl space-y-5">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-gold-500/30 pb-4">
+          <div>
+            <h3 class="font-serifTitle text-xl sm:text-2xl font-bold text-gold-400">
+              <i class="fa-solid fa-calendar-day mr-2"></i>
+              <span data-i18n="timetableHeading">Class-Wise Daily Routine & Subject Timetable</span>
+            </h3>
+            <p class="text-xs text-slate-300 mt-1" id="ttSubHeading">
+              Tap any class below to view its period-wise subjects & daily schedule
+            </p>
+          </div>
+          <span id="activeTtClassBadge" class="text-xs bg-gold-500 text-royal-950 font-extrabold px-3.5 py-1 rounded-full self-start sm:self-auto">
+            Nursery
+          </span>
         </div>
-        <div id="timetableGridContainer" class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs sm:text-sm"></div>
+
+        <!-- Dynamic Class Selector Buttons (Nursery to Class 4th + Custom Classes) -->
+        <div id="ttClassTabsBar" class="flex flex-wrap gap-2"></div>
+
+        <!-- Selected Class Period-Wise Subject Cards -->
+        <div id="timetableGridContainer" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 text-xs sm:text-sm"></div>
       </div>
-    </div>
   </section>
 
   <!-- ================= PAGE 4: CLEAN 2-OPTION FEE STRUCTURE & PRIVATE PARENT PAYMENT VIEW ================= -->
@@ -1356,51 +1368,50 @@
 
         <!-- TAB 6: TIMETABLE, SYLLABUS & HOMEWORK -->
         <div id="adm-sec-academics" class="adm-sec hidden space-y-5">
-          <div class="bg-slate-50 p-4 rounded-xl border space-y-3">
-            <h4 class="font-bold text-royal-800 text-sm">Add / Edit School Bell Timetable</h4>
-            <div class="grid sm:grid-cols-3 gap-2">
-              <input type="text" id="ttTime" placeholder="Time (e.g. 08:30 AM - 09:00 AM)" class="px-3 py-2 rounded border" />
-              <input type="text" id="ttTitle" placeholder="Period / Activity Title" class="px-3 py-2 rounded border" />
-              <input type="text" id="ttDesc" placeholder="Details / Subjects" class="px-3 py-2 rounded border" />
+                    <!-- Class-Wise Timetable & Custom Class Manager (Admin) -->
+          <div class="bg-slate-50 p-4 rounded-xl border-2 border-gold-500/40 space-y-4">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b pb-2.5">
+              <div>
+                <h4 class="font-bold text-royal-800 text-sm">
+                  <i class="fa-solid fa-clock text-gold-600 mr-1"></i> Class-Wise Subject Timetable Manager
+                </h4>
+                <p class="text-[11px] text-slate-500">Select a class to edit its periods/subjects, or add a new class</p>
+              </div>
+              <!-- Add New Custom Class -->
+              <div class="flex gap-1.5">
+                <input type="text" id="newTtClassInput" placeholder="New Class (e.g. Class 5th)" class="px-2.5 py-1 rounded border text-xs bg-white" />
+                <button type="button" onclick="addNewTimetableClassAdmin()" class="bg-royal-800 text-gold-400 px-3 py-1 rounded font-bold text-xs shrink-0">
+                  + Add Class
+                </button>
+              </div>
             </div>
-            <button onclick="addTimetableSlotAdmin()" class="bg-royal-800 text-white px-4 py-1.5 rounded font-bold text-xs">+ Add Timetable Slot</button>
-            <div id="adminTimetableList" class="divide-y pt-2"></div>
-          </div>
 
-          <div class="bg-slate-50 p-4 rounded-xl border space-y-3">
-            <h4 class="font-bold text-royal-800 text-sm">Edit Class-wise Syllabus (Nursery - Class 4th)</h4>
-            <div class="grid sm:grid-cols-3 gap-2">
-              <select id="sylClassSelect" onchange="loadSelectedSyllabus()" class="px-3 py-2 rounded border font-bold">
-                <option value="Nursery">Nursery</option>
-                <option value="LKG">LKG</option>
-                <option value="UKG">UKG</option>
-                <option value="Class 1st">Class 1st</option>
-                <option value="Class 2nd">Class 2nd</option>
-                <option value="Class 3rd">Class 3rd</option>
-                <option value="Class 4th">Class 4th</option>
-              </select>
-              <input type="text" id="sylTextInput" class="sm:col-span-2 px-3 py-2 rounded border" />
+            <!-- Select Which Class Timetable to Edit -->
+            <div class="flex flex-wrap items-center gap-2">
+              <label class="text-xs font-extrabold text-royal-900">Select Class to Edit:</label>
+              <select id="admTtClassSelect" onchange="renderAdminTimetableForClass()" class="px-3 py-1.5 rounded-lg border-2 border-royal-800 font-extrabold text-xs text-royal-900 bg-white"></select>
+              <button type="button" onclick="deleteCurrentTimetableClassAdmin()" class="text-[11px] text-red-600 hover:underline font-bold ml-auto">
+                <i class="fa-solid fa-trash-can mr-0.5"></i> Remove This Class
+              </button>
             </div>
-            <button onclick="saveSyllabusAdmin()" class="bg-royal-800 text-white px-4 py-1.5 rounded font-bold text-xs">Save Class Syllabus</button>
-          </div>
 
-          <div class="bg-slate-50 p-4 rounded-xl border space-y-3">
-            <h4 class="font-bold text-royal-800 text-sm">Update Daily Homework Diary</h4>
-            <div class="grid sm:grid-cols-3 gap-2">
-              <select id="hwClassSelect" onchange="loadSelectedHomework()" class="px-3 py-2 rounded border font-bold">
-                <option value="Nursery">Nursery</option>
-                <option value="LKG">LKG</option>
-                <option value="UKG">UKG</option>
-                <option value="Class 1st">Class 1st</option>
-                <option value="Class 2nd">Class 2nd</option>
-                <option value="Class 3rd">Class 3rd</option>
-                <option value="Class 4th">Class 4th</option>
-              </select>
-              <input type="text" id="hwTextInput" class="sm:col-span-2 px-3 py-2 rounded border" />
+            <!-- Add Period / Subject to Selected Class -->
+            <div class="grid sm:grid-cols-4 gap-2 bg-white p-3 rounded-xl border">
+              <input type="text" id="ttPeriod" placeholder="Period (e.g. 1st Period / Break)" class="px-2.5 py-2 rounded border text-xs" />
+              <input type="text" id="ttTime" placeholder="Time (e.g. 09:00 - 09:45 AM)" class="px-2.5 py-2 rounded border text-xs" />
+              <input type="text" id="ttTitle" placeholder="Subject (e.g. Maths / Phonics)" class="px-2.5 py-2 rounded border text-xs font-semibold" />
+              <input type="text" id="ttDesc" placeholder="Topic / Teacher / Activity" class="px-2.5 py-2 rounded border text-xs" />
             </div>
-            <button onclick="saveHomeworkAdmin()" class="bg-royal-800 text-white px-4 py-1.5 rounded font-bold text-xs">Save Class Homework</button>
+
+            <div class="flex flex-wrap gap-2">
+              <button type="button" onclick="addTimetableSlotAdmin()" class="gold-gradient-btn px-4 py-2 rounded-lg font-extrabold text-xs">
+                <i class="fa-solid fa-plus mr-1"></i> Add Period to Selected Class
+              </button>
+            </div>
+
+            <!-- List of Periods for Selected Class -->
+            <div id="adminTimetableList" class="divide-y pt-2 max-h-60 overflow-y-auto bg-white rounded-xl border px-3"></div>
           </div>
-        </div>
 
         <!-- TAB 7: NOTICES, TICKER & RESULTS -->
         <div id="adm-sec-notices" class="adm-sec hidden space-y-5">
@@ -1733,16 +1744,8 @@
       renderTeachersDirectory();
 
       // 5. Timetable
-      const ttGrid = document.getElementById('timetableGridContainer');
-      if (ttGrid && schoolData.timetable) {
-        ttGrid.innerHTML = schoolData.timetable.map(t => `
-          <div class="bg-royal-900/90 p-4 rounded-xl border border-gold-500/40 shadow-lg">
-            <span class="text-gold-400 font-extrabold text-xs">${t.time}</span>
-            <h4 class="font-bold text-white mt-1">${isHi ? (t.titleHi || t.titleEn) : t.titleEn}</h4>
-            <p class="text-xs text-slate-300 mt-1">${isHi ? (t.descHi || t.descEn) : t.descEn}</p>
-          </div>
-        `).join('');
-      }
+      renderClassWiseTimetableFrontend();
+
 
       // 6. Clean 2-Option Fee Structure Cards
       const feeGrid = document.getElementById('feeStructureGrid');
@@ -2474,21 +2477,241 @@
       alert('✅ Fixed Monthly & One-Time Ekmust Fees Updated!');
     }
 
-    function addTimetableSlotAdmin() {
-      const time = document.getElementById('ttTime').value.trim();
-      const titleEn = document.getElementById('ttTitle').value.trim();
-      const descEn = document.getElementById('ttDesc').value.trim();
-      if (!time || !titleEn) return;
-      schoolData.timetable.push({ time, titleEn, titleHi: titleEn, descEn, descHi: descEn });
-      document.getElementById('ttTime').value = '';
-      document.getElementById('ttTitle').value = '';
-      document.getElementById('ttDesc').value = '';
+        // ================= CLASS-WISE TIMETABLE ENGINE (NURSERY TO CLASS 4TH + CUSTOM) =================
+    let activeFrontendTtClass = 'Nursery';
+
+    const defaultClassWiseTimetables = {
+      "Nursery": [
+        { period: "Assembly", time: "08:30 AM - 08:50 AM", titleEn: "Prayer & Rhymes Circle", descEn: "Gayatri Mantra, Action Songs & Good Habits" },
+        { period: "1st Period", time: "08:50 AM - 09:35 AM", titleEn: "English Phonics (A-Z)", descEn: "Sound Recognition & Picture Flashcards" },
+        { period: "2nd Period", time: "09:35 AM - 10:20 AM", titleEn: "Play-Way Numbers (1-50)", descEn: "Counting with Beads, Blocks & Shapes" },
+        { period: "Lunch Break", time: "10:20 AM - 10:50 AM", titleEn: "Handwash & Tiffin Time", descEn: "Supervised Nutritious Meal & Etiquette" },
+        { period: "3rd Period", time: "10:50 AM - 11:40 AM", titleEn: "Hindi Swar (अ-अः) & Storytelling", descEn: "Smart Screen Animated Moral Stories" },
+        { period: "4th Period", time: "11:40 AM - 12:30 PM", titleEn: "Coloring, Clay & Indoor Play", descEn: "Motor Skills Development & Diary Note" }
+      ],
+      "LKG": [
+        { period: "Assembly", time: "08:30 AM - 08:50 AM", titleEn: "Morning Prayer & Yoga", descEn: "Prayer, National Song & Warm-up" },
+        { period: "1st Period", time: "08:50 AM - 09:40 AM", titleEn: "English Alphabet Writing", descEn: "Capital & Small Letters (A-Z) Workbook" },
+        { period: "2nd Period", time: "09:40 AM - 10:30 AM", titleEn: "Mathematics (1 to 100)", descEn: "Number Writing, Missing Numbers & Shapes" },
+        { period: "Lunch Break", time: "10:30 AM - 11:00 AM", titleEn: "Nutritious Tiffin Break", descEn: "Handwash Hygiene & Lunch" },
+        { period: "3rd Period", time: "11:00 AM - 11:45 AM", titleEn: "Hindi Varnamala (अ से ज्ञ)", descEn: "Akshar Writing & Hindi कविताएं" },
+        { period: "4th Period", time: "11:45 AM - 12:30 PM", titleEn: "General Awareness & Art", descEn: "Fruits, Animals, Colors & Drawing" }
+      ],
+      "UKG": [
+        { period: "Assembly", time: "08:30 AM - 08:50 AM", titleEn: "Morning Assembly", descEn: "Prayer, Pledge & Spoken English Word of the Day" },
+        { period: "1st Period", time: "08:50 AM - 09:40 AM", titleEn: "English Reader & Phonics", descEn: "Three-Letter Words, Vowels & Cursive Practice" },
+        { period: "2nd Period", time: "09:40 AM - 10:30 AM", titleEn: "Numbers & Basic Maths", descEn: "Addition, Subtraction, Tables (2-5) & Number Names" },
+        { period: "Lunch Break", time: "10:30 AM - 11:00 AM", titleEn: "Lunch Break", descEn: "Supervised Tiffin Time" },
+        { period: "3rd Period", time: "11:00 AM - 11:50 AM", titleEn: "Hindi Matra Gyan", descEn: "दो और तीन अक्षर वाले शब्द एवं मात्रा अभ्यास" },
+        { period: "4th Period", time: "11:50 AM - 12:45 PM", titleEn: "EVS, Smart Class & Conversation", descEn: "Good Manners, Nature Study & Spoken English" }
+      ],
+      "Class 1st": [
+        { period: "Assembly", time: "08:30 AM - 08:50 AM", titleEn: "Prayer, News & Thought", descEn: "Morning Assembly & PT Exercise" },
+        { period: "1st Period", time: "08:50 AM - 09:40 AM", titleEn: "Mathematics (NCERT)", descEn: "Addition, Subtraction, Shapes & Mental Maths" },
+        { period: "2nd Period", time: "09:40 AM - 10:30 AM", titleEn: "English Reader & Grammar", descEn: "Reading Fluency, Nouns, Pronouns & Vocabulary" },
+        { period: "Lunch Break", time: "10:30 AM - 11:00 AM", titleEn: "Tiffin Break", descEn: "Handwash & Lunch Break" },
+        { period: "3rd Period", time: "11:00 AM - 11:50 AM", titleEn: "Hindi (रिमझिम एवं व्याकरण)", descEn: "पठन, सुलेख और हिंदी व्याकरण" },
+        { period: "4th Period", time: "11:50 AM - 12:40 PM", titleEn: "EVS (Environmental Studies)", descEn: "Our Body, Family, Plants & Surroundings" },
+        { period: "5th Period", time: "12:40 PM - 01:30 PM", titleEn: "Computer Basics & GK", descEn: "Parts of Computer, Drawing & Diary Check" }
+      ],
+      "Class 2nd": [
+        { period: "Assembly", time: "08:30 AM - 08:50 AM", titleEn: "Morning Assembly", descEn: "Prayer, GK Quiz & National Anthem" },
+        { period: "1st Period", time: "08:50 AM - 09:40 AM", titleEn: "Mathematics", descEn: "2-Digit Sums, Tables (2-12) & Word Problems" },
+        { period: "2nd Period", time: "09:40 AM - 10:30 AM", titleEn: "English Literature & Grammar", descEn: "Story Reading, Sentence Making & Spoken English" },
+        { period: "Lunch Break", time: "10:30 AM - 11:00 AM", titleEn: "Tiffin Break", descEn: "Supervised Lunch Break" },
+        { period: "3rd Period", time: "11:00 AM - 11:50 AM", titleEn: "Hindi Sahitya & Vyakaran", descEn: "कहानी पठन, विलोम शब्द, संज्ञा एवं लेखन" },
+        { period: "4th Period", time: "11:50 AM - 12:40 PM", titleEn: "EVS & Activity Project", descEn: "Seasons, Festivals, Water & Healthy Habits" },
+        { period: "5th Period", time: "12:40 PM - 01:30 PM", titleEn: "Computer Lab (MS Paint) & Moral Values", descEn: "Practical Computer & Daily Homework Diary" }
+      ],
+      "Class 3rd": [
+        { period: "Assembly", time: "08:30 AM - 08:50 AM", titleEn: "Assembly & Stage Speech", descEn: "Prayer, Current Affairs & Student Speech" },
+        { period: "1st Period", time: "08:50 AM - 09:40 AM", titleEn: "Mathematics & Olympiad Prep", descEn: "Multiplication, Division, Geometry & Logical Maths" },
+        { period: "2nd Period", time: "09:40 AM - 10:30 AM", titleEn: "English NCERT & Spoken", descEn: "Comprehension, Tenses, Essay & Conversation" },
+        { period: "Lunch Break", time: "10:30 AM - 11:00 AM", titleEn: "Lunch Break", descEn: "Handwash & Tiffin" },
+        { period: "3rd Period", time: "11:00 AM - 11:50 AM", titleEn: "Environmental Science (EVS)", descEn: "Science Models, Plants, Solar System & Maps" },
+        { period: "4th Period", time: "11:50 AM - 12:40 PM", titleEn: "Hindi & Sanskrit Basics", descEn: "हिंदी व्याकरण, पत्र लेखन एवं सुभाषित" },
+        { period: "5th Period", time: "12:40 PM - 01:30 PM", titleEn: "Computer Typing, GK & Sports", descEn: "WordPad Typing, General Knowledge & Games" }
+      ],
+      "Class 4th": [
+        { period: "Assembly", time: "08:30 AM - 08:50 AM", titleEn: "Leadership Assembly", descEn: "Prayer, News Reading, Quiz & Discipline Check" },
+        { period: "1st Period", time: "08:50 AM - 09:40 AM", titleEn: "Advanced Primary Mathematics", descEn: "Fractions, Decimals, Factors & Navodaya/Olympiad Maths" },
+        { period: "2nd Period", time: "09:40 AM - 10:30 AM", titleEn: "Science & Environmental Studies", descEn: "Human Body, Force, Matter & Lab Experiments" },
+        { period: "Lunch Break", time: "10:30 AM - 11:00 AM", titleEn: "Lunch Break", descEn: "Nutritious Tiffin Time" },
+        { period: "3rd Period", time: "11:00 AM - 11:50 AM", titleEn: "English Grammar & Composition", descEn: "Application Writing, Grammar, Debate & Reading" },
+        { period: "4th Period", time: "11:50 AM - 12:40 PM", titleEn: "Hindi Vyakaran & Social Studies", descEn: "निबंध लेखन, व्याकरण एवं भारत का सामान्य ज्ञान" },
+        { period: "5th Period", time: "12:40 PM - 01:30 PM", titleEn: "Computer Applications & Reasoning", descEn: "MS Office Basics, Mental Ability & Diary Check" }
+      ]
+    };
+
+    function ensureClassTimetableStructure() {
+      if (!schoolData.classTimetables || typeof schoolData.classTimetables !== 'object') {
+        schoolData.classTimetables = JSON.parse(JSON.stringify(defaultClassWiseTimetables));
+      }
+      if (!Array.isArray(schoolData.timetableClasses) || schoolData.timetableClasses.length === 0) {
+        schoolData.timetableClasses = Object.keys(schoolData.classTimetables);
+      }
+      schoolData.timetableClasses.forEach(cls => {
+        if (!Array.isArray(schoolData.classTimetables[cls])) {
+          schoolData.classTimetables[cls] = [];
+        }
+      });
+      if (!schoolData.timetableClasses.includes(activeFrontendTtClass)) {
+        activeFrontendTtClass = schoolData.timetableClasses[0] || 'Nursery';
+      }
+    }
+
+    function selectFrontendTimetableClass(clsName) {
+      activeFrontendTtClass = clsName;
+      renderClassWiseTimetableFrontend();
+    }
+
+    function renderClassWiseTimetableFrontend() {
+      ensureClassTimetableStructure();
+      const tabsBar = document.getElementById('ttClassTabsBar');
+      const grid = document.getElementById('timetableGridContainer');
+      const badge = document.getElementById('activeTtClassBadge');
+      if (!tabsBar || !grid) return;
+
+      if (badge) badge.innerText = activeFrontendTtClass;
+
+      // Render Class Selector Buttons
+      tabsBar.innerHTML = schoolData.timetableClasses.map(cls => {
+        const isActive = cls === activeFrontendTtClass;
+        return `
+          <button type="button" onclick="selectFrontendTimetableClass('${cls.replace(/'/g, "\\'")}')"
+                  class="px-4 py-2 rounded-xl text-xs sm:text-sm transition ${isActive ? 'cls-tab-active' : 'cls-tab-inactive'}">
+            <i class="fa-solid fa-graduation-cap mr-1"></i> ${cls}
+          </button>
+        `;
+      }).join('');
+
+      // Render Selected Class Periods
+      const slots = schoolData.classTimetables[activeFrontendTtClass] || [];
+      if (slots.length === 0) {
+        grid.innerHTML = `<div class="col-span-full p-4 rounded-xl bg-royal-900/70 border border-gold-500/30 text-center text-slate-300 text-xs">No periods added for ${activeFrontendTtClass} yet.</div>`;
+        return;
+      }
+
+      grid.innerHTML = slots.map(t => `
+        <div class="bg-royal-900/90 p-4 rounded-xl border border-gold-500/40 shadow-lg space-y-1.5 hover:border-gold-400 transition">
+          <div class="flex items-center justify-between border-b border-white/10 pb-1.5">
+            <span class="bg-gold-500 text-royal-950 font-extrabold text-[10px] px-2.5 py-0.5 rounded-full uppercase">
+              ${t.period || 'Period'}
+            </span>
+            <span class="text-gold-300 font-bold text-xs">
+              <i class="fa-regular fa-clock mr-1"></i>${t.time}
+            </span>
+          </div>
+          <h4 class="font-extrabold text-white text-sm sm:text-base pt-0.5">${t.titleEn}</h4>
+          <p class="text-xs text-slate-300 leading-relaxed">${t.descEn || ''}</p>
+        </div>
+      `).join('');
+    }
+
+    // Admin Controls for Class-Wise Timetable
+    function renderAdminTimetableForClass() {
+      ensureClassTimetableStructure();
+      const selectEl = document.getElementById('admTtClassSelect');
+      const listEl = document.getElementById('adminTimetableList');
+      if (!selectEl || !listEl) return;
+
+      const currentSelected = selectEl.value && schoolData.timetableClasses.includes(selectEl.value)
+        ? selectEl.value
+        : schoolData.timetableClasses[0];
+
+      selectEl.innerHTML = schoolData.timetableClasses.map(cls =>
+        `<option value="${cls}" ${cls === currentSelected ? 'selected' : ''}>${cls}</option>`
+      ).join('');
+
+      const slots = schoolData.classTimetables[currentSelected] || [];
+      if (slots.length === 0) {
+        listEl.innerHTML = `<p class="py-3 text-xs text-slate-400">No periods in ${currentSelected}. Add one above!</p>`;
+        return;
+      }
+
+      listEl.innerHTML = slots.map((t, i) => `
+        <div class="py-2.5 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
+          <div>
+            <span class="bg-royal-800 text-gold-400 font-bold px-2 py-0.5 rounded text-[10px] mr-1.5">${t.period || 'Slot ' + (i+1)}</span>
+            <strong class="text-royal-900">${t.time}:</strong>
+            <span class="font-bold text-emerald-800 ml-1">${t.titleEn}</span>
+            <span class="text-slate-500 ml-1">(${t.descEn || ''})</span>
+          </div>
+          <div class="flex items-center gap-2 shrink-0">
+            <button type="button" onclick="deleteTimetableAdmin(${i})" class="text-red-600 hover:underline font-bold">Delete</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function addNewTimetableClassAdmin() {
+      ensureClassTimetableStructure();
+      const input = document.getElementById('newTtClassInput');
+      const newCls = input.value.trim();
+      if (!newCls) return;
+      if (!schoolData.timetableClasses.includes(newCls)) {
+        schoolData.timetableClasses.push(newCls);
+        schoolData.classTimetables[newCls] = [];
+      }
+      input.value = '';
+      saveLocalAndRefresh();
+      const selectEl = document.getElementById('admTtClassSelect');
+      if (selectEl) {
+        selectEl.value = newCls;
+        renderAdminTimetableForClass();
+      }
+      alert('✅ New Class Added to Timetable: ' + newCls);
+    }
+
+    function deleteCurrentTimetableClassAdmin() {
+      ensureClassTimetableStructure();
+      const selectEl = document.getElementById('admTtClassSelect');
+      const cls = selectEl?.value;
+      if (!cls) return;
+      if (schoolData.timetableClasses.length <= 1) {
+        alert('At least one class must remain!');
+        return;
+      }
+      if (!confirm(`Are you sure you want to remove "${cls}" timetable?`)) return;
+      schoolData.timetableClasses = schoolData.timetableClasses.filter(c => c !== cls);
+      delete schoolData.classTimetables[cls];
+      activeFrontendTtClass = schoolData.timetableClasses[0];
       saveLocalAndRefresh();
     }
 
-    function deleteTimetableAdmin(idx) {
-      schoolData.timetable.splice(idx, 1);
+    function addTimetableSlotAdmin() {
+      ensureClassTimetableStructure();
+      const cls = document.getElementById('admTtClassSelect').value;
+      const period = document.getElementById('ttPeriod').value.trim() || 'Period';
+      const time = document.getElementById('ttTime').value.trim();
+      const titleEn = document.getElementById('ttTitle').value.trim();
+      const descEn = document.getElementById('ttDesc').value.trim();
+      if (!time || !titleEn) {
+        alert('Please enter both Time and Subject name!');
+        return;
+      }
+      if (!schoolData.classTimetables[cls]) schoolData.classTimetables[cls] = [];
+      schoolData.classTimetables[cls].push({ period, time, titleEn, descEn });
+
+      document.getElementById('ttPeriod').value = '';
+      document.getElementById('ttTime').value = '';
+      document.getElementById('ttTitle').value = '';
+      document.getElementById('ttDesc').value = '';
+      activeFrontendTtClass = cls;
       saveLocalAndRefresh();
+      document.getElementById('admTtClassSelect').value = cls;
+      renderAdminTimetableForClass();
+    }
+
+    function deleteTimetableAdmin(idx) {
+      ensureClassTimetableStructure();
+      const cls = document.getElementById('admTtClassSelect').value;
+      if (schoolData.classTimetables[cls]) {
+        schoolData.classTimetables[cls].splice(idx, 1);
+        saveLocalAndRefresh();
+        document.getElementById('admTtClassSelect').value = cls;
+        renderAdminTimetableForClass();
+      }
     }
 
     function loadSelectedSyllabus() {
@@ -2703,15 +2926,8 @@
       }
 
       // Timetable, Notices & Results
-      const ttList = document.getElementById('adminTimetableList');
-      if (ttList && schoolData.timetable) {
-        ttList.innerHTML = schoolData.timetable.map((t, i) => `
-          <div class="py-1.5 flex items-center justify-between text-xs">
-            <span><strong>${t.time}:</strong> ${t.titleEn}</span>
-            <button onclick="deleteTimetableAdmin(${i})" class="text-red-600 font-bold">Delete</button>
-          </div>
-        `).join('');
-      }
+      renderAdminTimetableForClass();
+
       if (document.getElementById('admTickerEn')) {
         document.getElementById('admTickerEn').value = schoolData.ticker?.en || '';
         document.getElementById('admTickerHi').value = schoolData.ticker?.hi || '';
