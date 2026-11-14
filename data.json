@@ -12,16 +12,25 @@
       "isNew": true
     },
     {
-      "title": "Parent-Teacher Meeting (PTM) & Activity Exhibition Notice",
+      "title": "Parent-Teacher Meeting (PTM) & Science/Art Activity Exhibition",
       "date": "20 Nov 2026",
       "isNew": false
     }
   ],
+  "homework": {
+    "Nursery": "English: Trace letters A to D in workbook. Rhymes: Learn 'Twinkle Twinkle'.",
+    "LKG": "Hindi: अ से ई तक लिखें। Maths: Count and write numbers 1 to 20.",
+    "UKG": "English: Write 5 three-letter words (CAT, BAT, MAT). Maths: Addition page 14.",
+    "Class 1st": "English: Read Lesson 3. Maths: Learn Multiplication Table of 2 and 3.",
+    "Class 2nd": "Hindi: पाठ 4 के प्रश्न-उत्तर याद करें। Maths: Solve 5 subtraction sums.",
+    "Class 3rd": "EVS: Draw and label parts of a plant. English: Write 5 lines on 'My School'.",
+    "Class 4th": "Maths: Practice Fractions worksheet. Computer: Learn parts of computer & shortcut keys."
+  },
   "results": [
     {
       "roll": "101",
       "name": "Aarav Sharma",
-      "className": "Class 4",
+      "className": "Class 4th",
       "father": "Rajesh Sharma",
       "marks": "482 / 500",
       "percent": "96.4%",
@@ -31,7 +40,7 @@
     {
       "roll": "102",
       "name": "Ananya Verma",
-      "className": "Class 2",
+      "className": "Class 2nd",
       "father": "Suresh Verma",
       "marks": "465 / 500",
       "percent": "93.0%",
@@ -63,6 +72,27 @@
       "category": "campus",
       "desc": "Safe CCTV Monitored Campus at Ravan Bhantha, Arand Road, Basin",
       "img": ""
+    }
+  ],
+  "admissions": [
+    {
+      "token": "GHS-1042",
+      "student": "Vihaan Sahu",
+      "className": "Nursery",
+      "parent": "Kamlesh Sahu",
+      "phone": "9826012345",
+      "address": "Basin, Gariaband",
+      "date": "14 Nov 2026",
+      "status": "Approved"
+    }
+  ],
+  "messages": [
+    {
+      "name": "Mahesh Verma",
+      "phone": "9300011223",
+      "email": "mahesh@example.com",
+      "message": "Namaste sir, Class 1st mein admission ke liye kab aana hoga?",
+      "date": "14 Nov 2026"
     }
   ]
 }
