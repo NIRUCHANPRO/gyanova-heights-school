@@ -1,0 +1,68 @@
+{
+  "ticker": "🎉 प्रवेश प्रारंभ (Admissions Open 2026-27): नर्सरी से कक्षा 4थी तक प्रवेश चालू हैं! आज ही ऑनलाइन आवेदन करें या +91 93022 73813 पर संपर्क करें।",
+  "notices": [
+    {
+      "title": "Admission Open for Session 2026-27 (Nursery to Class 4th)",
+      "date": "14 Nov 2026",
+      "isNew": true
+    },
+    {
+      "title": "Half-Yearly Examination Guidelines & Timetable (Nursery - Class IV)",
+      "date": "15 Nov 2026",
+      "isNew": true
+    },
+    {
+      "title": "Parent-Teacher Meeting (PTM) & Activity Exhibition Notice",
+      "date": "20 Nov 2026",
+      "isNew": false
+    }
+  ],
+  "results": [
+    {
+      "roll": "101",
+      "name": "Aarav Sharma",
+      "className": "Class 4",
+      "father": "Rajesh Sharma",
+      "marks": "482 / 500",
+      "percent": "96.4%",
+      "grade": "A+ (Excellent)",
+      "status": "PASSED"
+    },
+    {
+      "roll": "102",
+      "name": "Ananya Verma",
+      "className": "Class 2",
+      "father": "Suresh Verma",
+      "marks": "465 / 500",
+      "percent": "93.0%",
+      "grade": "A+ (Outstanding)",
+      "status": "PASSED"
+    }
+  ],
+  "gallery": [
+    {
+      "title": "80th Independence Day Celebration",
+      "category": "celebrations",
+      "desc": "Cultural Parade & Flag Hoisting at Gyanova Heights School, Basin",
+      "img": ""
+    },
+    {
+      "title": "Anand Mela School Carnival",
+      "category": "events",
+      "desc": "Student Food & Activity Stalls with Digital QR System",
+      "img": ""
+    },
+    {
+      "title": "Smart Activity Classroom (Nursery - Class 4)",
+      "category": "activities",
+      "desc": "Interactive Digital & Play-Way Learning Environment",
+      "img": ""
+    },
+    {
+      "title": "Gyanova Heights School Campus",
+      "category": "campus",
+      "desc": "Safe CCTV Monitored Campus at Ravan Bhantha, Arand Road, Basin",
+      "img": ""
+    }
+  ]
+}
