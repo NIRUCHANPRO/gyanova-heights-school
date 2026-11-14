@@ -15,13 +15,14 @@
         extend: {
           colors: {
             royal: {
-              950: '#020716',
+              950: '#020614',
               900: '#040d26',
               800: '#091b47',
               700: '#0f2b6c',
               600: '#163e96',
             },
             gold: {
+              200: '#fff2b2',
               300: '#ffe68f',
               400: '#ffd25a',
               500: '#f5b82e',
@@ -40,73 +41,103 @@
   <style>
     html, body {
       font-family: 'Plus Jakarta Sans', 'Noto Sans Devanagari', sans-serif;
-      background-color: #f2f6fc;
+      background-color: #eef3fb;
       overflow-x: hidden;
       width: 100%;
     }
-    /* Ultra Glowing Hero Background */
+
+    /* Ultra Royal Lighting Hero Background */
     .hero-bg {
       background:
-        radial-gradient(circle at 75% 42%, rgba(245, 184, 46, 0.22) 0%, rgba(28, 68, 142, 0.9) 32%, #091b47 65%, #03091c 100%);
+        radial-gradient(circle at 78% 38%, rgba(255, 210, 90, 0.30) 0%, rgba(25, 68, 155, 0.92) 30%, #07163b 62%, #020614 100%);
       position: relative;
       overflow: hidden;
     }
-    .hero-bg::before {
-      content: "";
+
+    /* Animated Spotlight Halo */
+    .spotlight-orb {
       position: absolute;
-      inset: 0;
-      background-image: radial-gradient(#ffd25a 1px, transparent 1px);
-      background-size: 38px 38px;
-      opacity: 0.14;
+      width: 420px;
+      height: 420px;
+      border-radius: 9999px;
+      background: radial-gradient(circle, rgba(255, 210, 90, 0.32) 0%, rgba(245, 184, 46, 0.08) 45%, transparent 70%);
+      filter: blur(25px);
       pointer-events: none;
+      animation: floatOrb 6s ease-in-out infinite alternate;
     }
-    /* Shimmering Gold Button */
+    @keyframes floatOrb {
+      0% { transform: translate(-15px, -10px) scale(0.95); opacity: 0.75; }
+      100% { transform: translate(15px, 15px) scale(1.08); opacity: 1; }
+    }
+
+    /* Shimmering Gold Button with Light Sweep */
     .gold-gradient-btn {
-      background: linear-gradient(135deg, #fff0a8 0%, #ffd25a 35%, #f5b82e 70%, #d99716 100%);
-      color: #040d26;
-      box-shadow: 0 0 20px rgba(245, 184, 46, 0.55), 0 4px 12px rgba(0, 0, 0, 0.25);
-      border: 1px solid #fff3bd;
+      background: linear-gradient(135deg, #fff4b8 0%, #ffd25a 35%, #f5b82e 70%, #d99716 100%);
+      color: #03091c;
+      box-shadow: 0 0 24px rgba(245, 184, 46, 0.65), 0 4px 12px rgba(0, 0, 0, 0.3);
+      border: 1.5px solid #fff7d1;
+      position: relative;
+      overflow: hidden;
     }
     .gold-gradient-btn:hover {
       filter: brightness(1.08);
       transform: translateY(-2px);
-      box-shadow: 0 0 28px rgba(255, 210, 90, 0.85);
+      box-shadow: 0 0 34px rgba(255, 218, 105, 0.95);
     }
+
     .blue-pill-btn {
       background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
-      box-shadow: 0 0 20px rgba(37, 99, 235, 0.55);
+      box-shadow: 0 0 24px rgba(37, 99, 235, 0.65);
+      border: 1px solid rgba(147, 197, 253, 0.5);
     }
-    /* Glowing Cards */
+
+    /* Glowing Royal Cards with Golden Aura */
     .royal-glow-card {
-      box-shadow: 0 10px 30px -5px rgba(9, 27, 71, 0.12), 0 0 15px rgba(245, 184, 46, 0.18);
-      transition: all 0.25s ease;
+      background: #ffffff;
+      box-shadow: 0 12px 32px -6px rgba(9, 27, 71, 0.14), 0 0 18px rgba(245, 184, 46, 0.22);
+      border: 1px solid rgba(245, 184, 46, 0.38);
+      transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .royal-glow-card:hover {
       transform: translateY(-4px);
-      box-shadow: 0 16px 35px -5px rgba(9, 27, 71, 0.2), 0 0 22px rgba(245, 184, 46, 0.45);
+      box-shadow: 0 20px 40px -8px rgba(9, 27, 71, 0.22), 0 0 28px rgba(245, 184, 46, 0.55);
+      border-color: #f5b82e;
     }
+
+    .dark-royal-card {
+      background: radial-gradient(circle at top right, #132f73 0%, #071538 65%, #030a1c 100%);
+      box-shadow: 0 14px 36px rgba(2, 6, 20, 0.55), 0 0 25px rgba(245, 184, 46, 0.28);
+      border: 2px solid #f5b82e;
+    }
+
     .gold-text-glow {
-      text-shadow: 0 0 22px rgba(255, 210, 90, 0.55);
+      text-shadow: 0 0 26px rgba(255, 210, 90, 0.7), 0 2px 6px rgba(0, 0, 0, 0.5);
     }
+
     .nav-active {
-      background: linear-gradient(135deg, #0f2b6c 0%, #091b47 100%) !important;
+      background: linear-gradient(135deg, #0f2b6c 0%, #040d26 100%) !important;
       color: #ffd25a !important;
       border-radius: 9999px;
       padding: 0.4rem 1.05rem !important;
-      box-shadow: 0 3px 10px rgba(9, 27, 71, 0.3);
+      box-shadow: 0 0 15px rgba(245, 184, 46, 0.45);
+      border: 1px solid rgba(255, 210, 90, 0.5);
     }
+
     .star-glow {
-      filter: drop-shadow(0 0 30px rgba(255, 210, 90, 0.95));
+      filter: drop-shadow(0 0 32px rgba(255, 210, 90, 1));
       animation: pulseGlow 3s infinite alternate;
     }
     @keyframes pulseGlow {
-      0% { filter: drop-shadow(0 0 18px rgba(255, 210, 90, 0.75)); transform: scale(0.98); }
-      100% { filter: drop-shadow(0 0 36px rgba(255, 225, 130, 1)); transform: scale(1.04); }
+      0% { filter: drop-shadow(0 0 20px rgba(255, 210, 90, 0.8)); transform: scale(0.98); }
+      100% { filter: drop-shadow(0 0 40px rgba(255, 230, 140, 1)); transform: scale(1.04); }
     }
+
     .sub-banner {
-      background: linear-gradient(90deg, #040d26 0%, #0f2b6c 60%, #1e429f 100%);
+      background: radial-gradient(circle at 80% 50%, #1e429f 0%, #091b47 55%, #020614 100%);
       border-bottom: 4px solid #f5b82e;
+      box-shadow: 0 6px 20px rgba(4, 13, 38, 0.25);
     }
+
     .marquee-wrap { overflow: hidden; white-space: nowrap; flex: 1; min-width: 0; }
     .marquee-content { display: inline-block; animation: marquee 26s linear infinite; }
     .marquee-content:hover { animation-play-state: paused; }
@@ -114,13 +145,14 @@
       0% { transform: translateX(100%); }
       100% { transform: translateX(-100%); }
     }
+
     /* Class Explorer Active State */
     .cls-tab-active {
-      background: linear-gradient(135deg, #ffe07d 0%, #f5b82e 100%) !important;
-      color: #040d26 !important;
+      background: linear-gradient(135deg, #fff0a8 0%, #f5b82e 100%) !important;
+      color: #020614 !important;
       font-weight: 800 !important;
       border-color: #ffffff !important;
-      box-shadow: 0 0 16px rgba(245, 184, 46, 0.75);
+      box-shadow: 0 0 18px rgba(245, 184, 46, 0.85);
       transform: scale(1.05);
     }
     .cls-tab-inactive {
@@ -129,6 +161,14 @@
       font-weight: 600 !important;
       border: 1px solid rgba(245, 184, 46, 0.35) !important;
     }
+
+    /* Plan Selection Card Active */
+    .plan-card-active {
+      background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%) !important;
+      border: 2px solid #d99716 !important;
+      box-shadow: 0 0 18px rgba(245, 184, 46, 0.45);
+    }
+
     @media print {
       header, footer, .no-print { display: none !important; }
       .print-area { box-shadow: none !important; border: 2px solid #091b47 !important; }
@@ -138,7 +178,7 @@
 <body class="text-slate-800 antialiased selection:bg-gold-500 selection:text-royal-900">
 
   <!-- ================= TOP LIVE ANNOUNCEMENT BAR ================= -->
-  <div class="bg-royal-950 text-white text-xs sm:text-sm py-1.5 px-3 sm:px-4 border-b border-gold-500/40 flex items-center justify-between gap-2 w-full overflow-hidden no-print">
+  <div class="bg-royal-950 text-white text-xs sm:text-sm py-1.5 px-3 sm:px-4 border-b border-gold-500/50 flex items-center justify-between gap-2 w-full overflow-hidden no-print">
     <div class="flex items-center gap-1.5 shrink-0 bg-gold-500 text-royal-950 font-extrabold px-2.5 py-0.5 rounded text-[11px] shadow">
       <i class="fa-solid fa-bullhorn"></i> <span data-i18n="liveUpdateBadge">UPDATE</span>
     </div>
@@ -151,24 +191,24 @@
   </div>
 
   <!-- ================= HEADER / NAVBAR ================= -->
-  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md shadow-lg border-b-2 border-gold-500/50 w-full no-print">
+  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md shadow-lg border-b-2 border-gold-500/60 w-full no-print">
     <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-2.5 flex items-center justify-between gap-2">
       
       <!-- Logo & School Name -->
       <a href="#" onclick="switchPage('home')" class="flex items-center gap-2.5 min-w-0 group">
         <div class="relative shrink-0">
-          <div class="absolute -inset-0.5 rounded-full bg-gradient-to-r from-gold-400 to-royal-700 blur-xs opacity-75 group-hover:opacity-100 transition"></div>
+          <div class="absolute -inset-1 rounded-full bg-gradient-to-r from-gold-400 via-gold-500 to-royal-700 blur-xs opacity-85 group-hover:opacity-100 transition"></div>
           <img src="logo.png" alt="Gyanova Heights School Logo" 
                onerror="this.src='https://placehold.co/80x80/091b47/ffd25a?text=GHS'"
-               class="relative w-12 h-12 sm:w-16 sm:h-16 rounded-full object-cover shadow-md border-2 border-gold-500" />
+               class="relative w-12 h-12 sm:w-16 sm:h-16 rounded-full object-cover shadow-md border-2 border-gold-400" />
         </div>
         <div class="text-left min-w-0">
-          <h1 class="font-serifTitle text-sm sm:text-2xl font-extrabold tracking-wide text-royal-800 leading-tight truncate" data-i18n="schoolName">
+          <h1 class="font-serifTitle text-sm sm:text-2xl font-black tracking-wide text-royal-800 leading-tight truncate" data-i18n="schoolName">
             GYANOVA HEIGHTS SCHOOL
           </h1>
           <div class="flex flex-wrap items-center gap-1.5 text-[11px] sm:text-sm font-serifItalic italic text-slate-600">
             <span data-i18n="tagline">Learn • Grow • Excel</span>
-            <span class="text-[10px] not-italic font-extrabold bg-royal-800 text-gold-400 px-2 py-0.5 rounded-full border border-gold-500/40" data-i18n="wingBadge">Nursery - Class 4th</span>
+            <span class="text-[10px] not-italic font-extrabold bg-royal-900 text-gold-400 px-2 py-0.5 rounded-full border border-gold-500/50 shadow-xs" data-i18n="wingBadge">Nursery - Class 4th</span>
           </div>
         </div>
       </a>
@@ -188,7 +228,7 @@
       <!-- Action Buttons: Language Switcher & Apply Button -->
       <div class="flex items-center gap-1.5 sm:gap-2 shrink-0">
         <button onclick="toggleLanguage()" id="langToggleBtn"
-                class="px-2.5 sm:px-3.5 py-1.5 rounded-full border-2 border-royal-800 bg-royal-50 text-royal-900 font-extrabold text-xs sm:text-sm hover:bg-royal-800 hover:text-gold-400 transition flex items-center gap-1 shadow-sm">
+                class="px-2.5 sm:px-3.5 py-1.5 rounded-full border-2 border-royal-800 bg-royal-50 text-royal-900 font-extrabold text-xs sm:text-sm hover:bg-royal-800 hover:text-gold-400 transition flex items-center gap-1 shadow-xs">
           <i class="fa-solid fa-language text-sm sm:text-base text-gold-600"></i>
           <span id="langLabel">हिंदी</span>
         </button>
@@ -224,21 +264,22 @@
 
   <!-- ================= PAGE 1: HOME VIEW ================= -->
   <main id="page-home" class="page-section">
-    <!-- Hero Section -->
+    <!-- Hero Section with Live Golden Starlight Canvas & Spotlights -->
     <section class="hero-bg text-white pt-8 pb-16 lg:py-20 relative">
-      <i class="fa-solid fa-atom absolute top-12 left-[52%] text-gold-400/10 text-7xl pointer-events-none"></i>
-      <i class="fa-solid fa-graduation-cap absolute top-8 right-12 text-gold-400/10 text-8xl pointer-events-none"></i>
+      <canvas id="heroParticles" class="absolute inset-0 w-full h-full pointer-events-none z-0"></canvas>
+      <div class="spotlight-orb -top-20 -left-20"></div>
+      <div class="spotlight-orb top-10 right-10"></div>
 
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 grid lg:grid-cols-12 gap-8 items-center">
         <!-- Left Hero Text -->
         <div class="lg:col-span-7 text-center lg:text-left space-y-4">
-          <div class="inline-flex items-center justify-center lg:justify-start gap-3 bg-white/10 backdrop-blur-xs px-4 py-1 rounded-full border border-gold-400/40 text-gold-300 tracking-[0.2em] text-xs font-bold uppercase">
-            <i class="fa-solid fa-sparkles"></i>
+          <div class="inline-flex items-center justify-center lg:justify-start gap-2.5 bg-white/10 backdrop-blur-md px-4 py-1.5 rounded-full border border-gold-400/60 text-gold-300 tracking-[0.2em] text-xs font-extrabold uppercase shadow-lg">
+            <i class="fa-solid fa-wand-magic-sparkles text-gold-400"></i>
             <span data-i18n="welcomeTo">WELCOME TO</span>
-            <i class="fa-solid fa-sparkles"></i>
+            <i class="fa-solid fa-star text-gold-400"></i>
           </div>
 
-          <h2 class="font-serifTitle text-4xl sm:text-6xl font-black tracking-wide text-white leading-none drop-shadow-lg" data-i18n="heroTitle1">
+          <h2 class="font-serifTitle text-4xl sm:text-6xl font-black tracking-wide text-white leading-none drop-shadow-2xl" data-i18n="heroTitle1">
             GYANOVA
           </h2>
           <h3 class="font-serifTitle text-3xl sm:text-5xl font-extrabold tracking-wide text-gold-400 gold-text-glow leading-tight" data-i18n="heroTitle2">
@@ -246,14 +287,14 @@
           </h3>
 
           <div class="flex items-center justify-center lg:justify-start gap-2 sm:gap-3 py-1">
-            <span class="w-6 sm:w-10 h-[1.5px] bg-gold-400"></span>
-            <p class="font-serifItalic italic text-base sm:text-2xl text-slate-100" data-i18n="heroSub">
+            <span class="w-8 sm:w-12 h-[2px] bg-gradient-to-r from-transparent to-gold-400"></span>
+            <p class="font-serifItalic italic text-base sm:text-2xl text-gold-200 drop-shadow" data-i18n="heroSub">
               Seeking Blessings, Inspiring Futures.
             </p>
-            <span class="w-6 sm:w-10 h-[1.5px] bg-gold-400"></span>
+            <span class="w-8 sm:w-12 h-[2px] bg-gradient-to-l from-transparent to-gold-400"></span>
           </div>
 
-          <p class="text-xs sm:text-sm text-gold-300 font-bold tracking-wide uppercase bg-royal-900/70 inline-block px-3.5 py-1.5 rounded-lg border border-gold-500/30" data-i18n="heroWingTag">
+          <p class="text-xs sm:text-sm text-gold-300 font-bold tracking-wide uppercase bg-royal-900/80 inline-block px-4 py-1.5 rounded-xl border border-gold-400/50 shadow-lg" data-i18n="heroWingTag">
             ★ Foundational & Primary Wing: Nursery, LKG, UKG & Class 1st to 4th ★
           </p>
 
@@ -266,13 +307,13 @@
               <span>→</span>
             </button>
             <button onclick="switchPage('fees')"
-                    class="blue-pill-btn text-white font-bold px-6 py-3 rounded-full text-sm sm:text-base flex items-center gap-2 border border-blue-300/40 hover:scale-105 transition">
+                    class="blue-pill-btn text-white font-bold px-6 py-3 rounded-full text-sm sm:text-base flex items-center gap-2 hover:scale-105 transition">
               <i class="fa-solid fa-indian-rupee-sign text-gold-300"></i>
-              <span data-i18n="payFeesHeroBtn">Fee Structure & Online Pay</span>
+              <span data-i18n="payFeesHeroBtn">Fee & Online Pay</span>
             </button>
             <a href="https://wa.me/919302273813?text=Namaste%20Gyanova%20Heights%20School!%20Mujhe%20Admission%20(2026-27)%20ke%20baare%20mein%20jaankari%20chahiye."
                target="_blank"
-               class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-5 py-3 rounded-full text-sm sm:text-base flex items-center gap-2 shadow-lg transition">
+               class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-5 py-3 rounded-full text-sm sm:text-base flex items-center gap-2 shadow-lg border border-emerald-400/40 transition">
               <i class="fa-brands fa-whatsapp text-lg"></i>
               <span data-i18n="whatsappChatBtn">WhatsApp Us</span>
             </a>
@@ -282,12 +323,12 @@
         <!-- Right Hero Glowing Illustration -->
         <div class="lg:col-span-5 flex flex-col items-center justify-center relative">
           <div class="relative w-64 h-64 sm:w-80 sm:h-80 flex items-center justify-center">
-            <div class="absolute inset-6 rounded-full bg-gold-500/20 blur-2xl animate-pulse"></div>
+            <div class="absolute inset-4 rounded-full bg-gold-400/25 blur-3xl animate-pulse"></div>
             <svg viewBox="0 0 300 280" class="w-full h-full star-glow relative z-10">
               <defs>
                 <linearGradient id="goldBeam" x1="0%" y1="100%" x2="0%" y2="0%">
                   <stop offset="0%" stop-color="#f5b82e" stop-opacity="0.95"/>
-                  <stop offset="50%" stop-color="#ffd25a" stop-opacity="0.55"/>
+                  <stop offset="50%" stop-color="#ffd25a" stop-opacity="0.6"/>
                   <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
                 </linearGradient>
                 <linearGradient id="starGrad" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -296,8 +337,8 @@
                   <stop offset="100%" stop-color="#d99716"/>
                 </linearGradient>
               </defs>
-              <polygon points="105,220 150,50 195,220" fill="url(#goldBeam)" />
-              <polygon points="150,15 165,62 212,75 165,88 150,135 135,88 88,75 135,62" fill="url(#starGrad)" />
+              <polygon points="100,220 150,45 200,220" fill="url(#goldBeam)" />
+              <polygon points="150,12 166,62 215,75 166,88 150,138 134,88 85,75 134,62" fill="url(#starGrad)" />
               <path d="M 65 150 C 35 85, 225 45, 245 120" fill="none" stroke="#ffd25a" stroke-width="3" stroke-dasharray="5 3"/>
               <path d="M 45 215 Q 95 195 150 220 Q 205 195 255 215 L 265 235 Q 205 215 150 240 Q 95 215 35 235 Z" fill="#ffd25a" stroke="#091b47" stroke-width="2"/>
               <path d="M 50 205 Q 100 185 150 215 Q 200 185 250 205 L 255 215 Q 205 195 150 225 Q 95 195 45 215 Z" fill="#ffffff"/>
@@ -316,10 +357,10 @@
     </section>
 
     <!-- 3 Key Highlights Strip -->
-    <section class="bg-white py-6 shadow-sm w-full">
+    <section class="bg-white py-6 shadow-md w-full">
       <div class="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-gold-500/40 gap-4 sm:gap-6">
         <div class="flex items-center justify-start sm:justify-center gap-4 pt-2 md:pt-0 px-2">
-          <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-royal-800 text-gold-400 flex items-center justify-center text-xl sm:text-2xl shadow-md shrink-0 border border-gold-500/40">
+          <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-royal-900 text-gold-400 flex items-center justify-center text-xl sm:text-2xl shadow-lg shrink-0 border-2 border-gold-500/60">
             <i class="fa-solid fa-desktop"></i>
           </div>
           <div>
@@ -329,7 +370,7 @@
         </div>
 
         <div class="flex items-center justify-start sm:justify-center gap-4 pt-4 md:pt-0 px-2">
-          <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-royal-800 text-gold-400 flex items-center justify-center text-xl sm:text-2xl shadow-md shrink-0 border border-gold-500/40">
+          <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-royal-900 text-gold-400 flex items-center justify-center text-xl sm:text-2xl shadow-lg shrink-0 border-2 border-gold-500/60">
             <i class="fa-solid fa-shield-halved"></i>
           </div>
           <div>
@@ -339,7 +380,7 @@
         </div>
 
         <div class="flex items-center justify-start sm:justify-center gap-4 pt-4 md:pt-0 px-2">
-          <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-royal-800 text-gold-400 flex items-center justify-center text-xl sm:text-2xl shadow-md shrink-0 border border-gold-500/40">
+          <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-royal-900 text-gold-400 flex items-center justify-center text-xl sm:text-2xl shadow-lg shrink-0 border-2 border-gold-500/60">
             <i class="fa-solid fa-users"></i>
           </div>
           <div>
@@ -351,21 +392,21 @@
     </section>
 
     <!-- Address Strip -->
-    <div class="bg-royal-900 text-white py-2.5 px-4 border-y-2 border-gold-500 text-center text-xs sm:text-base font-semibold flex items-center justify-center gap-2">
+    <div class="bg-royal-950 text-white py-2.5 px-4 border-y-2 border-gold-500 text-center text-xs sm:text-base font-semibold flex items-center justify-center gap-2 shadow-inner">
       <i class="fa-solid fa-location-dot text-gold-400 text-base shrink-0"></i>
       <span data-i18n="fullAddress">Ravan Bhantha, Arand Road, Basin, Gariaband, Chhattisgarh 493992</span>
     </div>
 
-    <!-- Home Content Container -->
+    <!-- Home Main Container -->
     <section class="max-w-6xl mx-auto px-4 py-10 space-y-12">
       
       <!-- About Preview & Interactive Class Explorer -->
-      <div class="bg-white rounded-2xl royal-glow-card p-5 sm:p-10 grid md:grid-cols-2 gap-8 items-center border border-gold-500/30">
+      <div class="rounded-2xl royal-glow-card p-5 sm:p-10 grid md:grid-cols-2 gap-8 items-center">
         <div class="space-y-4">
           <h3 class="font-serifTitle text-2xl sm:text-3xl font-extrabold text-royal-800" data-i18n="aboutOurSchool">About Our School</h3>
           <p class="font-serifItalic italic text-royal-600 text-lg" data-i18n="aboutSub">Building a Brighter Future Together</p>
           <p class="text-slate-600 text-sm sm:text-base leading-relaxed" data-i18n="aboutHomeDesc">
-            Gyanova Heights School, located in Basin, Gariaband, Chhattisgarh (PIN - 493992), is committed to providing quality foundational & primary education (Nursery to Class 4th) with a perfect blend of academic excellence, moral values and modern play-way & smart learning methods.
+            Gyanova Heights School, located in Basin, Gariaband, Chhattisgarh (PIN - 493992), is committed to providing quality foundational & primary education (Nursery to Class 4th) with a blend of academic excellence, moral values and modern smart learning methods.
           </p>
           <div class="flex flex-wrap gap-2.5 pt-1">
             <button onclick="switchPage('about')" class="bg-royal-800 hover:bg-royal-700 text-white px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold inline-flex items-center gap-2 transition">
@@ -374,18 +415,18 @@
             <button onclick="switchPage('student'); switchStudentTab('results')" class="border-2 border-royal-800 text-royal-800 hover:bg-royal-800 hover:text-white px-4 py-2 rounded-full text-xs sm:text-sm font-bold transition">
               <i class="fa-solid fa-award text-gold-600 mr-1"></i> <span data-i18n="checkResultBtn">Check Results</span>
             </button>
-            <button onclick="switchPage('student'); switchStudentTab('homework')" class="border-2 border-gold-500 bg-gold-500/15 text-royal-900 px-4 py-2 rounded-full text-xs sm:text-sm font-extrabold transition">
-              <i class="fa-solid fa-book-open text-royal-800 mr-1"></i> <span data-i18n="dailyHomeworkBtn">Daily Homework</span>
+            <button onclick="switchPage('fees')" class="gold-gradient-btn px-4 py-2 rounded-full text-xs sm:text-sm font-extrabold transition">
+              <i class="fa-solid fa-indian-rupee-sign mr-1"></i> <span data-i18n="payFeesHeroBtn">Fee & Online Pay</span>
             </button>
           </div>
         </div>
 
         <!-- Interactive Class Finder Card (Nursery to Class 4th) -->
-        <div class="rounded-2xl shadow-2xl border-2 border-gold-500 bg-royal-950 p-5 sm:p-6 text-white space-y-4">
-          <div class="flex items-center justify-between border-b border-gold-500/30 pb-3">
+        <div class="rounded-2xl dark-royal-card p-5 sm:p-6 text-white space-y-4">
+          <div class="flex items-center justify-between border-b border-gold-500/40 pb-3">
             <div>
               <h4 class="font-serifTitle text-base sm:text-lg font-bold text-gold-400" data-i18n="classExplorerTitle">OUR CLASSES (NURSERY - CLASS 4TH)</h4>
-              <p class="text-xs text-slate-300" data-i18n="classExplorerSub">Tap any class below to view subjects & age criteria</p>
+              <p class="text-xs text-slate-300" data-i18n="classExplorerSub">Tap any class below to view subjects, fees & age criteria</p>
             </div>
             <i class="fa-solid fa-school text-2xl text-gold-400"></i>
           </div>
@@ -400,12 +441,12 @@
             <button type="button" id="cls-btn-c4" onclick="showClassInfo('c4')" class="cls-tab-btn cls-tab-inactive px-3.5 py-1.5 rounded-lg text-xs transition" data-i18n="cls4">Class 4th</button>
           </div>
 
-          <div id="classInfoBox" class="bg-royal-900 p-4 rounded-xl border border-gold-500/40 text-xs sm:text-sm text-slate-200 space-y-2 leading-relaxed"></div>
+          <div id="classInfoBox" class="bg-royal-950/80 p-4 rounded-xl border border-gold-500/40 text-xs sm:text-sm text-slate-200 space-y-2 leading-relaxed"></div>
         </div>
       </div>
 
-      <!-- Editable Stats Counter Bar (Toggleable via Admin) -->
-      <div id="section-stats" class="bg-gradient-to-r from-royal-950 via-royal-800 to-royal-950 text-white rounded-2xl p-6 grid grid-cols-2 lg:grid-cols-4 gap-6 text-center border-2 border-gold-500 shadow-2xl">
+      <!-- Editable Stats Counter Bar -->
+      <div id="section-stats" class="dark-royal-card text-white rounded-2xl p-6 grid grid-cols-2 lg:grid-cols-4 gap-6 text-center">
         <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
           <i class="fa-solid fa-user-graduate text-3xl text-gold-400"></i>
           <div class="text-center sm:text-left">
@@ -430,18 +471,18 @@
         <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
           <i class="fa-solid fa-shield-heart text-3xl text-gold-400"></i>
           <div class="text-center sm:text-left">
-            <div id="statValYears" class="text-2xl font-black text-gold-400">100% Care</div>
-            <div class="text-xs text-slate-300" data-i18n="statCareLbl">CCTV Safe Campus</div>
+            <div id="statValYears" class="text-2xl font-black text-gold-400">Safe CCTV</div>
+            <div class="text-xs text-slate-300" data-i18n="statCareLbl">Monitored Campus</div>
           </div>
         </div>
       </div>
 
-      <!-- Enrolled Students / Shining Stars Showcase (With Uploaded Photos & Filter, Toggleable) -->
-      <div id="section-students" class="bg-white rounded-2xl royal-glow-card p-6 sm:p-8 border border-gold-500/30 space-y-5">
+      <!-- Enrolled Students Showcase -->
+      <div id="section-students" class="rounded-2xl royal-glow-card p-6 sm:p-8 space-y-5">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-200 pb-4">
           <div>
             <h3 class="font-serifTitle text-xl sm:text-2xl font-extrabold text-royal-800">
-              <i class="fa-solid fa-stars text-gold-500 mr-1.5"></i>
+              <i class="fa-solid fa-star text-gold-500 mr-1.5"></i>
               <span data-i18n="studentsShowcaseTitle">Our Students & Shining Stars</span>
             </h3>
             <p class="text-xs sm:text-sm text-slate-500" data-i18n="studentsShowcaseSub">Meet the bright young minds studying at Gyanova Heights School</p>
@@ -460,8 +501,8 @@
         <div id="studentsDirectoryGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5"></div>
       </div>
 
-      <!-- Our Teachers & Leadership Showcase (With Uploaded Photos, Toggleable) -->
-      <div id="section-teachers" class="bg-white rounded-2xl royal-glow-card p-6 sm:p-8 border border-gold-500/30 space-y-5">
+      <!-- Our Teachers & Leadership Showcase -->
+      <div id="section-teachers" class="rounded-2xl royal-glow-card p-6 sm:p-8 space-y-5">
         <div class="border-b border-slate-200 pb-3">
           <h3 class="font-serifTitle text-xl sm:text-2xl font-extrabold text-royal-800">
             <i class="fa-solid fa-chalkboard-user text-gold-500 mr-1.5"></i>
@@ -486,7 +527,7 @@
 
     <div class="max-w-6xl mx-auto px-4 py-10 space-y-8">
       <div class="grid md:grid-cols-2 gap-6">
-        <div class="bg-white p-6 rounded-xl royal-glow-card border-l-4 border-royal-700 flex gap-4">
+        <div class="p-6 rounded-xl royal-glow-card border-l-4 border-royal-700 flex gap-4">
           <div class="w-12 h-12 rounded-full bg-royal-800 text-gold-400 flex items-center justify-center text-xl shrink-0">
             <i class="fa-solid fa-eye"></i>
           </div>
@@ -498,7 +539,7 @@
           </div>
         </div>
 
-        <div class="bg-white p-6 rounded-xl royal-glow-card border-l-4 border-gold-500 flex gap-4">
+        <div class="p-6 rounded-xl royal-glow-card border-l-4 border-gold-500 flex gap-4">
           <div class="w-12 h-12 rounded-full bg-royal-800 text-gold-400 flex items-center justify-center text-xl shrink-0">
             <i class="fa-solid fa-bullseye"></i>
           </div>
@@ -511,7 +552,7 @@
         </div>
       </div>
 
-      <div class="grid md:grid-cols-3 gap-6 items-center bg-white p-6 sm:p-8 rounded-2xl royal-glow-card">
+      <div class="grid md:grid-cols-3 gap-6 items-center p-6 sm:p-8 rounded-2xl royal-glow-card">
         <div class="md:col-span-2 space-y-3">
           <h3 class="font-serifTitle text-2xl font-bold text-royal-800" data-i18n="whyChooseTitle">Why Choose Gyanova Heights School?</h3>
           <ul class="grid sm:grid-cols-2 gap-3 pt-2 text-sm font-semibold text-slate-700">
@@ -523,7 +564,7 @@
             <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-royal-700"></i> <span data-i18n="why6">Spoken English & Olympiad Foundation</span></li>
           </ul>
         </div>
-        <div class="bg-royal-900 border-2 border-gold-500 rounded-xl p-6 text-center font-serifItalic italic text-gold-300 text-lg shadow-lg">
+        <div class="dark-royal-card rounded-xl p-6 text-center font-serifItalic italic text-gold-300 text-lg">
           <i class="fa-solid fa-quote-left text-2xl text-gold-500 mb-2 block"></i>
           <span data-i18n="quoteText">"Education is the key to unlock the golden door of freedom."</span>
         </div>
@@ -541,7 +582,7 @@
     </div>
 
     <div class="max-w-6xl mx-auto px-4 py-10 space-y-8">
-      <div class="bg-white p-6 sm:p-8 rounded-2xl royal-glow-card">
+      <div class="p-6 sm:p-8 rounded-2xl royal-glow-card">
         <h3 class="font-serifTitle text-2xl font-bold text-royal-800" data-i18n="acadExcTitle">Academic Excellence</h3>
         <p class="font-serifItalic italic text-royal-600" data-i18n="acadExcSub">Strong Foundation for Young Minds</p>
         <p class="text-slate-600 text-sm sm:text-base mt-2" data-i18n="acadExcDesc">
@@ -549,35 +590,35 @@
         </p>
 
         <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-6">
-          <div class="p-5 rounded-xl border border-slate-200 bg-slate-50 text-center space-y-2">
+          <div class="p-5 rounded-xl border border-gold-500/30 bg-slate-50 text-center space-y-2">
             <i class="fa-solid fa-book-open-reader text-3xl text-royal-700"></i>
             <h4 class="font-bold text-royal-900" data-i18n="acadCard1">Curriculum (NCERT Based)</h4>
           </div>
-          <div class="p-5 rounded-xl border border-slate-200 bg-slate-50 text-center space-y-2">
+          <div class="p-5 rounded-xl border border-gold-500/30 bg-slate-50 text-center space-y-2">
             <i class="fa-solid fa-laptop-code text-3xl text-royal-700"></i>
             <h4 class="font-bold text-royal-900" data-i18n="acadCard2">Smart Audio-Visual Learning</h4>
           </div>
-          <div class="p-5 rounded-xl border border-slate-200 bg-slate-50 text-center space-y-2">
+          <div class="p-5 rounded-xl border border-gold-500/30 bg-slate-50 text-center space-y-2">
             <i class="fa-solid fa-clipboard-check text-3xl text-royal-700"></i>
             <h4 class="font-bold text-royal-900" data-i18n="acadCard3">Regular Weekly Assessments</h4>
           </div>
-          <div class="p-5 rounded-xl border border-slate-200 bg-slate-50 text-center space-y-2">
+          <div class="p-5 rounded-xl border border-gold-500/30 bg-slate-50 text-center space-y-2">
             <i class="fa-solid fa-medal text-3xl text-royal-700"></i>
             <h4 class="font-bold text-royal-900" data-i18n="acadCard4">Olympiad & Navodaya Prep</h4>
           </div>
-          <div class="p-5 rounded-xl border border-slate-200 bg-slate-50 text-center space-y-2">
+          <div class="p-5 rounded-xl border border-gold-500/30 bg-slate-50 text-center space-y-2">
             <i class="fa-solid fa-lightbulb text-3xl text-royal-700"></i>
             <h4 class="font-bold text-royal-900" data-i18n="acadCard5">Creative Art, Craft & Phonics</h4>
           </div>
-          <div class="p-5 rounded-xl border border-slate-200 bg-slate-50 text-center space-y-2">
+          <div class="p-5 rounded-xl border border-gold-500/30 bg-slate-50 text-center space-y-2">
             <i class="fa-solid fa-user-check text-3xl text-royal-700"></i>
             <h4 class="font-bold text-royal-900" data-i18n="acadCard6">Individual Student Care</h4>
           </div>
         </div>
       </div>
 
-      <!-- Editable Daily School Bell & Timetable (Controlled by Admin) -->
-      <div id="section-timetable" class="bg-royal-950 text-white p-6 sm:p-8 rounded-2xl shadow-2xl border-2 border-gold-500 space-y-4">
+      <!-- Editable Daily School Bell & Timetable -->
+      <div id="section-timetable" class="dark-royal-card text-white p-6 sm:p-8 rounded-2xl space-y-4">
         <div class="flex items-center justify-between border-b border-gold-500/30 pb-3">
           <h3 class="font-serifTitle text-xl font-bold text-gold-400">
             <i class="fa-solid fa-clock mr-2"></i>
@@ -590,7 +631,7 @@
     </div>
   </section>
 
-  <!-- ================= PAGE 4: FEE STRUCTURE & ONLINE FEE PAYMENT VIEW ================= -->
+  <!-- ================= PAGE 4: CLEAN 2-OPTION FEE STRUCTURE & PRIVATE PARENT PAYMENT VIEW ================= -->
   <section id="page-fees" class="page-section hidden">
     <div class="sub-banner text-white py-10 px-4">
       <div class="max-w-6xl mx-auto">
@@ -600,54 +641,58 @@
     </div>
 
     <div class="max-w-6xl mx-auto px-4 py-10 space-y-10">
-      <!-- Editable Class-wise Fee Structure Cards -->
-      <div id="section-fees-table" class="bg-white p-6 sm:p-8 rounded-2xl royal-glow-card border border-gold-500/30 space-y-4">
+      
+      <!-- Clean 2-Option Fee Cards (Monthly Rs & One-Time Full Session Ekmust Rs) -->
+      <div id="section-fees-table" class="p-6 sm:p-8 rounded-2xl royal-glow-card space-y-4">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b pb-3">
           <div>
             <h3 class="font-serifTitle text-2xl font-extrabold text-royal-800" data-i18n="feeStructTitle">Class-Wise Fee Structure (2026-27)</h3>
-            <p class="text-xs sm:text-sm text-slate-500" data-i18n="feeStructSub">Transparent and affordable fee structure for Nursery to Class 4th</p>
+            <p class="text-xs sm:text-sm text-slate-500" data-i18n="feeStructSub">Choose between Easy Monthly Fee or One-Time Full Session (Ekmust) Package</p>
           </div>
-          <span class="bg-royal-800 text-gold-400 text-xs font-bold px-3.5 py-1.5 rounded-full self-start sm:self-auto" data-i18n="sessionBadge">Session 2026-27</span>
+          <span class="bg-royal-900 text-gold-400 text-xs font-extrabold px-3.5 py-1.5 rounded-full border border-gold-500/50 self-start sm:self-auto" data-i18n="sessionBadge">Session 2026-27</span>
         </div>
         <div id="feeStructureGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"></div>
       </div>
 
-      <!-- Online Fee Payment & Instant Receipt Generator -->
+      <!-- Online Fee Payment & Private Status Section -->
       <div class="grid lg:grid-cols-12 gap-8 items-start">
+        
         <!-- Left QR & UPI Box -->
-        <div class="lg:col-span-5 bg-royal-950 text-white p-6 rounded-2xl shadow-2xl border-2 border-gold-500 text-center space-y-4">
+        <div class="lg:col-span-5 dark-royal-card text-white p-6 rounded-2xl text-center space-y-4">
           <div class="inline-block bg-gold-500 text-royal-950 font-extrabold text-xs px-3 py-1 rounded-full uppercase">
-            <i class="fa-solid fa-qrcode mr-1"></i> <span data-i18n="instantUpiBadge">Instant School UPI Payment</span>
+            <i class="fa-solid fa-qrcode mr-1"></i> <span data-i18n="instantUpiBadge">Official School UPI QR</span>
           </div>
           <h4 class="font-serifTitle text-xl font-bold text-gold-400" data-i18n="scanToPayTitle">Scan QR to Pay School Fees</h4>
           <p class="text-xs text-slate-300" data-i18n="scanToPaySub">Supports PhonePe, Google Pay, Paytm & BHIM UPI</p>
 
-          <!-- Dynamic QR Image (Uploaded from Admin or Auto-Generated from UPI ID) -->
-          <div class="bg-white p-4 rounded-2xl w-56 h-56 mx-auto flex items-center justify-center shadow-lg border-4 border-gold-400">
+          <div class="bg-white p-4 rounded-2xl w-56 h-56 mx-auto flex items-center justify-center shadow-2xl border-4 border-gold-400">
             <img id="schoolUpiQrImg" src="" alt="School UPI QR" class="w-full h-full object-contain" />
           </div>
 
-          <div class="text-xs space-y-1">
+          <div class="text-xs space-y-1.5 pt-1">
             <p class="text-gold-300 font-bold"><span data-i18n="upiIdLbl">Official UPI ID:</span> <span id="displayUpiId" class="underline select-all">9302273813@ybl</span></p>
-            <p class="text-slate-400" data-i18n="upiAfterPayNote">After paying, fill the form on the right to download your Official Fee Receipt.</p>
+            <p class="text-slate-300" data-i18n="upiAfterPayNote">After paying, submit the form on the right. Your fee status stays PENDING until verified by the School Admin.</p>
           </div>
         </div>
 
-        <!-- Right Fee Payment Confirmation Form & Printable Receipt -->
-        <div class="lg:col-span-7 bg-white p-6 sm:p-8 rounded-2xl royal-glow-card border-t-4 border-gold-500 space-y-4">
-          <h3 class="font-serifTitle text-xl sm:text-2xl font-extrabold text-royal-800" data-i18n="feeFormTitle">Generate Official Online Fee Receipt</h3>
-          <p class="text-xs text-slate-500" data-i18n="feeFormSub">Submit payment details below to record fee in school database & print receipt</p>
+        <!-- Right Fee Payment Form (With Fixed Locked Amounts!) -->
+        <div class="lg:col-span-7 p-6 sm:p-8 rounded-2xl royal-glow-card border-t-4 border-gold-500 space-y-5">
+          <div>
+            <h3 class="font-serifTitle text-xl sm:text-2xl font-extrabold text-royal-800" data-i18n="feeFormTitle">Submit Fee Payment Details</h3>
+            <p class="text-xs text-slate-500" data-i18n="feeFormSub">Select your child's class and payment plan below. The fixed fee amount is automatically locked.</p>
+          </div>
 
           <form id="feePaymentForm" name="school-fee-payment" method="POST" data-netlify="true" onsubmit="handleFeePaymentSubmit(event)" class="space-y-4 text-sm no-print">
             <input type="hidden" name="form-name" value="school-fee-payment" />
+            
             <div class="grid sm:grid-cols-2 gap-4">
               <div>
                 <label class="block font-bold text-slate-700 mb-1" data-i18n="studentNameLbl">Student's Full Name *</label>
-                <input type="text" id="fee_student" name="student_name" required class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300" placeholder="Enter student name" />
+                <input type="text" id="fee_student" name="student_name" required class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 focus:border-royal-800 outline-none" placeholder="Enter student name" />
               </div>
               <div>
                 <label class="block font-bold text-slate-700 mb-1" data-i18n="classApplyingLbl">Select Class *</label>
-                <select id="fee_class" name="class_name" onchange="autoFillClassFee()" required class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 font-semibold">
+                <select id="fee_class" name="class_name" onchange="updateLockedFeeAmount()" required class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 font-bold text-royal-900">
                   <option value="Nursery">Nursery</option>
                   <option value="LKG">LKG</option>
                   <option value="UKG">UKG</option>
@@ -659,44 +704,80 @@
               </div>
             </div>
 
-            <div class="grid sm:grid-cols-3 gap-4">
+            <!-- 2 Clean Plan Radio Cards: Monthly vs One-Time Ekmust -->
+            <div>
+              <label class="block font-bold text-slate-700 mb-1.5" data-i18n="feeTypeLbl">Choose Payment Option (Fixed by School Admin) *</label>
+              <div class="grid sm:grid-cols-2 gap-3">
+                <label id="planCardMonthly" onclick="selectFeePlan('monthly')" class="plan-card-active cursor-pointer p-3.5 rounded-xl border border-slate-300 flex items-center justify-between transition">
+                  <div class="flex items-center gap-2.5">
+                    <input type="radio" name="fee_plan_radio" id="radio_monthly" value="Monthly Fee" checked class="w-4 h-4 accent-royal-800" />
+                    <div>
+                      <span class="font-extrabold text-royal-900 block text-xs sm:text-sm" data-i18n="optMonthlyTitle">Monthly Fee (मासिक शुल्क)</span>
+                      <span class="text-[11px] text-slate-500" data-i18n="optMonthlySub">Pay for 1 Month</span>
+                    </div>
+                  </div>
+                  <span id="previewMonthlyAmt" class="font-black text-base text-royal-800">₹500</span>
+                </label>
+
+                <label id="planCardOneTime" onclick="selectFeePlan('onetime')" class="cursor-pointer p-3.5 rounded-xl border border-slate-300 bg-slate-50 flex items-center justify-between transition">
+                  <div class="flex items-center gap-2.5">
+                    <input type="radio" name="fee_plan_radio" id="radio_onetime" value="One-Time Full Session (Ekmust)" class="w-4 h-4 accent-royal-800" />
+                    <div>
+                      <span class="font-extrabold text-royal-900 block text-xs sm:text-sm" data-i18n="optOneTimeTitle">Full Session (एकमुश्त शुल्क)</span>
+                      <span class="text-[11px] text-emerald-700 font-bold" data-i18n="optOneTimeSub">Complete Year Package</span>
+                    </div>
+                  </div>
+                  <span id="previewOneTimeAmt" class="font-black text-base text-emerald-700">₹5000</span>
+                </label>
+              </div>
+              <input type="hidden" id="fee_plan_input" name="fee_type" value="Monthly Fee (मासिक शुल्क)" />
+            </div>
+
+            <!-- Locked Amount Box & Parent Phone -->
+            <div class="grid sm:grid-cols-2 gap-4">
               <div>
-                <label class="block font-bold text-slate-700 mb-1" data-i18n="feeTypeLbl">Fee Month / Type *</label>
-                <select id="fee_month" name="fee_type" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300">
-                  <option value="Admission Fee">Admission Fee</option>
-                  <option value="Monthly Tuition Fee">Monthly Tuition Fee</option>
-                  <option value="Term / Exam Fee">Term / Exam Fee</option>
-                  <option value="Full Year Package">Full Year Package</option>
-                </select>
+                <label class="block font-bold text-slate-700 mb-1">
+                  <i class="fa-solid fa-lock text-gold-600 mr-1"></i>
+                  <span data-i18n="amountPaidLbl">Fixed Payable Amount (Locked)</span>
+                </label>
+                <input type="text" id="fee_amount_display" readonly class="w-full px-3.5 py-2.5 rounded-lg border-2 border-gold-500 bg-amber-50/70 font-black text-lg text-royal-900 cursor-not-allowed select-none" value="₹500" />
+                <input type="hidden" id="fee_amount" name="amount" value="500" />
               </div>
               <div>
-                <label class="block font-bold text-slate-700 mb-1" data-i18n="amountPaidLbl">Amount (₹) *</label>
-                <input type="number" id="fee_amount" name="amount" required class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 font-extrabold text-royal-800" placeholder="e.g. 500" />
-              </div>
-              <div>
-                <label class="block font-bold text-slate-700 mb-1" data-i18n="parentPhoneLbl">Parent Mobile *</label>
-                <input type="tel" id="fee_phone" name="phone" required class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300" placeholder="10-digit mobile" />
+                <label class="block font-bold text-slate-700 mb-1" data-i18n="parentPhoneLbl">Parent's WhatsApp / Mobile *</label>
+                <input type="tel" id="fee_phone" name="phone" required class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300" placeholder="10-digit mobile number" />
               </div>
             </div>
 
             <div>
-              <label class="block font-bold text-slate-700 mb-1" data-i18n="utrRefLbl">UPI Reference / UTR No. (or 'CASH' if paid at office) *</label>
-              <input type="text" id="fee_utr" name="utr_number" required class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300" placeholder="Enter 12-digit UPI Ref / UTR Number" />
+              <label class="block font-bold text-slate-700 mb-1" data-i18n="utrRefLbl">UPI Reference / UTR No. (or write 'OFFICE' if paying at school) *</label>
+              <input type="text" id="fee_utr" name="utr_number" required class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300" placeholder="Enter 12-digit UPI UTR No. or 'OFFICE'" />
             </div>
 
-            <button type="submit" class="w-full gold-gradient-btn font-extrabold py-3 rounded-xl text-base transition">
-              <i class="fa-solid fa-receipt mr-1.5"></i> <span data-i18n="generateReceiptBtn">Submit & Generate Official Fee Receipt →</span>
+            <button type="submit" class="w-full gold-gradient-btn font-extrabold py-3.5 rounded-xl text-sm sm:text-base transition">
+              <i class="fa-solid fa-paper-plane mr-1.5"></i> <span data-i18n="generateReceiptBtn">Submit Fee for Admin Verification →</span>
             </button>
           </form>
 
-          <!-- Generated Printable Fee Receipt -->
-          <div id="feeReceiptOutput" class="hidden pt-4"></div>
+          <!-- Private Device-Only Fee Submissions Status (Visible ONLY to the Parent on this Phone!) -->
+          <div id="myDeviceFeeSection" class="pt-4 border-t border-slate-200 space-y-3">
+            <div class="flex items-center justify-between">
+              <h4 class="font-serifTitle font-bold text-royal-800 text-sm sm:text-base">
+                <i class="fa-solid fa-mobile-screen-button text-gold-600 mr-1"></i>
+                <span data-i18n="myDevicePaymentsTitle">Your Submitted Fee Status (Private to Your Phone)</span>
+              </h4>
+              <span class="text-[10px] bg-royal-100 text-royal-800 font-bold px-2.5 py-0.5 rounded-full" data-i18n="privateBadge">Private View</span>
+            </div>
+            <p class="text-xs text-slate-500" data-i18n="myDevicePaymentsSub">Only applications submitted from your phone appear below. Status turns PAID once verified by the School Admin.</p>
+            <div id="myDeviceFeeCardsList" class="space-y-3"></div>
+          </div>
+
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ================= PAGE 5: ADMISSIONS VIEW ================= -->
+  <!-- ================= PAGE 5: ADMISSIONS VIEW (WITH PRIVATE DEVICE TRACKER) ================= -->
   <section id="page-admissions" class="page-section hidden">
     <div class="sub-banner text-white py-10 px-4">
       <div class="max-w-6xl mx-auto">
@@ -708,13 +789,12 @@
     <div class="max-w-6xl mx-auto px-4 py-10 grid lg:grid-cols-12 gap-8">
       <!-- Left Info -->
       <div class="lg:col-span-6 space-y-6">
-        <div class="bg-white p-6 rounded-2xl royal-glow-card space-y-4">
+        <div class="p-6 rounded-2xl royal-glow-card space-y-4">
           <h3 class="font-serifTitle text-2xl font-bold text-royal-800" data-i18n="admJoinTitle">Join Gyanova Heights School</h3>
           <p class="text-sm text-slate-600" data-i18n="admJoinDesc">
             Admissions are open for session 2026-27 from Nursery to Class 4th. Give your child the best start towards a bright future.
           </p>
 
-          <!-- Interactive Age & Document Calculator -->
           <div class="bg-slate-50 p-4 rounded-xl border border-royal-700/20 space-y-3">
             <label class="block text-xs font-bold uppercase text-royal-800" data-i18n="selectClassEligLbl">Select Class to Check Age & Documents:</label>
             <select id="eligCalcSelect" onchange="updateEligibilityCalc()" class="w-full px-3 py-2 rounded-lg border border-slate-300 font-semibold text-sm text-royal-900">
@@ -731,12 +811,12 @@
         </div>
 
         <div class="grid sm:grid-cols-2 gap-4">
-          <div class="bg-white p-5 rounded-xl royal-glow-card border-t-4 border-royal-700">
+          <div class="p-5 rounded-xl royal-glow-card border-t-4 border-royal-700">
             <h4 class="font-bold text-royal-900 mb-2" data-i18n="eligibilityTitle">Classes Available</h4>
             <p class="text-sm text-slate-700 font-semibold flex items-center gap-2"><i class="fa-solid fa-check text-royal-700"></i> <span>Nursery, LKG, UKG</span></p>
             <p class="text-sm text-slate-700 font-semibold flex items-center gap-2 mt-1"><i class="fa-solid fa-check text-royal-700"></i> <span>Class 1st to Class 4th</span></p>
           </div>
-          <div class="bg-white p-5 rounded-xl royal-glow-card border-t-4 border-gold-500">
+          <div class="p-5 rounded-xl royal-glow-card border-t-4 border-gold-500">
             <h4 class="font-bold text-royal-900 mb-2" data-i18n="helpdeskTitle">Direct Admission Helpdesk</h4>
             <p class="text-sm text-slate-700 font-bold"><i class="fa-solid fa-phone text-royal-700 mr-1"></i> +91 93022 73813</p>
             <p class="text-xs text-slate-500 mt-1 break-all"><i class="fa-solid fa-envelope text-royal-700 mr-1"></i> gyanovaheightsschool@gmail.com</p>
@@ -745,11 +825,13 @@
       </div>
 
       <!-- Right Online Application Form -->
-      <div class="lg:col-span-6 bg-white p-6 sm:p-8 rounded-2xl royal-glow-card border-2 border-gold-500/50">
-        <h3 class="font-serifTitle text-xl font-bold text-royal-800 mb-1" data-i18n="onlineFormTitle">Online Admission Application (2026-27)</h3>
-        <p class="text-xs text-slate-500 mb-4" data-i18n="onlineFormSub">Saves directly to Admin Panel & generates Instant Admission Token</p>
+      <div class="lg:col-span-6 p-6 sm:p-8 rounded-2xl royal-glow-card border-2 border-gold-500/60 space-y-5">
+        <div>
+          <h3 class="font-serifTitle text-xl font-bold text-royal-800 mb-1" data-i18n="onlineFormTitle">Online Admission Application (2026-27)</h3>
+          <p class="text-xs text-slate-500" data-i18n="onlineFormSub">Saves to School Admin Panel & shows status privately on your phone</p>
+        </div>
 
-        <form id="admissionForm" name="admission-2026-27" method="POST" data-netlify="true" onsubmit="handleAdmissionSubmit(event)" class="space-y-4 text-sm">
+        <form id="admissionForm" name="admission-2026-27" method="POST" data-netlify="true" onsubmit="handleAdmissionSubmit(event)" class="space-y-4 text-sm no-print">
           <input type="hidden" name="form-name" value="admission-2026-27" />
           <div>
             <label class="block font-semibold text-slate-700 mb-1" data-i18n="studentNameLbl">Student's Full Name *</label>
@@ -758,7 +840,7 @@
           <div class="grid sm:grid-cols-2 gap-4">
             <div>
               <label class="block font-semibold text-slate-700 mb-1" data-i18n="classApplyingLbl">Applying for Class *</label>
-              <select id="adm_class" name="applying_class" required class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300">
+              <select id="adm_class" name="applying_class" required class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 font-bold">
                 <option value="Nursery">Nursery</option>
                 <option value="LKG">LKG</option>
                 <option value="UKG">UKG</option>
@@ -786,22 +868,16 @@
           </button>
         </form>
 
-        <!-- Instant Admission Token Slip -->
-        <div id="admTokenCard" class="hidden mt-5 p-5 rounded-xl bg-royal-900 text-white border-2 border-gold-500 space-y-3 print-area">
-          <div class="flex items-center justify-between border-b border-gold-500/30 pb-2">
-            <span class="font-serifTitle font-bold text-gold-400">GYANOVA HEIGHTS SCHOOL</span>
-            <span id="admTokenNo" class="bg-gold-500 text-royal-900 text-xs font-extrabold px-2.5 py-1 rounded">TOKEN #GHS-2026</span>
+        <!-- Private Device-Only Admission Applications Tracker -->
+        <div id="myDeviceAdmissionsSection" class="pt-4 border-t border-slate-200 space-y-3">
+          <div class="flex items-center justify-between">
+            <h4 class="font-serifTitle font-bold text-royal-800 text-sm">
+              <i class="fa-solid fa-user-lock text-gold-600 mr-1"></i>
+              <span data-i18n="myDeviceAdmTitle">Your Admission Applications (Private to Your Phone)</span>
+            </h4>
+            <span class="text-[10px] bg-royal-100 text-royal-800 font-bold px-2.5 py-0.5 rounded-full" data-i18n="privateBadge">Private View</span>
           </div>
-          <p class="text-xs text-emerald-400 font-semibold">✅ Application Saved in School Admin Records!</p>
-          <div id="admTokenDetails" class="text-xs space-y-1 text-slate-200"></div>
-          <div class="flex flex-wrap gap-2 pt-2 no-print">
-            <a id="admWhatsappLink" href="#" target="_blank" class="flex-1 bg-emerald-600 hover:bg-emerald-500 text-white text-center py-2 px-3 rounded-lg font-bold text-xs flex items-center justify-center gap-1.5">
-              <i class="fa-brands fa-whatsapp text-base"></i> Send to School WhatsApp
-            </a>
-            <button onclick="window.print()" class="bg-white/10 hover:bg-white/20 text-white py-2 px-3 rounded-lg font-semibold text-xs">
-              <i class="fa-solid fa-print mr-1"></i> Print Slip
-            </button>
-          </div>
+          <div id="myDeviceAdmissionsList" class="space-y-3"></div>
         </div>
       </div>
     </div>
@@ -821,43 +897,43 @@
       <p class="font-serifItalic italic text-royal-600 mb-6" data-i18n="facMainSub">For a Joyful & Safe Learning Experience</p>
 
       <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div class="bg-white rounded-xl royal-glow-card overflow-hidden border border-gold-500/30">
-          <div class="h-40 bg-royal-800 flex items-center justify-center text-gold-400 text-5xl"><i class="fa-solid fa-chalkboard-user"></i></div>
+        <div class="rounded-xl royal-glow-card overflow-hidden">
+          <div class="h-40 bg-royal-900 flex items-center justify-center text-gold-400 text-5xl"><i class="fa-solid fa-chalkboard-user"></i></div>
           <div class="p-4 text-center">
             <h4 class="font-bold text-royal-900" data-i18n="fac1">Smart Classrooms</h4>
             <p class="text-xs text-slate-500 mt-1" data-i18n="fac1Desc">Projector & visual learning for Nursery to Class 4th</p>
           </div>
         </div>
-        <div class="bg-white rounded-xl royal-glow-card overflow-hidden border border-gold-500/30">
-          <div class="h-40 bg-royal-800 flex items-center justify-center text-gold-400 text-5xl"><i class="fa-solid fa-book-open-reader"></i></div>
+        <div class="rounded-xl royal-glow-card overflow-hidden">
+          <div class="h-40 bg-royal-900 flex items-center justify-center text-gold-400 text-5xl"><i class="fa-solid fa-book-open-reader"></i></div>
           <div class="p-4 text-center">
             <h4 class="font-bold text-royal-900" data-i18n="fac2">Storybooks & Reading Corner</h4>
             <p class="text-xs text-slate-500 mt-1" data-i18n="fac2Desc">Illustrated Hindi & English books for kids</p>
           </div>
         </div>
-        <div class="bg-white rounded-xl royal-glow-card overflow-hidden border border-gold-500/30">
-          <div class="h-40 bg-royal-800 flex items-center justify-center text-gold-400 text-5xl"><i class="fa-solid fa-puzzle-piece"></i></div>
+        <div class="rounded-xl royal-glow-card overflow-hidden">
+          <div class="h-40 bg-royal-900 flex items-center justify-center text-gold-400 text-5xl"><i class="fa-solid fa-puzzle-piece"></i></div>
           <div class="p-4 text-center">
             <h4 class="font-bold text-royal-900" data-i18n="fac3">Activity & Science Zone</h4>
             <p class="text-xs text-slate-500 mt-1" data-i18n="fac3Desc">Hands-on learning models, charts & puzzles</p>
           </div>
         </div>
-        <div class="bg-white rounded-xl royal-glow-card overflow-hidden border border-gold-500/30">
-          <div class="h-40 bg-royal-800 flex items-center justify-center text-gold-400 text-5xl"><i class="fa-solid fa-futbol"></i></div>
+        <div class="rounded-xl royal-glow-card overflow-hidden">
+          <div class="h-40 bg-royal-900 flex items-center justify-center text-gold-400 text-5xl"><i class="fa-solid fa-futbol"></i></div>
           <div class="p-4 text-center">
             <h4 class="font-bold text-royal-900" data-i18n="fac4">Sports & Play Ground</h4>
             <p class="text-xs text-slate-500 mt-1" data-i18n="fac4Desc">Outdoor games, yoga & physical fitness</p>
           </div>
         </div>
-        <div class="bg-white rounded-xl royal-glow-card overflow-hidden border border-gold-500/30">
-          <div class="h-40 bg-royal-800 flex items-center justify-center text-gold-400 text-5xl"><i class="fa-solid fa-computer"></i></div>
+        <div class="rounded-xl royal-glow-card overflow-hidden">
+          <div class="h-40 bg-royal-900 flex items-center justify-center text-gold-400 text-5xl"><i class="fa-solid fa-computer"></i></div>
           <div class="p-4 text-center">
             <h4 class="font-bold text-royal-900" data-i18n="fac5">Computer Lab</h4>
             <p class="text-xs text-slate-500 mt-1" data-i18n="fac5Desc">Early digital literacy for primary classes</p>
           </div>
         </div>
-        <div class="bg-white rounded-xl royal-glow-card overflow-hidden border border-gold-500/30">
-          <div class="h-40 bg-royal-800 flex items-center justify-center text-gold-400 text-5xl"><i class="fa-solid fa-video"></i></div>
+        <div class="rounded-xl royal-glow-card overflow-hidden">
+          <div class="h-40 bg-royal-900 flex items-center justify-center text-gold-400 text-5xl"><i class="fa-solid fa-video"></i></div>
           <div class="p-4 text-center">
             <h4 class="font-bold text-royal-900" data-i18n="fac6">Safe CCTV Campus & RO Water</h4>
             <p class="text-xs text-slate-500 mt-1" data-i18n="fac6Desc">Complete safety & clean drinking water</p>
@@ -867,7 +943,7 @@
     </div>
   </section>
 
-  <!-- ================= PAGE 7: HD GALLERY VIEW (WITH CUSTOM ALBUMS) ================= -->
+  <!-- ================= PAGE 7: HD GALLERY VIEW ================= -->
   <section id="page-gallery" class="page-section hidden">
     <div class="sub-banner text-white py-10 px-4">
       <div class="max-w-6xl mx-auto">
@@ -892,8 +968,7 @@
     </div>
 
     <div class="max-w-6xl mx-auto px-4 py-10 grid md:grid-cols-12 gap-6">
-      <!-- Sidebar Menu -->
-      <div class="md:col-span-4 bg-white p-4 rounded-2xl royal-glow-card space-y-2 no-print">
+      <div class="md:col-span-4 p-4 rounded-2xl royal-glow-card space-y-2 no-print">
         <button onclick="switchStudentTab('notices')" id="stab-notices" class="stu-tab w-full text-left px-4 py-3 rounded-xl font-bold bg-royal-800 text-white flex items-center gap-3">
           <i class="fa-solid fa-bullhorn text-gold-400"></i> <span data-i18n="stuNotices">Notices</span>
         </button>
@@ -911,9 +986,7 @@
         </button>
       </div>
 
-      <!-- Content Panel -->
-      <div class="md:col-span-8 bg-white p-6 rounded-2xl royal-glow-card">
-        <!-- 1. Notices -->
+      <div class="md:col-span-8 p-6 rounded-2xl royal-glow-card">
         <div id="stu-panel-notices" class="stu-panel space-y-4">
           <div class="flex items-center justify-between border-b pb-3">
             <h3 class="font-serifTitle text-xl font-bold text-royal-800" data-i18n="latestNotices">Latest Notices</h3>
@@ -922,7 +995,6 @@
           <div id="noticesListContainer" class="divide-y text-sm"></div>
         </div>
 
-        <!-- 2. Homework -->
         <div id="stu-panel-homework" class="stu-panel hidden space-y-4">
           <div class="border-b pb-3">
             <h3 class="font-serifTitle text-xl font-bold text-royal-800" data-i18n="stuHomework">Class-wise Daily Homework & Diary</h3>
@@ -930,7 +1002,6 @@
           <div id="homeworkGridContainer" class="grid sm:grid-cols-2 gap-3 text-sm"></div>
         </div>
 
-        <!-- 3. Results -->
         <div id="stu-panel-results" class="stu-panel hidden space-y-5">
           <div class="border-b pb-3 no-print">
             <h3 class="font-serifTitle text-xl font-bold text-royal-800" data-i18n="stuResults">Online Exam Result Portal</h3>
@@ -943,7 +1014,6 @@
           <div id="resultCardOutput"></div>
         </div>
 
-        <!-- 4. Digital ID Card Maker (With Photo Upload!) -->
         <div id="stu-panel-idcard" class="stu-panel hidden space-y-5">
           <div class="border-b pb-3 no-print">
             <h3 class="font-serifTitle text-xl font-bold text-royal-800" data-i18n="stuIdCard">Instant Digital Student ID Card</h3>
@@ -971,7 +1041,6 @@
           <div id="idCardOutput" class="flex justify-center pt-2"></div>
         </div>
 
-        <!-- 5. Dynamic Editable Syllabus -->
         <div id="stu-panel-syllabus" class="stu-panel hidden space-y-4">
           <h3 class="font-serifTitle text-xl font-bold text-royal-800" data-i18n="stuSyllabus">Class-wise NCERT Syllabus (2026-27)</h3>
           <div id="syllabusGridContainer" class="grid sm:grid-cols-2 gap-3 text-sm"></div>
@@ -990,10 +1059,10 @@
     </div>
 
     <div class="max-w-6xl mx-auto px-4 py-10 grid md:grid-cols-2 gap-8">
-      <div class="bg-white p-6 sm:p-8 rounded-2xl royal-glow-card space-y-5 border-t-4 border-royal-800">
+      <div class="p-6 sm:p-8 rounded-2xl royal-glow-card space-y-5 border-t-4 border-royal-800">
         <div>
           <h3 class="font-serifTitle text-2xl font-bold text-royal-800" data-i18n="getInTouch">Get in Touch</h3>
-          <p class="text-sm text-slate-500" data-i18n="getInTouchSub">We are always happy to assist parents and students!</p>
+          <p class="text-sm text-slate-500" data-i18n="getInTouchSub">We are happy to assist parents and students!</p>
         </div>
 
         <div class="space-y-4 text-sm">
@@ -1034,8 +1103,7 @@
         </div>
       </div>
 
-      <!-- Send Message Form -->
-      <div class="bg-white p-6 sm:p-8 rounded-2xl royal-glow-card border-t-4 border-gold-500">
+      <div class="p-6 sm:p-8 rounded-2xl royal-glow-card border-t-4 border-gold-500">
         <h3 class="font-serifTitle text-2xl font-bold text-royal-800 mb-4" data-i18n="sendMsgTitle">Send a Message</h3>
         <form name="contact-message" method="POST" data-netlify="true" onsubmit="handleContactSubmit(event)" class="space-y-4 text-sm">
           <input type="hidden" name="form-name" value="contact-message" />
@@ -1049,7 +1117,7 @@
             <span data-i18n="sendMsgBtn">Send Message →</span>
           </button>
           <p id="contactSuccess" class="hidden text-green-700 bg-green-50 p-3 rounded-lg font-semibold text-center">
-            ✅ Message Saved to School Admin Inbox!
+            ✅ Message Sent to School Admin Inbox!
           </p>
         </form>
       </div>
@@ -1064,15 +1132,15 @@
     <i class="fa-brands fa-whatsapp"></i>
   </a>
 
-  <!-- ================= SUPER-POWERED SECRET ADMIN PANEL MODAL (PASSWORD: ghs) ================= -->
+  <!-- ================= MASTER ADMIN PANEL MODAL (PASSWORD: ghs) ================= -->
   <div id="adminModal" class="fixed inset-0 z-50 bg-black/80 hidden items-center justify-center p-2 sm:p-4 overflow-y-auto no-print">
     <div class="bg-white rounded-2xl max-w-6xl w-full p-4 sm:p-6 shadow-2xl border-t-4 border-gold-500 max-h-[94vh] overflow-y-auto">
       <div class="flex items-center justify-between border-b pb-3 mb-4">
         <div class="flex items-center gap-2.5">
           <i class="fa-solid fa-crown text-2xl text-gold-500"></i>
           <div>
-            <h3 class="font-serifTitle text-lg sm:text-xl font-black text-royal-800">Gyanova Heights — Master Control Admin Panel</h3>
-            <p class="text-xs text-slate-500">Direct HD Photo Upload • Toggles • Timetable • Fees • Students • Teachers • Syllabus</p>
+            <h3 class="font-serifTitle text-lg sm:text-xl font-black text-royal-800">Gyanova Heights — Master Admin Panel</h3>
+            <p class="text-xs text-slate-500">Manual Fee Approval (Pending → Paid) • 2-Option Fee Setup • HD Photo Upload • Toggles</p>
           </div>
         </div>
         <button onclick="closeAdminModal()" class="text-slate-400 hover:text-red-600 text-2xl font-bold px-2">&times;</button>
@@ -1089,22 +1157,21 @@
 
       <!-- Unlocked Master Admin Dashboard -->
       <div id="adminDashboard" class="hidden space-y-5 text-xs sm:text-sm">
-        <!-- Admin Navigation Tabs -->
         <div class="flex flex-wrap gap-1.5 border-b pb-3">
-          <button onclick="switchAdminSection('toggles')" id="atab-toggles" class="adm-nav-btn bg-royal-800 text-white px-3 py-2 rounded-lg font-bold text-xs">
-            <i class="fa-solid fa-sliders mr-1"></i> Toggles & Stats
-          </button>
-          <button onclick="switchAdminSection('admissions')" id="atab-admissions" class="adm-nav-btn bg-slate-100 text-slate-700 px-3 py-2 rounded-lg font-bold text-xs">
-            <i class="fa-solid fa-user-plus mr-1"></i> Admissions & Fee Inbox
-          </button>
-          <button onclick="switchAdminSection('gallery')" id="atab-gallery" class="adm-nav-btn bg-slate-100 text-slate-700 px-3 py-2 rounded-lg font-bold text-xs">
-            <i class="fa-solid fa-camera mr-1"></i> Direct HD Gallery Upload
-          </button>
-          <button onclick="switchAdminSection('people')" id="atab-people" class="adm-nav-btn bg-slate-100 text-slate-700 px-3 py-2 rounded-lg font-bold text-xs">
-            <i class="fa-solid fa-users mr-1"></i> Students & Teachers Photo
+          <button onclick="switchAdminSection('admissions')" id="atab-admissions" class="adm-nav-btn bg-royal-800 text-white px-3 py-2 rounded-lg font-bold text-xs">
+            <i class="fa-solid fa-check-double mr-1"></i> Fee Approval & Admissions Inbox
           </button>
           <button onclick="switchAdminSection('fees')" id="atab-fees" class="adm-nav-btn bg-slate-100 text-slate-700 px-3 py-2 rounded-lg font-bold text-xs">
-            <i class="fa-solid fa-indian-rupee-sign mr-1"></i> Fee Structure & QR
+            <i class="fa-solid fa-indian-rupee-sign mr-1"></i> Set Monthly & Ekmust Fees
+          </button>
+          <button onclick="switchAdminSection('toggles')" id="atab-toggles" class="adm-nav-btn bg-slate-100 text-slate-700 px-3 py-2 rounded-lg font-bold text-xs">
+            <i class="fa-solid fa-sliders mr-1"></i> Toggles & Stats
+          </button>
+          <button onclick="switchAdminSection('gallery')" id="atab-gallery" class="adm-nav-btn bg-slate-100 text-slate-700 px-3 py-2 rounded-lg font-bold text-xs">
+            <i class="fa-solid fa-camera mr-1"></i> Direct HD Gallery
+          </button>
+          <button onclick="switchAdminSection('people')" id="atab-people" class="adm-nav-btn bg-slate-100 text-slate-700 px-3 py-2 rounded-lg font-bold text-xs">
+            <i class="fa-solid fa-users mr-1"></i> Students & Teachers
           </button>
           <button onclick="switchAdminSection('academics')" id="atab-academics" class="adm-nav-btn bg-slate-100 text-slate-700 px-3 py-2 rounded-lg font-bold text-xs">
             <i class="fa-solid fa-clock mr-1"></i> Timetable, Syllabus & HW
@@ -1117,142 +1184,51 @@
           </button>
         </div>
 
-        <!-- TAB 1: VISIBILITY TOGGLES & STATS NUMBERS -->
-        <div id="adm-sec-toggles" class="adm-sec space-y-5">
-          <div class="bg-slate-50 p-4 rounded-xl border space-y-3">
-            <h4 class="font-bold text-royal-800 text-sm"><i class="fa-solid fa-toggle-on text-gold-600 mr-1"></i> Show / Hide Website Sections (Master Toggles)</h4>
-            <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
-              <label class="flex items-center gap-2 bg-white p-3 rounded-lg border cursor-pointer font-semibold">
-                <input type="checkbox" id="tog_stats" onchange="saveTogglesAdmin()" class="w-4 h-4 accent-royal-800" /> Show Stats Counter Bar
-              </label>
-              <label class="flex items-center gap-2 bg-white p-3 rounded-lg border cursor-pointer font-semibold">
-                <input type="checkbox" id="tog_students" onchange="saveTogglesAdmin()" class="w-4 h-4 accent-royal-800" /> Show Students Showcase
-              </label>
-              <label class="flex items-center gap-2 bg-white p-3 rounded-lg border cursor-pointer font-semibold">
-                <input type="checkbox" id="tog_teachers" onchange="saveTogglesAdmin()" class="w-4 h-4 accent-royal-800" /> Show Teachers Section
-              </label>
-              <label class="flex items-center gap-2 bg-white p-3 rounded-lg border cursor-pointer font-semibold">
-                <input type="checkbox" id="tog_fees" onchange="saveTogglesAdmin()" class="w-4 h-4 accent-royal-800" /> Show Fee Structure Table
-              </label>
-              <label class="flex items-center gap-2 bg-white p-3 rounded-lg border cursor-pointer font-semibold">
-                <input type="checkbox" id="tog_timetable" onchange="saveTogglesAdmin()" class="w-4 h-4 accent-royal-800" /> Show Bell Timetable
-              </label>
-            </div>
-          </div>
-
-          <div class="bg-slate-50 p-4 rounded-xl border space-y-3">
-            <h4 class="font-bold text-royal-800 text-sm"><i class="fa-solid fa-chart-simple text-gold-600 mr-1"></i> Update School Stats Counter Numbers</h4>
-            <div class="grid sm:grid-cols-4 gap-3">
+        <!-- TAB 1: MANUAL FEE APPROVAL (PENDING -> PAID) & ADMISSIONS INBOX -->
+        <div id="adm-sec-admissions" class="adm-sec space-y-5">
+          <!-- Fee Payments Approval Inbox -->
+          <div class="bg-slate-50 p-4 rounded-xl border-2 border-gold-500/50 space-y-3">
+            <div class="flex items-center justify-between">
               <div>
-                <label class="block text-[11px] font-bold text-slate-600">Total Students Count</label>
-                <input type="text" id="stat_in_students" class="w-full px-3 py-2 rounded border font-bold" placeholder="e.g. 250+" />
-              </div>
-              <div>
-                <label class="block text-[11px] font-bold text-slate-600">Teachers Count</label>
-                <input type="text" id="stat_in_teachers" class="w-full px-3 py-2 rounded border font-bold" placeholder="e.g. 15+" />
-              </div>
-              <div>
-                <label class="block text-[11px] font-bold text-slate-600">Classes Text</label>
-                <input type="text" id="stat_in_classes" class="w-full px-3 py-2 rounded border font-bold" placeholder="Nursery - 4th" />
-              </div>
-              <div>
-                <label class="block text-[11px] font-bold text-slate-600">Highlight Badge</label>
-                <input type="text" id="stat_in_years" class="w-full px-3 py-2 rounded border font-bold" placeholder="100% Care" />
+                <h4 class="font-bold text-royal-800 text-sm"><i class="fa-solid fa-money-check-dollar text-gold-600 mr-1"></i> 1. Fee Payment Verification Inbox (Default: PENDING)</h4>
+                <p class="text-[11px] text-slate-500">Click "Mark PAID" only after verifying money in your UPI/Bank. Otherwise leave it as Pending.</p>
               </div>
             </div>
-            <button onclick="saveStatsAdmin()" class="bg-royal-800 text-white px-5 py-2 rounded-lg font-bold text-xs">Save Stats Numbers</button>
+            <div id="adminFeePaymentsContainer" class="space-y-2.5 max-h-64 overflow-y-auto"></div>
           </div>
-        </div>
 
-        <!-- TAB 2: ADMISSIONS, FEE PAYMENTS & MESSAGES INBOX -->
-        <div id="adm-sec-admissions" class="adm-sec hidden space-y-5">
+          <!-- Admissions Inbox -->
           <div class="bg-slate-50 p-4 rounded-xl border space-y-3">
             <div class="flex items-center justify-between">
-              <h4 class="font-bold text-royal-800 text-sm">1. Online Admission Applications</h4>
-              <button onclick="exportAdmissionsCSV()" class="bg-emerald-600 text-white px-3 py-1 rounded text-xs font-bold">Export CSV</button>
+              <h4 class="font-bold text-royal-800 text-sm">2. Online Admission Applications (Pending / Approved)</h4>
+              <button onclick="exportAdmissionsCSV()" class="bg-emerald-600 text-white px-3 py-1 rounded text-xs font-bold">Export Excel CSV</button>
             </div>
             <div id="adminAdmissionsContainer" class="space-y-2 max-h-56 overflow-y-auto"></div>
           </div>
 
-          <div class="bg-slate-50 p-4 rounded-xl border space-y-3">
-            <h4 class="font-bold text-royal-800 text-sm">2. Online Fee Payment Submissions (UTR Records)</h4>
-            <div id="adminFeePaymentsContainer" class="space-y-2 max-h-56 overflow-y-auto"></div>
-          </div>
-
+          <!-- Contact Messages Inbox -->
           <div class="bg-slate-50 p-4 rounded-xl border space-y-3">
             <h4 class="font-bold text-royal-800 text-sm">3. Parent Contact Messages</h4>
-            <div id="adminMessagesContainer" class="space-y-2 max-h-56 overflow-y-auto"></div>
+            <div id="adminMessagesContainer" class="space-y-2 max-h-48 overflow-y-auto"></div>
           </div>
         </div>
 
-        <!-- TAB 3: DIRECT HD GALLERY UPLOAD & CUSTOM ALBUMS -->
-        <div id="adm-sec-gallery" class="adm-sec hidden space-y-5">
-          <div class="bg-slate-50 p-4 rounded-xl border space-y-3">
-            <h4 class="font-bold text-royal-800 text-sm"><i class="fa-solid fa-folder-plus text-gold-600 mr-1"></i> Create New Gallery Category / Album Section</h4>
-            <div class="flex gap-2">
-              <input type="text" id="newGalCategoryInput" placeholder="New Category Name (e.g. Sports Day, Picnic, Prize Distribution)" class="flex-1 px-3 py-2 rounded border" />
-              <button onclick="addGalleryCategoryAdmin()" class="bg-royal-800 text-white px-4 py-2 rounded font-bold text-xs">+ Add Section</button>
-            </div>
-          </div>
-
-          <div class="bg-slate-50 p-4 rounded-xl border space-y-3">
-            <h4 class="font-bold text-royal-800 text-sm"><i class="fa-solid fa-cloud-arrow-up text-gold-600 mr-1"></i> Direct HD Photo Upload to Gallery (From Phone / PC)</h4>
-            <div class="grid sm:grid-cols-3 gap-3">
-              <input type="text" id="galTitle" placeholder="Photo Title / Caption *" class="px-3 py-2 rounded border" />
-              <select id="galCat" class="px-3 py-2 rounded border font-semibold"></select>
-              <div>
-                <input type="file" id="galFileInput" accept="image/*" class="w-full text-xs bg-white p-1.5 rounded border" />
-              </div>
-            </div>
-            <button onclick="uploadGalleryPhotoAdmin()" class="gold-gradient-btn px-5 py-2.5 rounded-lg font-extrabold text-xs">
-              <i class="fa-solid fa-upload mr-1"></i> Upload HD Photo to Gallery
-            </button>
-            <div id="adminGalleryList" class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-3 max-h-64 overflow-y-auto"></div>
-          </div>
-        </div>
-
-        <!-- TAB 4: STUDENTS DIRECTORY & TEACHERS PHOTO UPLOAD -->
-        <div id="adm-sec-people" class="adm-sec hidden space-y-5">
-          <!-- Add Student with Photo -->
-          <div class="bg-slate-50 p-4 rounded-xl border space-y-3">
-            <h4 class="font-bold text-royal-800 text-sm"><i class="fa-solid fa-user-graduate text-gold-600 mr-1"></i> Add Student to Website Directory (With Photo)</h4>
-            <div class="grid sm:grid-cols-3 gap-2.5">
-              <input type="text" id="stuDirName" placeholder="Student Full Name *" class="px-3 py-2 rounded border" />
-              <select id="stuDirClass" class="px-3 py-2 rounded border font-semibold">
-                <option value="Nursery">Nursery</option>
-                <option value="LKG">LKG</option>
-                <option value="UKG">UKG</option>
-                <option value="Class 1st">Class 1st</option>
-                <option value="Class 2nd">Class 2nd</option>
-                <option value="Class 3rd">Class 3rd</option>
-                <option value="Class 4th">Class 4th</option>
-              </select>
-              <input type="text" id="stuDirRoll" placeholder="Roll No (e.g. 101)" class="px-3 py-2 rounded border" />
-              <input type="text" id="stuDirFather" placeholder="Father's Name" class="px-3 py-2 rounded border" />
-              <input type="text" id="stuDirBadge" placeholder="Badge (e.g. Topper / Star Student)" class="px-3 py-2 rounded border" />
-              <input type="file" id="stuDirPhoto" accept="image/*" class="text-xs bg-white p-1.5 rounded border" />
-            </div>
-            <button onclick="addStudentDirectoryAdmin()" class="bg-royal-800 text-white px-5 py-2 rounded-lg font-bold text-xs">+ Upload Student & Photo</button>
-            <div id="adminStudentsDirList" class="divide-y pt-2 max-h-44 overflow-y-auto"></div>
-          </div>
-
-          <!-- Add Teacher with Photo -->
-          <div class="bg-slate-50 p-4 rounded-xl border space-y-3">
-            <h4 class="font-bold text-royal-800 text-sm"><i class="fa-solid fa-chalkboard-user text-gold-600 mr-1"></i> Add Teacher / Faculty Member (With Photo)</h4>
-            <div class="grid sm:grid-cols-3 gap-2.5">
-              <input type="text" id="tchName" placeholder="Teacher Name *" class="px-3 py-2 rounded border" />
-              <input type="text" id="tchRole" placeholder="Designation (e.g. Principal / PRT)" class="px-3 py-2 rounded border" />
-              <input type="text" id="tchQual" placeholder="Qualification (e.g. B.Ed, M.A.)" class="px-3 py-2 rounded border" />
-              <input type="text" id="tchSub" placeholder="Subject / Class Incharge" class="px-3 py-2 rounded border sm:col-span-2" />
-              <input type="file" id="tchPhoto" accept="image/*" class="text-xs bg-white p-1.5 rounded border" />
-            </div>
-            <button onclick="addTeacherAdmin()" class="bg-royal-800 text-white px-5 py-2 rounded-lg font-bold text-xs">+ Upload Teacher & Photo</button>
-            <div id="adminTeachersList" class="divide-y pt-2 max-h-44 overflow-y-auto"></div>
-          </div>
-        </div>
-
-        <!-- TAB 5: FEE STRUCTURE EDITOR & UPI QR UPLOAD -->
+        <!-- TAB 2: 2-OPTION FEE STRUCTURE EDITOR (MONTHLY & ONE-TIME EKMUST) -->
         <div id="adm-sec-fees" class="adm-sec hidden space-y-5">
+          <div class="bg-slate-50 p-4 rounded-xl border space-y-3">
+            <h4 class="font-bold text-royal-800 text-sm"><i class="fa-solid fa-indian-rupee-sign text-gold-600 mr-1"></i> Set Fixed Class Fees (Only 2 Clean Options: Monthly Rs & Full Session Ekmust Rs)</h4>
+            <p class="text-xs text-slate-500">Whatever numbers you set here will be automatically locked on the parent fee payment form:</p>
+            <div class="grid grid-cols-3 gap-2 font-bold text-xs text-royal-900 px-2">
+              <span>Class</span>
+              <span>Monthly Fee (₹)</span>
+              <span>Full Session Ekmust (₹)</span>
+            </div>
+            <div id="adminFeeEditorList" class="space-y-2"></div>
+            <button onclick="saveFeeStructureAdmin()" class="gold-gradient-btn px-5 py-2.5 rounded-lg font-extrabold text-xs">
+              <i class="fa-solid fa-floppy-disk mr-1"></i> Save Fixed Fee Amounts
+            </button>
+          </div>
+
           <div class="bg-slate-50 p-4 rounded-xl border space-y-3">
             <h4 class="font-bold text-royal-800 text-sm"><i class="fa-solid fa-qrcode text-gold-600 mr-1"></i> Update School UPI ID & Upload Custom QR Image</h4>
             <div class="grid sm:grid-cols-2 gap-3">
@@ -1267,19 +1243,121 @@
             </div>
             <button onclick="saveUpiSettingsAdmin()" class="bg-royal-800 text-white px-5 py-2 rounded-lg font-bold text-xs">Save UPI & QR Settings</button>
           </div>
+        </div>
+
+        <!-- TAB 3: VISIBILITY TOGGLES & STATS NUMBERS -->
+        <div id="adm-sec-toggles" class="adm-sec hidden space-y-5">
+          <div class="bg-slate-50 p-4 rounded-xl border space-y-3">
+            <h4 class="font-bold text-royal-800 text-sm"><i class="fa-solid fa-toggle-on text-gold-600 mr-1"></i> Show / Hide Website Sections (Master Toggles)</h4>
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+              <label class="flex items-center gap-2 bg-white p-3 rounded-lg border cursor-pointer font-semibold">
+                <input type="checkbox" id="tog_stats" onchange="saveTogglesAdmin()" class="w-4 h-4 accent-royal-800" /> Show Stats Counter Bar
+              </label>
+              <label class="flex items-center gap-2 bg-white p-3 rounded-lg border cursor-pointer font-semibold">
+                <input type="checkbox" id="tog_students" onchange="saveTogglesAdmin()" class="w-4 h-4 accent-royal-800" /> Show Students Showcase
+              </label>
+              <label class="flex items-center gap-2 bg-white p-3 rounded-lg border cursor-pointer font-semibold">
+                <input type="checkbox" id="tog_teachers" onchange="saveTogglesAdmin()" class="w-4 h-4 accent-royal-800" /> Show Teachers Section
+              </label>
+              <label class="flex items-center gap-2 bg-white p-3 rounded-lg border cursor-pointer font-semibold">
+                <input type="checkbox" id="tog_fees" onchange="saveTogglesAdmin()" class="w-4 h-4 accent-royal-800" /> Show Fee Structure Cards
+              </label>
+              <label class="flex items-center gap-2 bg-white p-3 rounded-lg border cursor-pointer font-semibold">
+                <input type="checkbox" id="tog_timetable" onchange="saveTogglesAdmin()" class="w-4 h-4 accent-royal-800" /> Show Bell Timetable
+              </label>
+            </div>
+          </div>
 
           <div class="bg-slate-50 p-4 rounded-xl border space-y-3">
-            <h4 class="font-bold text-royal-800 text-sm"><i class="fa-solid fa-indian-rupee-sign text-gold-600 mr-1"></i> Edit Class-Wise Fee Structure (Nursery - Class 4th)</h4>
-            <div id="adminFeeEditorList" class="space-y-2"></div>
-            <button onclick="saveFeeStructureAdmin()" class="gold-gradient-btn px-5 py-2 rounded-lg font-extrabold text-xs">Save Updated Fee Structure</button>
+            <h4 class="font-bold text-royal-800 text-sm"><i class="fa-solid fa-chart-simple text-gold-600 mr-1"></i> Update School Stats Counter Numbers</h4>
+            <div class="grid sm:grid-cols-4 gap-3">
+              <div>
+                <label class="block text-[11px] font-bold text-slate-600">Total Students Count</label>
+                <input type="text" id="stat_in_students" class="w-full px-3 py-2 rounded border font-bold" />
+              </div>
+              <div>
+                <label class="block text-[11px] font-bold text-slate-600">Teachers Count</label>
+                <input type="text" id="stat_in_teachers" class="w-full px-3 py-2 rounded border font-bold" />
+              </div>
+              <div>
+                <label class="block text-[11px] font-bold text-slate-600">Classes Text</label>
+                <input type="text" id="stat_in_classes" class="w-full px-3 py-2 rounded border font-bold" />
+              </div>
+              <div>
+                <label class="block text-[11px] font-bold text-slate-600">Highlight Badge</label>
+                <input type="text" id="stat_in_years" class="w-full px-3 py-2 rounded border font-bold" />
+              </div>
+            </div>
+            <button onclick="saveStatsAdmin()" class="bg-royal-800 text-white px-5 py-2 rounded-lg font-bold text-xs">Save Stats Numbers</button>
           </div>
         </div>
 
-        <!-- TAB 6: TIMETABLE, SYLLABUS & HOMEWORK EDITOR -->
-        <div id="adm-sec-academics" class="adm-sec hidden space-y-5">
-          <!-- Timetable Editor -->
+        <!-- TAB 4: DIRECT HD GALLERY UPLOAD -->
+        <div id="adm-sec-gallery" class="adm-sec hidden space-y-5">
           <div class="bg-slate-50 p-4 rounded-xl border space-y-3">
-            <h4 class="font-bold text-royal-800 text-sm"><i class="fa-solid fa-clock text-gold-600 mr-1"></i> Add / Edit School Bell Timetable</h4>
+            <h4 class="font-bold text-royal-800 text-sm">Create New Gallery Album Section</h4>
+            <div class="flex gap-2">
+              <input type="text" id="newGalCategoryInput" placeholder="New Album Name (e.g. Sports Day, Annual Function)" class="flex-1 px-3 py-2 rounded border" />
+              <button onclick="addGalleryCategoryAdmin()" class="bg-royal-800 text-white px-4 py-2 rounded font-bold text-xs">+ Add Album</button>
+            </div>
+          </div>
+
+          <div class="bg-slate-50 p-4 rounded-xl border space-y-3">
+            <h4 class="font-bold text-royal-800 text-sm">Direct HD Photo Upload to Gallery</h4>
+            <div class="grid sm:grid-cols-3 gap-3">
+              <input type="text" id="galTitle" placeholder="Photo Title / Caption *" class="px-3 py-2 rounded border" />
+              <select id="galCat" class="px-3 py-2 rounded border font-semibold"></select>
+              <input type="file" id="galFileInput" accept="image/*" class="w-full text-xs bg-white p-1.5 rounded border" />
+            </div>
+            <button onclick="uploadGalleryPhotoAdmin()" class="gold-gradient-btn px-5 py-2.5 rounded-lg font-extrabold text-xs">
+              <i class="fa-solid fa-upload mr-1"></i> Upload HD Photo
+            </button>
+            <div id="adminGalleryList" class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-3 max-h-60 overflow-y-auto"></div>
+          </div>
+        </div>
+
+        <!-- TAB 5: STUDENTS & TEACHERS PHOTO UPLOAD -->
+        <div id="adm-sec-people" class="adm-sec hidden space-y-5">
+          <div class="bg-slate-50 p-4 rounded-xl border space-y-3">
+            <h4 class="font-bold text-royal-800 text-sm">Add Student to Website Showcase (With Photo)</h4>
+            <div class="grid sm:grid-cols-3 gap-2.5">
+              <input type="text" id="stuDirName" placeholder="Student Full Name *" class="px-3 py-2 rounded border" />
+              <select id="stuDirClass" class="px-3 py-2 rounded border font-semibold">
+                <option value="Nursery">Nursery</option>
+                <option value="LKG">LKG</option>
+                <option value="UKG">UKG</option>
+                <option value="Class 1st">Class 1st</option>
+                <option value="Class 2nd">Class 2nd</option>
+                <option value="Class 3rd">Class 3rd</option>
+                <option value="Class 4th">Class 4th</option>
+              </select>
+              <input type="text" id="stuDirRoll" placeholder="Roll No (e.g. 101)" class="px-3 py-2 rounded border" />
+              <input type="text" id="stuDirFather" placeholder="Father's Name" class="px-3 py-2 rounded border" />
+              <input type="text" id="stuDirBadge" placeholder="Badge (e.g. Class Topper)" class="px-3 py-2 rounded border" />
+              <input type="file" id="stuDirPhoto" accept="image/*" class="text-xs bg-white p-1.5 rounded border" />
+            </div>
+            <button onclick="addStudentDirectoryAdmin()" class="bg-royal-800 text-white px-5 py-2 rounded-lg font-bold text-xs">+ Upload Student</button>
+            <div id="adminStudentsDirList" class="divide-y pt-2 max-h-40 overflow-y-auto"></div>
+          </div>
+
+          <div class="bg-slate-50 p-4 rounded-xl border space-y-3">
+            <h4 class="font-bold text-royal-800 text-sm">Add Teacher / Faculty Member (With Photo)</h4>
+            <div class="grid sm:grid-cols-3 gap-2.5">
+              <input type="text" id="tchName" placeholder="Teacher Name *" class="px-3 py-2 rounded border" />
+              <input type="text" id="tchRole" placeholder="Designation (e.g. Principal / Teacher)" class="px-3 py-2 rounded border" />
+              <input type="text" id="tchQual" placeholder="Qualification (e.g. B.Ed, M.A.)" class="px-3 py-2 rounded border" />
+              <input type="text" id="tchSub" placeholder="Subject / Class Incharge" class="px-3 py-2 rounded border sm:col-span-2" />
+              <input type="file" id="tchPhoto" accept="image/*" class="text-xs bg-white p-1.5 rounded border" />
+            </div>
+            <button onclick="addTeacherAdmin()" class="bg-royal-800 text-white px-5 py-2 rounded-lg font-bold text-xs">+ Upload Teacher</button>
+            <div id="adminTeachersList" class="divide-y pt-2 max-h-40 overflow-y-auto"></div>
+          </div>
+        </div>
+
+        <!-- TAB 6: TIMETABLE, SYLLABUS & HOMEWORK -->
+        <div id="adm-sec-academics" class="adm-sec hidden space-y-5">
+          <div class="bg-slate-50 p-4 rounded-xl border space-y-3">
+            <h4 class="font-bold text-royal-800 text-sm">Add / Edit School Bell Timetable</h4>
             <div class="grid sm:grid-cols-3 gap-2">
               <input type="text" id="ttTime" placeholder="Time (e.g. 08:30 AM - 09:00 AM)" class="px-3 py-2 rounded border" />
               <input type="text" id="ttTitle" placeholder="Period / Activity Title" class="px-3 py-2 rounded border" />
@@ -1289,9 +1367,8 @@
             <div id="adminTimetableList" class="divide-y pt-2"></div>
           </div>
 
-          <!-- Syllabus Editor -->
           <div class="bg-slate-50 p-4 rounded-xl border space-y-3">
-            <h4 class="font-bold text-royal-800 text-sm"><i class="fa-solid fa-book-open text-gold-600 mr-1"></i> Edit Class-wise Syllabus (Nursery - Class 4th)</h4>
+            <h4 class="font-bold text-royal-800 text-sm">Edit Class-wise Syllabus (Nursery - Class 4th)</h4>
             <div class="grid sm:grid-cols-3 gap-2">
               <select id="sylClassSelect" onchange="loadSelectedSyllabus()" class="px-3 py-2 rounded border font-bold">
                 <option value="Nursery">Nursery</option>
@@ -1302,14 +1379,13 @@
                 <option value="Class 3rd">Class 3rd</option>
                 <option value="Class 4th">Class 4th</option>
               </select>
-              <input type="text" id="sylTextInput" placeholder="Syllabus topics..." class="sm:col-span-2 px-3 py-2 rounded border" />
+              <input type="text" id="sylTextInput" class="sm:col-span-2 px-3 py-2 rounded border" />
             </div>
             <button onclick="saveSyllabusAdmin()" class="bg-royal-800 text-white px-4 py-1.5 rounded font-bold text-xs">Save Class Syllabus</button>
           </div>
 
-          <!-- Homework Editor -->
           <div class="bg-slate-50 p-4 rounded-xl border space-y-3">
-            <h4 class="font-bold text-royal-800 text-sm"><i class="fa-solid fa-pencil text-gold-600 mr-1"></i> Update Daily Homework Diary</h4>
+            <h4 class="font-bold text-royal-800 text-sm">Update Daily Homework Diary</h4>
             <div class="grid sm:grid-cols-3 gap-2">
               <select id="hwClassSelect" onchange="loadSelectedHomework()" class="px-3 py-2 rounded border font-bold">
                 <option value="Nursery">Nursery</option>
@@ -1320,13 +1396,13 @@
                 <option value="Class 3rd">Class 3rd</option>
                 <option value="Class 4th">Class 4th</option>
               </select>
-              <input type="text" id="hwTextInput" placeholder="Today's homework..." class="sm:col-span-2 px-3 py-2 rounded border" />
+              <input type="text" id="hwTextInput" class="sm:col-span-2 px-3 py-2 rounded border" />
             </div>
             <button onclick="saveHomeworkAdmin()" class="bg-royal-800 text-white px-4 py-1.5 rounded font-bold text-xs">Save Class Homework</button>
           </div>
         </div>
 
-        <!-- TAB 7: NOTICES, TICKER & EXAM RESULTS -->
+        <!-- TAB 7: NOTICES, TICKER & RESULTS -->
         <div id="adm-sec-notices" class="adm-sec hidden space-y-5">
           <div class="bg-slate-50 p-4 rounded-xl border space-y-2">
             <h4 class="font-bold text-royal-800 text-sm">Top Announcement Ticker (English & Hindi)</h4>
@@ -1368,11 +1444,11 @@
           </div>
         </div>
 
-        <!-- TAB 8: GITHUB LIVE SYNC (SAVE PHOTOS & DATA PERMANENTLY) -->
+        <!-- TAB 8: GITHUB LIVE SYNC -->
         <div id="adm-sec-cloud" class="adm-sec hidden space-y-4">
-          <div class="bg-royal-950 text-white p-5 rounded-xl border-2 border-gold-500 space-y-3">
-            <h4 class="font-bold text-gold-400 text-base"><i class="fa-brands fa-github mr-1"></i> One-Click Permanent Save to GitHub (`data.json`)</h4>
-            <p class="text-xs text-slate-300">All uploaded HD Photos, Students, Teachers, Fees, Timetable & Notices are packed into `data.json`. Enter your GitHub Repo & Token once to publish directly from this website:</p>
+          <div class="dark-royal-card text-white p-5 rounded-xl space-y-3">
+            <h4 class="font-bold text-gold-400 text-base"><i class="fa-brands fa-github mr-1"></i> Publish All Changes & Verified Payments to GitHub (`data.json`)</h4>
+            <p class="text-xs text-slate-300">When you mark a parent's fee as PAID or upload photos, click below to push `data.json` live so the parent's phone reflects the verified status:</p>
             <div class="grid sm:grid-cols-2 gap-2 text-slate-900">
               <input type="text" id="ghRepo" placeholder="GitHub Repo (e.g. nirwan/gyanova-school)" class="px-3 py-2 rounded text-xs font-bold" />
               <input type="password" id="ghToken" placeholder="GitHub Personal Access Token (ghp_...)" class="px-3 py-2 rounded text-xs font-bold" />
@@ -1382,7 +1458,7 @@
                 <i class="fa-solid fa-cloud-arrow-up mr-1"></i> Publish Everything Live to GitHub
               </button>
               <button onclick="downloadDataJson()" class="bg-white/15 hover:bg-white/25 text-white px-4 py-2.5 rounded-lg font-bold text-xs">
-                <i class="fa-solid fa-download mr-1"></i> Download data.json File
+                <i class="fa-solid fa-download mr-1"></i> Download data.json
               </button>
             </div>
             <p id="ghSyncStatus" class="text-xs text-gold-400 font-bold"></p>
@@ -1397,7 +1473,7 @@
   <footer class="bg-royal-950 text-white border-t-4 border-gold-500 mt-12 no-print">
     <div class="max-w-7xl mx-auto px-4 py-8 flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
       <div class="flex items-center gap-3">
-        <img src="logo.png" alt="Logo" onerror="this.src='https://placehold.co/60x60/091b47/ffd25a?text=GHS'" class="w-12 h-12 rounded-full border-2 border-gold-400" />
+        <img src="logo.png" alt="Logo" onerror="this.src='https://placehold.co/60x60/091b47/ffd25a?text=GHS'" class="w-12 h-12 rounded-full border-2 border-gold-400 shadow-md" />
         <div>
           <h4 class="font-serifTitle font-bold text-lg text-gold-400" data-i18n="schoolName">GYANOVA HEIGHTS SCHOOL</h4>
           <p class="text-xs italic text-slate-300" data-i18n="tagline">Learn • Grow • Excel</p>
@@ -1427,24 +1503,25 @@
   <script>
     let currentLang = 'en';
     let currentClassKey = 'nursery';
+    let selectedFeePlan = 'monthly'; // 'monthly' or 'onetime'
 
-    // Default Master Data
+    // Master School Data (Clean 2-Option Fee Structure & Pending Verification System)
     let schoolData = {
       visibility: { stats: true, students: true, teachers: true, fees: true, timetable: true, homework: true },
-      stats: { students: "250+", teachers: "15+", classes: "Nursery - 4th", years: "100% Care" },
+      stats: { students: "250+", teachers: "15+", classes: "Nursery - 4th", years: "Safe CCTV" },
       ticker: {
         en: "🎉 Admissions Open 2026-27: Enrolling now from Nursery to Class 4th! Apply online today or call +91 93022 73813.",
         hi: "🎉 प्रवेश प्रारंभ (2026-27): नर्सरी से कक्षा 4थी तक प्रवेश चालू हैं! आज ही ऑनलाइन आवेदन करें या +91 93022 73813 पर संपर्क करें।"
       },
       upi: { id: "9302273813@ybl", name: "Gyanova Heights School", qrImg: "" },
       fees: [
-        { className: "Nursery", admFee: "₹1,000", monthlyFee: "₹500", examFee: "₹300" },
-        { className: "LKG", admFee: "₹1,000", monthlyFee: "₹550", examFee: "₹300" },
-        { className: "UKG", admFee: "₹1,000", monthlyFee: "₹600", examFee: "₹300" },
-        { className: "Class 1st", admFee: "₹1,200", monthlyFee: "₹650", examFee: "₹400" },
-        { className: "Class 2nd", admFee: "₹1,200", monthlyFee: "₹700", examFee: "₹400" },
-        { className: "Class 3rd", admFee: "₹1,500", monthlyFee: "₹750", examFee: "₹400" },
-        { className: "Class 4th", admFee: "₹1,500", monthlyFee: "₹800", examFee: "₹400" }
+        { className: "Nursery", monthlyFee: 500, oneTimeFee: 5000 },
+        { className: "LKG", monthlyFee: 550, oneTimeFee: 5500 },
+        { className: "UKG", monthlyFee: 600, oneTimeFee: 6000 },
+        { className: "Class 1st", monthlyFee: 650, oneTimeFee: 6500 },
+        { className: "Class 2nd", monthlyFee: 700, oneTimeFee: 7000 },
+        { className: "Class 3rd", monthlyFee: 750, oneTimeFee: 7500 },
+        { className: "Class 4th", monthlyFee: 800, oneTimeFee: 8000 }
       ],
       timetable: [
         { time: "08:30 AM - 08:50 AM", titleEn: "Morning Prayer & Assembly", titleHi: "प्रार्थना सभा एवं राष्ट्रगान", descEn: "Gayatri Mantra, Thought of the Day, News & Yoga", descHi: "गायत्री मंत्र, आज का सुविचार, समाचार एवं योग" },
@@ -1488,14 +1565,77 @@
       galleryCategories: ["events", "activities", "campus", "celebrations"],
       gallery: [
         { title: "80th Independence Day Celebration", category: "celebrations", desc: "Cultural Parade & Flag Hoisting at Gyanova Heights School, Basin", img: "" },
-        { title: "Anand Mela School Carnival", category: "events", desc: "Student Food & Activity Stalls with Digital QR System", img: "" }
+        { title: "Anand Mela School Carnival", category: "events", desc: "Student Food & Activity Stalls with Digital QR System", "img": "" }
       ],
       admissions: [],
       feePayments: [],
       messages: []
     };
 
-    // Built-in HD Image Compressor (Converts Device File to Crisp Base64 DataURL)
+    // Normalize Fee Structure in case old format exists in localStorage
+    function normalizeFeeData() {
+      const defaults = [
+        { className: "Nursery", monthlyFee: 500, oneTimeFee: 5000 },
+        { className: "LKG", monthlyFee: 550, oneTimeFee: 5500 },
+        { className: "UKG", monthlyFee: 600, oneTimeFee: 6000 },
+        { className: "Class 1st", monthlyFee: 650, oneTimeFee: 6500 },
+        { className: "Class 2nd", monthlyFee: 700, oneTimeFee: 7000 },
+        { className: "Class 3rd", monthlyFee: 750, oneTimeFee: 7500 },
+        { className: "Class 4th", monthlyFee: 800, oneTimeFee: 8000 }
+      ];
+      if (!Array.isArray(schoolData.fees) || schoolData.fees.length === 0) {
+        schoolData.fees = defaults;
+        return;
+      }
+      schoolData.fees = schoolData.fees.map((f, i) => {
+        const m = parseInt(String(f.monthlyFee ?? defaults[i]?.monthlyFee ?? 500).replace(/\D/g, ''), 10) || 500;
+        const o = parseInt(String(f.oneTimeFee ?? (m * 10)).replace(/\D/g, ''), 10) || (m * 10);
+        return { className: f.className || defaults[i]?.className, monthlyFee: m, oneTimeFee: o };
+      });
+    }
+
+    // Golden Starlight Particle Canvas Effect
+    function initHeroParticles() {
+      const canvas = document.getElementById('heroParticles');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      let particles = [];
+      function resize() {
+        canvas.width = canvas.offsetWidth;
+        canvas.height = canvas.offsetHeight;
+      }
+      window.addEventListener('resize', resize);
+      resize();
+
+      for (let i = 0; i < 36; i++) {
+        particles.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          r: Math.random() * 2.2 + 0.6,
+          dx: (Math.random() - 0.5) * 0.35,
+          dy: -Math.random() * 0.45 - 0.15,
+          alpha: Math.random() * 0.75 + 0.25
+        });
+      }
+      function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach(p => {
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(255, 215, 100, ${p.alpha})`;
+          ctx.fill();
+          p.x += p.dx;
+          p.y += p.dy;
+          if (p.y < 0) p.y = canvas.height;
+          if (p.x < 0) p.x = canvas.width;
+          if (p.x > canvas.width) p.x = 0;
+        });
+        requestAnimationFrame(draw);
+      }
+      draw();
+    }
+
+    // HD Image Compressor
     function compressAndReadImage(file, maxWidth = 900, quality = 0.82) {
       return new Promise((resolve, reject) => {
         if (!file) { resolve(""); return; }
@@ -1525,6 +1665,7 @@
     }
 
     async function initSchoolData() {
+      initHeroParticles();
       try {
         const res = await fetch('data.json?t=' + Date.now());
         if (res.ok) {
@@ -1533,13 +1674,15 @@
         }
       } catch (e) {}
 
-      const savedLocal = localStorage.getItem('ghs_master_erp_v3');
+      const savedLocal = localStorage.getItem('ghs_master_erp_v4');
       if (savedLocal) {
         try {
           const parsed = JSON.parse(savedLocal);
           schoolData = { ...schoolData, ...parsed };
         } catch (e) {}
       }
+
+      normalizeFeeData();
 
       const savedGhRepo = localStorage.getItem('ghs_gh_repo');
       const savedGhToken = localStorage.getItem('ghs_gh_token');
@@ -1549,11 +1692,14 @@
       renderAllContent();
       showClassInfo('nursery');
       updateEligibilityCalc();
-      autoFillClassFee();
+      updateLockedFeeAmount();
       if (window.location.hash === '#admin') openAdminModal();
     }
 
     function renderAllContent() {
+      normalizeFeeData();
+      const isHi = currentLang === 'hi';
+
       // 1. Visibility Toggles
       const vis = schoolData.visibility || {};
       const toggleMap = {
@@ -1573,7 +1719,7 @@
         document.getElementById('statValStudents').innerText = schoolData.stats.students || '250+';
         document.getElementById('statValTeachers').innerText = schoolData.stats.teachers || '15+';
         document.getElementById('statValClasses').innerText = schoolData.stats.classes || 'Nursery - 4th';
-        document.getElementById('statValYears').innerText = schoolData.stats.years || '100% Care';
+        document.getElementById('statValYears').innerText = schoolData.stats.years || 'Safe CCTV';
       }
 
       // 3. Bilingual Ticker
@@ -1590,27 +1736,32 @@
       const ttGrid = document.getElementById('timetableGridContainer');
       if (ttGrid && schoolData.timetable) {
         ttGrid.innerHTML = schoolData.timetable.map(t => `
-          <div class="bg-royal-900 p-4 rounded-xl border border-gold-500/40 shadow">
+          <div class="bg-royal-900/90 p-4 rounded-xl border border-gold-500/40 shadow-lg">
             <span class="text-gold-400 font-extrabold text-xs">${t.time}</span>
-            <h4 class="font-bold text-white mt-1">${currentLang === 'hi' ? (t.titleHi || t.titleEn) : t.titleEn}</h4>
-            <p class="text-xs text-slate-300 mt-1">${currentLang === 'hi' ? (t.descHi || t.descEn) : t.descEn}</p>
+            <h4 class="font-bold text-white mt-1">${isHi ? (t.titleHi || t.titleEn) : t.titleEn}</h4>
+            <p class="text-xs text-slate-300 mt-1">${isHi ? (t.descHi || t.descEn) : t.descEn}</p>
           </div>
         `).join('');
       }
 
-      // 6. Fee Structure & UPI QR
+      // 6. Clean 2-Option Fee Structure Cards
       const feeGrid = document.getElementById('feeStructureGrid');
       if (feeGrid && schoolData.fees) {
         feeGrid.innerHTML = schoolData.fees.map(f => `
-          <div class="p-4 rounded-xl border-2 border-royal-800/15 bg-slate-50 hover:border-gold-500 transition space-y-2">
-            <div class="flex items-center justify-between border-b pb-2">
-              <span class="font-serifTitle font-extrabold text-royal-800 text-base">${f.className}</span>
-              <span class="bg-gold-500 text-royal-950 font-extrabold text-xs px-2.5 py-0.5 rounded-full">${f.monthlyFee}/mo</span>
+          <div class="p-4 rounded-2xl border-2 border-gold-500/40 bg-gradient-to-b from-white to-amber-50/30 hover:border-gold-500 shadow-sm transition space-y-3">
+            <div class="flex items-center justify-between border-b border-gold-500/30 pb-2">
+              <span class="font-serifTitle font-black text-royal-900 text-base">${f.className}</span>
+              <span class="bg-royal-900 text-gold-400 font-bold text-[10px] px-2.5 py-0.5 rounded-full">2026-27</span>
             </div>
-            <div class="text-xs space-y-1 text-slate-600">
-              <p class="flex justify-between"><span>${currentLang === 'hi' ? 'प्रवेश शुल्क:' : 'Admission Fee:'}</span> <strong class="text-royal-900">${f.admFee}</strong></p>
-              <p class="flex justify-between"><span>${currentLang === 'hi' ? 'मासिक शिक्षण शुल्क:' : 'Monthly Tuition:'}</span> <strong class="text-royal-900">${f.monthlyFee}</strong></p>
-              <p class="flex justify-between"><span>${currentLang === 'hi' ? 'परीक्षा शुल्क:' : 'Exam Fee:'}</span> <strong class="text-royal-900">${f.examFee}</strong></p>
+            <div class="space-y-2 text-xs">
+              <div class="p-2.5 rounded-xl bg-white border border-slate-200 flex items-center justify-between">
+                <span class="font-semibold text-slate-600">${isHi ? '1. मासिक शुल्क (Monthly):' : '1. Monthly Fee:'}</span>
+                <strong class="text-royal-900 text-sm font-black">₹${f.monthlyFee}</strong>
+              </div>
+              <div class="p-2.5 rounded-xl bg-emerald-50 border border-emerald-300 flex items-center justify-between">
+                <span class="font-bold text-emerald-900">${isHi ? '2. एकमुश्त सत्र (Full Year):' : '2. Full Session (Ekmust):'}</span>
+                <strong class="text-emerald-700 text-sm font-black">₹${f.oneTimeFee}</strong>
+              </div>
             </div>
           </div>
         `).join('');
@@ -1626,10 +1777,9 @@
         qrEl.src = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${upiUri}`;
       }
 
-      // 7. Gallery Categories & Grid
+      // 7. Gallery, Notices, Homework & Syllabus
       renderGallerySection();
 
-      // 8. Notices, Homework & Syllabus
       const noticeContainer = document.getElementById('noticesListContainer');
       if (noticeContainer) {
         noticeContainer.innerHTML = (schoolData.notices || []).map(n => `
@@ -1649,7 +1799,7 @@
           <div class="p-4 rounded-xl border border-slate-200 bg-slate-50 space-y-1">
             <div class="flex items-center justify-between">
               <span class="font-bold text-royal-800">${cls}</span>
-              <span class="text-[10px] bg-gold-500/30 text-royal-950 font-bold px-2 py-0.5 rounded">${currentLang === 'hi' ? 'आज का होमवर्क' : "Today's Diary"}</span>
+              <span class="text-[10px] bg-gold-500/30 text-royal-950 font-bold px-2 py-0.5 rounded">${isHi ? 'आज का होमवर्क' : "Today's Diary"}</span>
             </div>
             <p class="text-xs text-slate-600 leading-relaxed">${text}</p>
           </div>
@@ -1666,7 +1816,163 @@
         `).join('');
       }
 
+      renderMyDevicePrivateRecords();
       renderAdminPanelState();
+    }
+
+    // ================= FIXED FEE LOCK & DEVICE-ONLY PRIVACY ENGINE =================
+    function selectFeePlan(planType) {
+      selectedFeePlan = planType;
+      const mCard = document.getElementById('planCardMonthly');
+      const oCard = document.getElementById('planCardOneTime');
+      if (planType === 'monthly') {
+        document.getElementById('radio_monthly').checked = true;
+        mCard.classList.add('plan-card-active');
+        oCard.classList.remove('plan-card-active');
+        document.getElementById('fee_plan_input').value = 'Monthly Fee (मासिक शुल्क)';
+      } else {
+        document.getElementById('radio_onetime').checked = true;
+        oCard.classList.add('plan-card-active');
+        mCard.classList.remove('plan-card-active');
+        document.getElementById('fee_plan_input').value = 'One-Time Full Session (एकमुश्त सत्र शुल्क)';
+      }
+      updateLockedFeeAmount();
+    }
+
+    function updateLockedFeeAmount() {
+      const cls = document.getElementById('fee_class')?.value || 'Nursery';
+      const found = (schoolData.fees || []).find(f => f.className === cls) || { monthlyFee: 500, oneTimeFee: 5000 };
+      
+      document.getElementById('previewMonthlyAmt').innerText = '₹' + found.monthlyFee;
+      document.getElementById('previewOneTimeAmt').innerText = '₹' + found.oneTimeFee;
+
+      const lockedAmt = selectedFeePlan === 'monthly' ? found.monthlyFee : found.oneTimeFee;
+      document.getElementById('fee_amount_display').value = '₹' + lockedAmt;
+      document.getElementById('fee_amount').value = lockedAmt;
+    }
+
+    // Submit Fee -> Strictly PENDING until Admin marks PAID, saved privately on Parent's Device!
+    function handleFeePaymentSubmit(e) {
+      e.preventDefault();
+      const student = document.getElementById('fee_student').value.trim();
+      const className = document.getElementById('fee_class').value;
+      const feeType = document.getElementById('fee_plan_input').value;
+      const amount = document.getElementById('fee_amount').value;
+      const phone = document.getElementById('fee_phone').value.trim();
+      const utr = document.getElementById('fee_utr').value.trim();
+      const receiptNo = 'GHS-FEE-' + Math.floor(10000 + Math.random() * 90000);
+      const dateStr = new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
+
+      const newRecord = {
+        receiptNo,
+        student,
+        className,
+        feeType,
+        amount,
+        phone,
+        utr,
+        date: dateStr,
+        status: 'Pending' // Strictly PENDING until Admin approves!
+      };
+
+      // 1. Save in Admin Database
+      if (!schoolData.feePayments) schoolData.feePayments = [];
+      schoolData.feePayments.unshift(newRecord);
+
+      // 2. Save Receipt ID privately on THIS parent's phone only
+      const myDeviceList = JSON.parse(localStorage.getItem('ghs_my_device_fees') || '[]');
+      myDeviceList.unshift(newRecord);
+      localStorage.setItem('ghs_my_device_fees', JSON.stringify(myDeviceList));
+
+      saveLocalAndRefresh();
+
+      // 3. Send to Netlify Forms
+      fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams(new FormData(e.target)).toString(),
+      }).catch(() => {});
+
+      e.target.reset();
+      updateLockedFeeAmount();
+    }
+
+    // Render Private Records (Only shows items submitted from THIS device, synced with Admin approval status)
+    function renderMyDevicePrivateRecords() {
+      const isHi = currentLang === 'hi';
+
+      // 1. Private Fee Submissions on This Phone
+      const myFeeCards = document.getElementById('myDeviceFeeCardsList');
+      if (myFeeCards) {
+        const localFees = JSON.parse(localStorage.getItem('ghs_my_device_fees') || '[]');
+        if (localFees.length === 0) {
+          myFeeCards.innerHTML = `<p class="text-xs text-slate-400 italic">${isHi ? 'इस फोन से अभी तक कोई फीस सबमिट नहीं की गई है।' : 'No fee submissions from this phone yet.'}</p>`;
+        } else {
+          myFeeCards.innerHTML = localFees.map(localItem => {
+            // Check if Admin updated status to 'Paid' in schoolData
+            const syncedItem = (schoolData.feePayments || []).find(p => p.receiptNo === localItem.receiptNo) || localItem;
+            const isPaid = syncedItem.status === 'Paid';
+            return `
+              <div class="p-4 rounded-xl border-2 ${isPaid ? 'border-emerald-500 bg-emerald-50/60' : 'border-amber-400 bg-amber-50/60'} space-y-2 print-area">
+                <div class="flex flex-wrap items-center justify-between gap-2 border-b pb-2">
+                  <div>
+                    <span class="font-serifTitle font-bold text-xs text-royal-900">GYANOVA HEIGHTS SCHOOL</span>
+                    <span class="block text-[11px] text-slate-500">Token: <strong>${syncedItem.receiptNo}</strong> • ${syncedItem.date}</span>
+                  </div>
+                  ${isPaid
+                    ? `<span class="bg-emerald-600 text-white text-xs font-extrabold px-3 py-1 rounded-full shadow-xs"><i class="fa-solid fa-circle-check mr-1"></i> ${isHi ? 'सत्यापित (PAID)' : 'VERIFIED PAID'}</span>`
+                    : `<span class="bg-amber-500 text-royal-950 text-xs font-extrabold px-3 py-1 rounded-full shadow-xs"><i class="fa-solid fa-clock mr-1"></i> ${isHi ? 'सत्यापन लंबित (PENDING)' : 'PENDING ADMIN APPROVAL'}</span>`
+                  }
+                </div>
+                <div class="grid grid-cols-2 gap-2 text-xs text-slate-700">
+                  <div><span class="text-slate-500">Student:</span> <strong class="text-royal-900">${syncedItem.student} (${syncedItem.className})</strong></div>
+                  <div><span class="text-slate-500">Plan:</span> <strong class="text-royal-900">${syncedItem.feeType}</strong></div>
+                  <div><span class="text-slate-500">Amount:</span> <strong class="text-royal-900 text-sm">₹${syncedItem.amount}</strong></div>
+                  <div><span class="text-slate-500">UTR / Ref:</span> <strong class="text-royal-900">${syncedItem.utr}</strong></div>
+                </div>
+                <div class="pt-1 flex flex-wrap gap-2 no-print">
+                  <button onclick="window.print()" class="bg-royal-800 text-white px-3 py-1.5 rounded-lg text-xs font-bold">
+                    <i class="fa-solid fa-print mr-1"></i> ${isPaid ? (isHi ? 'पक्की रसीद प्रिंट करें' : 'Print Paid Receipt') : (isHi ? 'पावती प्रिंट करें' : 'Print Pending Slip')}
+                  </button>
+                  <a href="https://wa.me/919302273813?text=${encodeURIComponent(`*Fee Verification Request*\nToken: ${syncedItem.receiptNo}\nStudent: ${syncedItem.student} (${syncedItem.className})\nAmount: ₹${syncedItem.amount}\nUTR: ${syncedItem.utr}`)}" target="_blank" class="bg-emerald-600 text-white px-3 py-1.5 rounded-lg text-xs font-bold">
+                    <i class="fa-brands fa-whatsapp mr-1"></i> ${isHi ? 'स्कूल को व्हाट्सएप करें' : 'Notify School on WhatsApp'}
+                  </a>
+                </div>
+              </div>
+            `;
+          }).join('');
+        }
+      }
+
+      // 2. Private Admission Submissions on This Phone
+      const myAdmList = document.getElementById('myDeviceAdmissionsList');
+      if (myAdmList) {
+        const localAdms = JSON.parse(localStorage.getItem('ghs_my_device_admissions') || '[]');
+        if (localAdms.length === 0) {
+          myAdmList.innerHTML = `<p class="text-xs text-slate-400 italic">${isHi ? 'इस फोन से अभी तक कोई प्रवेश फॉर्म सबमिट नहीं किया गया है।' : 'No admission applications submitted from this phone yet.'}</p>`;
+        } else {
+          myAdmList.innerHTML = localAdms.map(localAdm => {
+            const syncedAdm = (schoolData.admissions || []).find(a => a.token === localAdm.token) || localAdm;
+            const isApproved = syncedAdm.status === 'Approved';
+            return `
+              <div class="p-4 rounded-xl border-2 ${isApproved ? 'border-emerald-500 bg-emerald-50/60' : 'border-amber-400 bg-amber-50/60'} space-y-2 print-area">
+                <div class="flex items-center justify-between border-b pb-2">
+                  <span class="font-bold text-xs text-royal-900">TOKEN #${syncedAdm.token}</span>
+                  ${isApproved
+                    ? `<span class="bg-emerald-600 text-white text-[11px] font-extrabold px-2.5 py-0.5 rounded-full">✅ APPROVED</span>`
+                    : `<span class="bg-amber-500 text-royal-950 text-[11px] font-extrabold px-2.5 py-0.5 rounded-full">⏳ PENDING</span>`
+                  }
+                </div>
+                <p class="text-xs text-slate-700"><strong>Student:</strong> ${syncedAdm.student} (${syncedAdm.className}) • <strong>Parent:</strong> ${syncedAdm.parent}</p>
+                <div class="flex gap-2 pt-1 no-print">
+                  <button onclick="window.print()" class="bg-royal-800 text-white px-3 py-1 rounded text-xs font-bold"><i class="fa-solid fa-print mr-1"></i> Print Slip</button>
+                  <a href="https://wa.me/919302273813?text=${encodeURIComponent(`*Admission Application*\nToken: ${syncedAdm.token}\nStudent: ${syncedAdm.student} (${syncedAdm.className})\nParent: ${syncedAdm.parent}`)}" target="_blank" class="bg-emerald-600 text-white px-3 py-1 rounded text-xs font-bold"><i class="fa-brands fa-whatsapp mr-1"></i> Send on WhatsApp</a>
+                </div>
+              </div>
+            `;
+          }).join('');
+        }
+      }
     }
 
     function renderStudentsDirectory() {
@@ -1719,7 +2025,7 @@
       const galGrid = document.getElementById('galleryGrid');
       if (galGrid) {
         galGrid.innerHTML = (schoolData.gallery || []).map(g => `
-          <div class="gal-item ${g.category} bg-white rounded-2xl royal-glow-card overflow-hidden border border-gold-500/30">
+          <div class="gal-item ${g.category} rounded-2xl royal-glow-card overflow-hidden">
             ${g.img ? `<img src="${g.img}" alt="${g.title}" class="w-full h-56 object-cover" />` : `
             <div class="h-56 bg-gradient-to-br from-royal-900 to-royal-700 flex flex-col items-center justify-center text-white p-4 text-center">
               <i class="fa-solid fa-camera-retro text-4xl text-gold-400 mb-2"></i>
@@ -1731,33 +2037,40 @@
       }
     }
 
-    // Fully Bilingual Class Explorer
+    // Class Explorer
     const classDetailsMap = {
       nursery: {
+        clsName: "Nursery",
         en: { title: "Nursery (Pre-Primary)", age: "Age: 3+ Years", desc: "Play-way motor skills, phonics songs, storytelling, colors & shapes recognition, and joyful habits.", timing: "8:30 AM - 12:30 PM" },
         hi: { title: "नर्सरी (प्री-प्राइमरी)", age: "आयु: 3+ वर्ष", desc: "खेल-खेल में शिक्षा, फोक्स राइम्स, कहानी, रंगों और आकारों की पहचान एवं उत्तम संस्कार।", timing: "सुबह 8:30 - दोपहर 12:30" }
       },
       lkg: {
+        clsName: "LKG",
         en: { title: "LKG (Lower Kindergarten)", age: "Age: 4+ Years", desc: "Alphabet writing (A-Z, अ-ज्ञ), number counting (1-50), rhymes, picture reading, and art activities.", timing: "8:30 AM - 12:30 PM" },
         hi: { title: "एल.के.जी. (LKG)", age: "आयु: 4+ वर्ष", desc: "वर्णमाला लेखन (A-Z, अ-ज्ञ), गिनती (1-50), कविताएं, चित्र पठन और कला गतिविधियां।", timing: "सुबह 8:30 - दोपहर 12:30" }
       },
       ukg: {
+        clsName: "UKG",
         en: { title: "UKG (Upper Kindergarten)", age: "Age: 5+ Years", desc: "English & Hindi word formation, basic addition/subtraction, environmental awareness & spoken confidence.", timing: "8:30 AM - 12:45 PM" },
         hi: { title: "यू.के.जी. (UKG)", age: "आयु: 5+ वर्ष", desc: "हिंदी एवं अंग्रेजी शब्द निर्माण, जोड़-घटाव, पर्यावरण ज्ञान और अंग्रेजी बोलने का अभ्यास।", timing: "सुबह 8:30 - दोपहर 12:45" }
       },
       c1: {
+        clsName: "Class 1st",
         en: { title: "Class 1st (Primary Wing)", age: "Age: 6+ Years", desc: "NCERT foundational reading, Hindi-English grammar basics, mental maths, EVS, and computer introduction.", timing: "8:30 AM - 1:30 PM" },
         hi: { title: "कक्षा 1ली (प्राइमरी विंग)", age: "आयु: 6+ वर्ष", desc: "एनसीईआरटी पठन, हिंदी-अंग्रेजी व्याकरण, मेंटल मैथ्स, पर्यावरण अध्ययन और बेसिक कंप्यूटर।", timing: "सुबह 8:30 - दोपहर 1:30" }
       },
       c2: {
+        clsName: "Class 2nd",
         en: { title: "Class 2nd (Primary Wing)", age: "Age: 7+ Years", desc: "Sentence building, spoken English conversation, multiplication tables (2-12), drawing, and moral values.", timing: "8:30 AM - 1:30 PM" },
         hi: { title: "कक्षा 2री (प्राइमरी विंग)", age: "आयु: 7+ वर्ष", desc: "वाक्य निर्माण, स्पोकन इंग्लिश संवाद, पहाड़े (2 से 12), चित्रकला और नैतिक शिक्षा।", timing: "सुबह 8:30 - दोपहर 1:30" }
       },
       c3: {
+        clsName: "Class 3rd",
         en: { title: "Class 3rd (Primary Wing)", age: "Age: 8+ Years", desc: "Subject-wise NCERT learning, hands-on science & EVS projects, computer paint/typing, and Olympiad basics.", timing: "8:30 AM - 1:30 PM" },
         hi: { title: "कक्षा 3री (प्राइमरी विंग)", age: "आयु: 8+ वर्ष", desc: "विषयवार एनसीईआरटी शिक्षण, विज्ञान एवं पर्यावरण प्रोजेक्ट, कंप्यूटर टाइपिंग और ओलंपियाड तैयारी।", timing: "सुबह 8:30 - दोपहर 1:30" }
       },
       c4: {
+        clsName: "Class 4th",
         en: { title: "Class 4th (Upper Primary Prep)", age: "Age: 9+ Years", desc: "Strong upper-primary foundation, Navodaya & Maths Olympiad preparation, public speaking, and leadership.", timing: "8:30 AM - 1:30 PM" },
         hi: { title: "कक्षा 4थी (सीनियर प्राइमरी)", age: "आयु: 9+ वर्ष", desc: "मजबूत शैक्षणिक आधार, नवोदय एवं मैथ्स ओलंपियाड की विशेष तैयारी, मंच संचालन एवं नेतृत्व विकास।", timing: "सुबह 8:30 - दोपहर 1:30" }
       }
@@ -1774,16 +2087,24 @@
         clickedBtn.classList.remove('cls-tab-inactive');
         clickedBtn.classList.add('cls-tab-active');
       }
-      const info = classDetailsMap[clsKey][currentLang];
+      const meta = classDetailsMap[clsKey];
+      const info = meta[currentLang];
+      const feeObj = (schoolData.fees || []).find(f => f.className === meta.clsName) || { monthlyFee: 500, oneTimeFee: 5000 };
+      const isHi = currentLang === 'hi';
+
       document.getElementById('classInfoBox').innerHTML = `
         <div class="flex items-center justify-between">
           <strong class="text-gold-400 text-base">${info.title}</strong>
           <span class="bg-gold-500/20 text-gold-300 border border-gold-400/40 px-2 py-0.5 rounded text-[11px] font-bold">${info.age}</span>
         </div>
         <p>${info.desc}</p>
+        <div class="flex flex-wrap gap-2 pt-1 text-xs">
+          <span class="bg-white/10 px-2.5 py-1 rounded text-gold-300 font-bold">${isHi ? 'मासिक:' : 'Monthly:'} ₹${feeObj.monthlyFee}</span>
+          <span class="bg-emerald-500/20 border border-emerald-400/40 px-2.5 py-1 rounded text-emerald-300 font-bold">${isHi ? 'एकमुश्त सत्र:' : 'Full Session:'} ₹${feeObj.oneTimeFee}</span>
+        </div>
         <div class="pt-1 flex items-center justify-between text-[11px] text-gold-400 border-t border-white/10">
           <span><i class="fa-solid fa-clock mr-1"></i> ${info.timing}</span>
-          <button onclick="switchPage('admissions')" class="underline font-bold">${currentLang === 'hi' ? 'प्रवेश आवेदन करें →' : 'Apply Now →'}</button>
+          <button onclick="switchPage('admissions')" class="underline font-bold">${isHi ? 'प्रवेश आवेदन करें →' : 'Apply Now →'}</button>
         </div>
       `;
     }
@@ -1807,71 +2128,6 @@
           <p><i class="fa-solid fa-file-shield text-royal-700 mr-1.5"></i> <strong>${isHi ? 'आवश्यक दस्तावेज:' : 'Documents:'}</strong> ${isHi ? 'जन्म प्रमाण पत्र, बच्चे एवं माता-पिता का आधार कार्ड, 4 पासपोर्ट फोटो' : 'Birth Certificate, Child & Parent Aadhaar Copy, 4 Passport Photos'}</p>
         `;
       }
-    }
-
-    function autoFillClassFee() {
-      const cls = document.getElementById('fee_class')?.value;
-      const found = (schoolData.fees || []).find(f => f.className === cls);
-      if (found) {
-        const num = parseInt(String(found.monthlyFee).replace(/\D/g, ''), 10);
-        if (num) document.getElementById('fee_amount').value = num;
-      }
-    }
-
-    function handleFeePaymentSubmit(e) {
-      e.preventDefault();
-      const student = document.getElementById('fee_student').value.trim();
-      const className = document.getElementById('fee_class').value;
-      const feeType = document.getElementById('fee_month').value;
-      const amount = document.getElementById('fee_amount').value.trim();
-      const phone = document.getElementById('fee_phone').value.trim();
-      const utr = document.getElementById('fee_utr').value.trim();
-      const receiptNo = 'GHS-FEE-' + Math.floor(10000 + Math.random() * 90000);
-      const dateStr = new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
-
-      if (!schoolData.feePayments) schoolData.feePayments = [];
-      schoolData.feePayments.unshift({ receiptNo, student, className, feeType, amount, phone, utr, date: dateStr });
-      saveLocalAndRefresh();
-
-      fetch("/", {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: new URLSearchParams(new FormData(e.target)).toString(),
-      }).catch(() => {});
-
-      const recBox = document.getElementById('feeReceiptOutput');
-      recBox.classList.remove('hidden');
-      recBox.innerHTML = `
-        <div class="p-6 rounded-2xl border-2 border-royal-800 bg-slate-50 space-y-4 print-area">
-          <div class="flex items-center justify-between border-b-2 border-gold-500 pb-3">
-            <div>
-              <h4 class="font-serifTitle font-black text-lg text-royal-800">GYANOVA HEIGHTS SCHOOL</h4>
-              <p class="text-xs text-slate-500">Ravan Bhantha, Arand Road, Basin, Gariaband (C.G.)</p>
-            </div>
-            <div class="text-right">
-              <span class="bg-emerald-600 text-white text-xs font-extrabold px-3 py-1 rounded-full">PAID RECEIPT</span>
-              <p class="text-[11px] font-bold text-royal-900 mt-1">${receiptNo}</p>
-            </div>
-          </div>
-          <div class="grid grid-cols-2 gap-3 text-xs sm:text-sm">
-            <div><span class="text-slate-500">Student Name:</span> <strong class="text-royal-900 block">${student}</strong></div>
-            <div><span class="text-slate-500">Class:</span> <strong class="text-royal-900 block">${className}</strong></div>
-            <div><span class="text-slate-500">Fee Type:</span> <strong class="text-royal-900 block">${feeType}</strong></div>
-            <div><span class="text-slate-500">Amount Paid:</span> <strong class="text-emerald-700 text-base block">₹${amount}</strong></div>
-            <div><span class="text-slate-500">UTR / Ref No:</span> <strong class="text-royal-900 block">${utr}</strong></div>
-            <div><span class="text-slate-500">Date:</span> <strong class="text-royal-900 block">${dateStr}</strong></div>
-          </div>
-          <div class="flex flex-wrap gap-2 pt-2 no-print">
-            <button onclick="window.print()" class="bg-royal-800 text-white px-4 py-2 rounded-lg text-xs font-bold">
-              <i class="fa-solid fa-print mr-1"></i> Print Fee Receipt
-            </button>
-            <a href="https://wa.me/919302273813?text=${encodeURIComponent(`*Fee Payment Receipt - Gyanova Heights School*\nReceipt: ${receiptNo}\nStudent: ${student} (${className})\nAmount: ₹${amount}\nUTR: ${utr}`)}" target="_blank" class="bg-emerald-600 text-white px-4 py-2 rounded-lg text-xs font-bold">
-              <i class="fa-brands fa-whatsapp mr-1"></i> Share on School WhatsApp
-            </a>
-          </div>
-        </div>
-      `;
-      e.target.reset();
     }
 
     // SPA Router
@@ -1973,6 +2229,7 @@
       });
     }
 
+    // Admission Submit -> Defaults to Pending & Saves Privately on Parent's Phone
     function handleAdmissionSubmit(e) {
       e.preventDefault();
       const form = e.target;
@@ -1984,8 +2241,15 @@
       const tokenNo = 'GHS-' + Math.floor(1000 + Math.random() * 9000);
       const today = new Date().toLocaleDateString('en-IN');
 
+      const newAdm = { token: tokenNo, student, className: cls, parent, phone, address: addr, date: today, status: 'Pending' };
+
       if (!schoolData.admissions) schoolData.admissions = [];
-      schoolData.admissions.unshift({ token: tokenNo, student, className: cls, parent, phone, address: addr, date: today, status: 'Pending' });
+      schoolData.admissions.unshift(newAdm);
+
+      const myDeviceAdms = JSON.parse(localStorage.getItem('ghs_my_device_admissions') || '[]');
+      myDeviceAdms.unshift(newAdm);
+      localStorage.setItem('ghs_my_device_admissions', JSON.stringify(myDeviceAdms));
+
       saveLocalAndRefresh();
 
       fetch("/", {
@@ -1994,15 +2258,6 @@
         body: new URLSearchParams(new FormData(form)).toString(),
       }).catch(() => {});
 
-      document.getElementById('admTokenNo').innerText = 'TOKEN #' + tokenNo;
-      document.getElementById('admTokenDetails').innerHTML = `
-        <p><strong>Student Name:</strong> ${student} (${cls})</p>
-        <p><strong>Parent Name:</strong> ${parent} | <strong>Mobile:</strong> ${phone}</p>
-        <p><strong>Address:</strong> ${addr}</p>
-      `;
-      const waMsg = encodeURIComponent(`*New Admission Application (2026-27)*\nToken: ${tokenNo}\nStudent: ${student}\nClass: ${cls}\nParent: ${parent}\nPhone: ${phone}\nAddress: ${addr}`);
-      document.getElementById('admWhatsappLink').href = `https://wa.me/919302273813?text=${waMsg}`;
-      document.getElementById('admTokenCard').classList.remove('hidden');
       form.reset();
     }
 
@@ -2081,8 +2336,24 @@
     }
 
     function saveLocalAndRefresh() {
-      localStorage.setItem('ghs_master_erp_v3', JSON.stringify(schoolData));
+      localStorage.setItem('ghs_master_erp_v4', JSON.stringify(schoolData));
       renderAllContent();
+      showClassInfo(currentClassKey);
+      updateLockedFeeAmount();
+    }
+
+    // Manual Admin Toggle for Fee Status: Pending <-> Paid
+    function toggleFeePaymentStatusAdmin(idx) {
+      const curr = schoolData.feePayments[idx].status || 'Pending';
+      schoolData.feePayments[idx].status = curr === 'Paid' ? 'Pending' : 'Paid';
+      saveLocalAndRefresh();
+    }
+
+    // Manual Admin Toggle for Admission Status: Pending <-> Approved
+    function toggleAdmissionStatusAdmin(idx) {
+      const curr = schoolData.admissions[idx].status || 'Pending';
+      schoolData.admissions[idx].status = curr === 'Approved' ? 'Pending' : 'Approved';
+      saveLocalAndRefresh();
     }
 
     function saveTogglesAdmin() {
@@ -2101,13 +2372,12 @@
         students: document.getElementById('stat_in_students').value.trim() || '250+',
         teachers: document.getElementById('stat_in_teachers').value.trim() || '15+',
         classes: document.getElementById('stat_in_classes').value.trim() || 'Nursery - 4th',
-        years: document.getElementById('stat_in_years').value.trim() || '100% Care'
+        years: document.getElementById('stat_in_years').value.trim() || 'Safe CCTV'
       };
       saveLocalAndRefresh();
       alert('✅ Stats Counter Updated!');
     }
 
-    // Custom Gallery Category & Direct HD Photo Upload
     function addGalleryCategoryAdmin() {
       const cat = document.getElementById('newGalCategoryInput').value.trim().toLowerCase();
       if (!cat) return;
@@ -2117,7 +2387,7 @@
       }
       document.getElementById('newGalCategoryInput').value = '';
       saveLocalAndRefresh();
-      alert('✅ New Gallery Section Added: ' + cat);
+      alert('✅ New Album Added: ' + cat);
     }
 
     async function uploadGalleryPhotoAdmin() {
@@ -2138,7 +2408,6 @@
       saveLocalAndRefresh();
     }
 
-    // Direct Student & Teacher Upload with Photos
     async function addStudentDirectoryAdmin() {
       const name = document.getElementById('stuDirName').value.trim();
       const className = document.getElementById('stuDirClass').value;
@@ -2184,7 +2453,6 @@
       saveLocalAndRefresh();
     }
 
-    // UPI & Fee Structure Admin
     async function saveUpiSettingsAdmin() {
       const id = document.getElementById('admUpiId').value.trim() || '9302273813@ybl';
       const file = document.getElementById('admQrFile').files[0];
@@ -2194,17 +2462,18 @@
       alert('✅ UPI ID & QR Code Updated!');
     }
 
+    // Save Clean 2-Option Fees (Monthly & One-Time Ekmust)
     function saveFeeStructureAdmin() {
       schoolData.fees.forEach((f, i) => {
-        f.admFee = document.getElementById(`fee_adm_${i}`).value.trim();
-        f.monthlyFee = document.getElementById(`fee_mon_${i}`).value.trim();
-        f.examFee = document.getElementById(`fee_exm_${i}`).value.trim();
+        const mVal = parseInt(String(document.getElementById(`fee_mon_${i}`).value).replace(/\D/g, ''), 10) || 500;
+        const oVal = parseInt(String(document.getElementById(`fee_one_${i}`).value).replace(/\D/g, ''), 10) || 5000;
+        f.monthlyFee = mVal;
+        f.oneTimeFee = oVal;
       });
       saveLocalAndRefresh();
-      alert('✅ Class-wise Fee Structure Updated!');
+      alert('✅ Fixed Monthly & One-Time Ekmust Fees Updated!');
     }
 
-    // Timetable, Syllabus & Homework Admin
     function addTimetableSlotAdmin() {
       const time = document.getElementById('ttTime').value.trim();
       const titleEn = document.getElementById('ttTitle').value.trim();
@@ -2258,7 +2527,7 @@
         hi: document.getElementById('admTickerHi').value.trim()
       };
       saveLocalAndRefresh();
-      alert('✅ Bilingual Ticker Updated!');
+      alert('✅ Ticker Updated!');
     }
 
     function addNoticeAdmin() {
@@ -2313,55 +2582,14 @@
         document.getElementById('stat_in_years').value = schoolData.stats.years || '';
       }
 
-      // Gallery Category Dropdown
-      const galCatSelect = document.getElementById('galCat');
-      if (galCatSelect) {
-        galCatSelect.innerHTML = (schoolData.galleryCategories || ["events", "activities", "campus", "celebrations"])
-          .map(c => `<option value="${c}">${c.toUpperCase()}</option>`).join('');
-      }
-
-      // Admin Gallery Thumbs
-      const adminGal = document.getElementById('adminGalleryList');
-      if (adminGal) {
-        adminGal.innerHTML = (schoolData.gallery || []).map((g, i) => `
-          <div class="p-2 border rounded-lg bg-white text-center space-y-1">
-            ${g.img ? `<img src="${g.img}" class="w-full h-20 object-cover rounded" />` : `<div class="h-20 bg-royal-800 text-gold-400 flex items-center justify-center text-xs rounded">Icon Card</div>`}
-            <p class="text-[11px] font-bold truncate">${g.title}</p>
-            <button onclick="deleteGalleryAdmin(${i})" class="text-[10px] text-red-600 font-bold">Delete</button>
-          </div>
-        `).join('');
-      }
-
-      // Admin Students & Teachers Lists
-      const stuListEl = document.getElementById('adminStudentsDirList');
-      if (stuListEl) {
-        stuListEl.innerHTML = (schoolData.studentsList || []).map((s, i) => `
-          <div class="py-1.5 flex items-center justify-between text-xs">
-            <span><strong>${s.name}</strong> (${s.className}) - ${s.badge || ''}</span>
-            <button onclick="deleteStudentDirAdmin(${i})" class="text-red-600 font-bold">Delete</button>
-          </div>
-        `).join('');
-      }
-
-      const tchListEl = document.getElementById('adminTeachersList');
-      if (tchListEl) {
-        tchListEl.innerHTML = (schoolData.teachersList || []).map((t, i) => `
-          <div class="py-1.5 flex items-center justify-between text-xs">
-            <span><strong>${t.name}</strong> (${t.role}) - ${t.qual || ''}</span>
-            <button onclick="deleteTeacherAdmin(${i})" class="text-red-600 font-bold">Delete</button>
-          </div>
-        `).join('');
-      }
-
-      // Fee Editor
+      // 2-Option Fee Editor (Monthly & One-Time Ekmust)
       const feeEd = document.getElementById('adminFeeEditorList');
       if (feeEd && schoolData.fees) {
         feeEd.innerHTML = schoolData.fees.map((f, i) => `
-          <div class="grid grid-cols-4 gap-2 items-center bg-white p-2 rounded border text-xs">
+          <div class="grid grid-cols-3 gap-2 items-center bg-white p-2 rounded-lg border text-xs">
             <strong class="text-royal-900">${f.className}</strong>
-            <input type="text" id="fee_adm_${i}" value="${f.admFee}" class="px-2 py-1 border rounded" placeholder="Admission Fee" />
-            <input type="text" id="fee_mon_${i}" value="${f.monthlyFee}" class="px-2 py-1 border rounded" placeholder="Monthly Fee" />
-            <input type="text" id="fee_exm_${i}" value="${f.examFee}" class="px-2 py-1 border rounded" placeholder="Exam Fee" />
+            <input type="number" id="fee_mon_${i}" value="${f.monthlyFee}" class="px-2.5 py-1.5 border rounded font-bold" placeholder="Monthly Rs" />
+            <input type="number" id="fee_one_${i}" value="${f.oneTimeFee}" class="px-2.5 py-1.5 border rounded font-bold text-emerald-800" placeholder="Full Session Ekmust Rs" />
           </div>
         `).join('');
       }
@@ -2369,46 +2597,63 @@
         document.getElementById('admUpiId').value = schoolData.upi?.id || '9302273813@ybl';
       }
 
-      // Timetable List
-      const ttList = document.getElementById('adminTimetableList');
-      if (ttList && schoolData.timetable) {
-        ttList.innerHTML = schoolData.timetable.map((t, i) => `
-          <div class="py-1.5 flex items-center justify-between text-xs">
-            <span><strong>${t.time}:</strong> ${t.titleEn}</span>
-            <button onclick="deleteTimetableAdmin(${i})" class="text-red-600 font-bold">Delete</button>
-          </div>
-        `).join('');
-      }
-
-      // Ticker Inputs
-      if (document.getElementById('admTickerEn')) {
-        document.getElementById('admTickerEn').value = schoolData.ticker?.en || '';
-        document.getElementById('admTickerHi').value = schoolData.ticker?.hi || '';
-      }
-
-      // Admissions, Fee Payments & Messages Inboxes
-      const admBox = document.getElementById('adminAdmissionsContainer');
-      if (admBox) {
-        const list = schoolData.admissions || [];
-        admBox.innerHTML = list.length === 0 ? '<p class="text-xs text-slate-400">No admissions yet.</p>' : list.map((a, i) => `
-          <div class="p-2.5 border rounded-lg bg-white flex items-center justify-between text-xs">
-            <div><strong>${a.student}</strong> (${a.className}) • Parent: ${a.parent} • <a href="tel:${a.phone}" class="text-blue-600 underline">${a.phone}</a></div>
-            <button onclick="schoolData.admissions.splice(${i},1); saveLocalAndRefresh();" class="text-red-600 font-bold">✕</button>
-          </div>
-        `).join('');
-      }
-
+      // Fee Payments Inbox with Manual Pending <-> Paid Toggle
       const feeInbox = document.getElementById('adminFeePaymentsContainer');
       if (feeInbox) {
         const list = schoolData.feePayments || [];
-        feeInbox.innerHTML = list.length === 0 ? '<p class="text-xs text-slate-400">No online fee records yet.</p>' : list.map((f, i) => `
-          <div class="p-2.5 border rounded-lg bg-white flex items-center justify-between text-xs">
-            <div><strong>${f.student}</strong> (${f.className}) • <strong class="text-emerald-700">₹${f.amount}</strong> (${f.feeType}) • UTR: ${f.utr}</div>
-            <button onclick="schoolData.feePayments.splice(${i},1); saveLocalAndRefresh();" class="text-red-600 font-bold">✕</button>
-          </div>
-        `).join('');
+        feeInbox.innerHTML = list.length === 0 ? '<p class="text-xs text-slate-400">No fee submissions yet.</p>' : list.map((f, i) => {
+          const isPaid = f.status === 'Paid';
+          return `
+            <div class="p-3 border rounded-xl bg-white flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs shadow-xs">
+              <div class="space-y-0.5">
+                <div class="flex items-center gap-2">
+                  <strong class="text-royal-900 text-sm">${f.student}</strong>
+                  <span class="bg-royal-800 text-gold-400 px-2 py-0.5 rounded font-bold">${f.className}</span>
+                  <span class="px-2.5 py-0.5 rounded-full font-extrabold ${isPaid ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-900'}">
+                    ${isPaid ? '✅ PAID' : '⏳ PENDING'}
+                  </span>
+                </div>
+                <p class="text-slate-600">Plan: <strong>${f.feeType}</strong> • Amount: <strong class="text-emerald-700">₹${f.amount}</strong> • UTR: <strong>${f.utr}</strong></p>
+                <p class="text-[11px] text-slate-400">Token: ${f.receiptNo} • Mobile: ${f.phone} • Date: ${f.date || ''}</p>
+              </div>
+              <div class="flex flex-wrap items-center gap-1.5 shrink-0">
+                <button onclick="toggleFeePaymentStatusAdmin(${i})" class="px-3 py-1.5 rounded-lg font-extrabold text-xs ${isPaid ? 'bg-amber-500 text-royal-950' : 'bg-emerald-600 text-white'}">
+                  ${isPaid ? 'Revert to Pending' : '✓ Mark as PAID'}
+                </button>
+                <a href="https://wa.me/91${String(f.phone || '').replace(/\D/g,'').slice(-10)}?text=${encodeURIComponent(`Namaste! Gyanova Heights School mein ${f.student} (${f.className}) ki fee ₹${f.amount} (${f.receiptNo}) ka status: ${isPaid ? 'PAID (Verified)' : 'PENDING'}.`)}" target="_blank" class="bg-emerald-500 text-white px-2.5 py-1.5 rounded-lg font-bold">
+                  <i class="fa-brands fa-whatsapp"></i>
+                </a>
+                <button onclick="schoolData.feePayments.splice(${i},1); saveLocalAndRefresh();" class="text-red-600 font-bold px-2">✕</button>
+              </div>
+            </div>
+          `;
+        }).join('');
       }
 
+      // Admissions Inbox with Pending <-> Approved Toggle
+      const admBox = document.getElementById('adminAdmissionsContainer');
+      if (admBox) {
+        const list = schoolData.admissions || [];
+        admBox.innerHTML = list.length === 0 ? '<p class="text-xs text-slate-400">No admissions yet.</p>' : list.map((a, i) => {
+          const isApp = a.status === 'Approved';
+          return `
+            <div class="p-3 border rounded-xl bg-white flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
+              <div>
+                <strong>${a.student}</strong> (${a.className}) • Parent: ${a.parent} • <a href="tel:${a.phone}" class="text-blue-600 underline">${a.phone}</a>
+                <span class="ml-2 px-2 py-0.5 rounded-full font-bold ${isApp ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'}">${a.status || 'Pending'}</span>
+              </div>
+              <div class="flex items-center gap-1.5">
+                <button onclick="toggleAdmissionStatusAdmin(${i})" class="px-2.5 py-1 rounded font-bold ${isApp ? 'bg-amber-500 text-royal-950' : 'bg-emerald-600 text-white'}">
+                  ${isApp ? 'Set Pending' : '✓ Approve'}
+                </button>
+                <button onclick="schoolData.admissions.splice(${i},1); saveLocalAndRefresh();" class="text-red-600 font-bold px-2">✕</button>
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+
+      // Messages Inbox
       const msgBox = document.getElementById('adminMessagesContainer');
       if (msgBox) {
         const list = schoolData.messages || [];
@@ -2420,6 +2665,57 @@
         `).join('');
       }
 
+      // Gallery Category Dropdown & Thumbs
+      const galCatSelect = document.getElementById('galCat');
+      if (galCatSelect) {
+        galCatSelect.innerHTML = (schoolData.galleryCategories || ["events", "activities", "campus", "celebrations"])
+          .map(c => `<option value="${c}">${c.toUpperCase()}</option>`).join('');
+      }
+      const adminGal = document.getElementById('adminGalleryList');
+      if (adminGal) {
+        adminGal.innerHTML = (schoolData.gallery || []).map((g, i) => `
+          <div class="p-2 border rounded-lg bg-white text-center space-y-1">
+            ${g.img ? `<img src="${g.img}" class="w-full h-20 object-cover rounded" />` : `<div class="h-20 bg-royal-800 text-gold-400 flex items-center justify-center text-xs rounded">Icon Card</div>`}
+            <p class="text-[11px] font-bold truncate">${g.title}</p>
+            <button onclick="deleteGalleryAdmin(${i})" class="text-[10px] text-red-600 font-bold">Delete</button>
+          </div>
+        `).join('');
+      }
+
+      // Students & Teachers Lists
+      const stuListEl = document.getElementById('adminStudentsDirList');
+      if (stuListEl) {
+        stuListEl.innerHTML = (schoolData.studentsList || []).map((s, i) => `
+          <div class="py-1.5 flex items-center justify-between text-xs">
+            <span><strong>${s.name}</strong> (${s.className}) - ${s.badge || ''}</span>
+            <button onclick="deleteStudentDirAdmin(${i})" class="text-red-600 font-bold">Delete</button>
+          </div>
+        `).join('');
+      }
+      const tchListEl = document.getElementById('adminTeachersList');
+      if (tchListEl) {
+        tchListEl.innerHTML = (schoolData.teachersList || []).map((t, i) => `
+          <div class="py-1.5 flex items-center justify-between text-xs">
+            <span><strong>${t.name}</strong> (${t.role})</span>
+            <button onclick="deleteTeacherAdmin(${i})" class="text-red-600 font-bold">Delete</button>
+          </div>
+        `).join('');
+      }
+
+      // Timetable, Notices & Results
+      const ttList = document.getElementById('adminTimetableList');
+      if (ttList && schoolData.timetable) {
+        ttList.innerHTML = schoolData.timetable.map((t, i) => `
+          <div class="py-1.5 flex items-center justify-between text-xs">
+            <span><strong>${t.time}:</strong> ${t.titleEn}</span>
+            <button onclick="deleteTimetableAdmin(${i})" class="text-red-600 font-bold">Delete</button>
+          </div>
+        `).join('');
+      }
+      if (document.getElementById('admTickerEn')) {
+        document.getElementById('admTickerEn').value = schoolData.ticker?.en || '';
+        document.getElementById('admTickerHi').value = schoolData.ticker?.hi || '';
+      }
       const nList = document.getElementById('adminNoticesList');
       if (nList) {
         nList.innerHTML = (schoolData.notices || []).map((n, i) => `
@@ -2429,7 +2725,6 @@
           </div>
         `).join('');
       }
-
       const rList = document.getElementById('adminResultsList');
       if (rList) {
         rList.innerHTML = (schoolData.results || []).map((r, i) => `
@@ -2445,8 +2740,8 @@
     }
 
     function exportAdmissionsCSV() {
-      const rows = [["Token", "Student", "Class", "Parent", "Phone", "Address", "Date"]];
-      (schoolData.admissions || []).forEach(a => rows.push([a.token, a.student, a.className, a.parent, a.phone, a.address, a.date]));
+      const rows = [["Token", "Student", "Class", "Parent", "Phone", "Address", "Date", "Status"]];
+      (schoolData.admissions || []).forEach(a => rows.push([a.token, a.student, a.className, a.parent, a.phone, a.address, a.date, a.status || 'Pending']));
       const csv = "data:text/csv;charset=utf-8," + rows.map(r => r.join(",")).join("\n");
       const link = document.createElement('a');
       link.href = encodeURI(csv);
@@ -2472,7 +2767,7 @@
       }
       localStorage.setItem('ghs_gh_repo', repo);
       localStorage.setItem('ghs_gh_token', token);
-      status.innerText = '⏳ Uploading HD Photos & School Database to GitHub...';
+      status.innerText = '⏳ Uploading Updated School Database & Verified Statuses to GitHub...';
       try {
         const apiUrl = `https://api.github.com/repos/${repo}/contents/data.json`;
         let sha = '';
@@ -2486,13 +2781,13 @@
           method: 'PUT',
           headers: { Authorization: `token ${token}`, 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            message: 'Update Gyanova Heights School ERP & Photos via Admin Panel',
+            message: 'Update Gyanova Heights School ERP & Verified Fee Status',
             content: contentBase64,
             sha: sha || undefined
           })
         });
         if (putRes.ok) {
-          status.innerText = '✅ Live! All Photos, Timetable, Fees & Student Data pushed to GitHub.';
+          status.innerText = '✅ Live! All Fee Approvals, Photos & Updates pushed to GitHub.';
         } else {
           status.innerText = '❌ GitHub Push failed. Check Repo & Token permissions.';
         }
@@ -2501,7 +2796,7 @@
       }
     }
 
-    // ================= 100% COMPLETE BILINGUAL TRANSLATION DICTIONARY =================
+    // ================= BILINGUAL TRANSLATION DICTIONARY =================
     const translations = {
       en: {
         liveUpdateBadge: "UPDATE",
@@ -2525,7 +2820,7 @@
         heroSub: "Seeking Blessings, Inspiring Futures.",
         heroWingTag: "★ Foundational & Primary Wing: Nursery, LKG, UKG & Class 1st to 4th ★",
         exploreAdmissions: "Explore Admissions",
-        payFeesHeroBtn: "Fee Structure & Online Pay",
+        payFeesHeroBtn: "Fee & Online Pay",
         whatsappChatBtn: "WhatsApp Us",
         feat1Title: "Smart Classrooms",
         feat1Sub: "Learn with Innovation",
@@ -2536,12 +2831,11 @@
         fullAddress: "Ravan Bhantha, Arand Road, Basin, Gariaband, Chhattisgarh 493992",
         aboutOurSchool: "About Our School",
         aboutSub: "Building a Brighter Future Together",
-        aboutHomeDesc: "Gyanova Heights School, located in Basin, Gariaband, Chhattisgarh (PIN - 493992), is committed to providing quality foundational & primary education (Nursery to Class 4th) with a perfect blend of academic excellence, moral values and modern play-way & smart learning methods.",
+        aboutHomeDesc: "Gyanova Heights School, located in Basin, Gariaband, Chhattisgarh (PIN - 493992), is committed to providing quality foundational & primary education (Nursery to Class 4th) with a blend of academic excellence, moral values and modern smart learning methods.",
         knowMoreBtn: "Know More",
         checkResultBtn: "Check Results",
-        dailyHomeworkBtn: "Daily Homework",
         classExplorerTitle: "OUR CLASSES (NURSERY - CLASS 4TH)",
-        classExplorerSub: "Tap any class below to view subjects & age criteria",
+        classExplorerSub: "Tap any class below to view subjects, fees & age criteria",
         clsNursery: "Nursery",
         clsLkg: "LKG",
         clsUkg: "UKG",
@@ -2552,7 +2846,7 @@
         statStudentsLbl: "Enrolled Students",
         statTeachersLbl: "Dedicated Teachers",
         statClassesLbl: "Active Classes",
-        statCareLbl: "CCTV Safe Campus",
+        statCareLbl: "Monitored Campus",
         studentsShowcaseTitle: "Our Students & Shining Stars",
         studentsShowcaseSub: "Meet the bright young minds studying at Gyanova Heights School",
         allClassesOpt: "All Classes (Nursery - 4th)",
@@ -2581,26 +2875,34 @@
         acadCard6: "Individual Student Care",
         timetableHeading: "Daily School Routine & Bell Timetable",
         feeStructTitle: "Class-Wise Fee Structure (2026-27)",
-        feeStructSub: "Transparent and affordable fee structure for Nursery to Class 4th",
+        feeStructSub: "Choose between Easy Monthly Fee or One-Time Full Session (Ekmust) Package",
         sessionBadge: "Session 2026-27",
-        instantUpiBadge: "Instant School UPI Payment",
+        instantUpiBadge: "Official School UPI QR",
         scanToPayTitle: "Scan QR to Pay School Fees",
         scanToPaySub: "Supports PhonePe, Google Pay, Paytm & BHIM UPI",
         upiIdLbl: "Official UPI ID:",
-        upiAfterPayNote: "After paying, fill the form on the right to download your Official Fee Receipt.",
-        feeFormTitle: "Generate Official Online Fee Receipt",
-        feeFormSub: "Submit payment details below to record fee in school database & print receipt",
-        feeTypeLbl: "Fee Month / Type *",
-        amountPaidLbl: "Amount (₹) *",
-        utrRefLbl: "UPI Reference / UTR No. (or 'CASH' if paid at office) *",
-        generateReceiptBtn: "Submit & Generate Official Fee Receipt →",
+        upiAfterPayNote: "After paying, submit the form on the right. Your fee status stays PENDING until verified by the School Admin.",
+        feeFormTitle: "Submit Fee Payment Details",
+        feeFormSub: "Select your child's class and payment plan below. The fixed fee amount is automatically locked.",
+        feeTypeLbl: "Choose Payment Option (Fixed by School Admin) *",
+        optMonthlyTitle: "Monthly Fee (मासिक शुल्क)",
+        optMonthlySub: "Pay for 1 Month",
+        optOneTimeTitle: "Full Session (एकमुश्त शुल्क)",
+        optOneTimeSub: "Complete Year Package",
+        amountPaidLbl: "Fixed Payable Amount (Locked)",
+        utrRefLbl: "UPI Reference / UTR No. (or write 'OFFICE' if paying at school) *",
+        generateReceiptBtn: "Submit Fee for Admin Verification →",
+        myDevicePaymentsTitle: "Your Submitted Fee Status (Private to Your Phone)",
+        myDevicePaymentsSub: "Only applications submitted from your phone appear below. Status turns PAID once verified by the School Admin.",
+        privateBadge: "Private View",
+        myDeviceAdmTitle: "Your Admission Applications (Private to Your Phone)",
         admJoinTitle: "Join Gyanova Heights School",
         admJoinDesc: "Admissions are open for session 2026-27 from Nursery to Class 4th. Give your child the best start towards a bright future.",
         selectClassEligLbl: "Select Class to Check Age & Documents:",
         eligibilityTitle: "Classes Available",
         helpdeskTitle: "Direct Admission Helpdesk",
         onlineFormTitle: "Online Admission Application (2026-27)",
-        onlineFormSub: "Saves directly to Admin Panel & generates Instant Admission Token",
+        onlineFormSub: "Saves to School Admin Panel & shows status privately on your phone",
         studentNameLbl: "Student's Full Name *",
         classApplyingLbl: "Select Class *",
         parentPhoneLbl: "Parent's WhatsApp / Mobile *",
@@ -2628,7 +2930,7 @@
         stuSyllabus: "Syllabus (Nursery - IV)",
         latestNotices: "Latest Notices",
         getInTouch: "Get in Touch",
-        getInTouchSub: "We are always happy to assist parents and students!",
+        getInTouchSub: "We are happy to assist parents and students!",
         addressHeading: "School Campus Address",
         phoneHeading: "Phone / Call Us",
         emailHeading: "Official Email",
@@ -2646,7 +2948,7 @@
         navAbout: "हमारे बारे में",
         navAcademics: "शिक्षा एवं समय-सारणी",
         navAdmissions: "प्रवेश 2026-27",
-        navFees: "फीस एवं ऑनलाइन पेमेंट",
+        navFees: "फीस एवं पेमेंट",
         navFacilities: "सुविधाएं",
         navGallery: "फोटो गैलरी",
         navStudent: "विद्यार्थी कॉर्नर",
@@ -2659,12 +2961,12 @@
         heroSub: "आशीर्वाद की कामना, उज्ज्वल भविष्य की प्रेरणा।",
         heroWingTag: "★ फाउंडेशनल एवं प्राइमरी विंग: नर्सरी, एलकेजी, यूकेजी एवं कक्षा 1ली से 4थी तक ★",
         exploreAdmissions: "प्रवेश आवेदन करें",
-        payFeesHeroBtn: "फीस विवरण एवं ऑनलाइन पेमेंट",
+        payFeesHeroBtn: "फीस एवं ऑनलाइन पेमेंट",
         whatsappChatBtn: "व्हाट्सएप करें",
         feat1Title: "स्मार्ट क्लासरूम",
         feat1Sub: "आधुनिक तकनीक से रोचक शिक्षा",
         feat2Title: "आधुनिक सुरक्षा (CCTV)",
-        feat2Sub: "पूर्णतः सुरक्षित एवं अनुशासित परिसर",
+        feat2Sub: "सुरक्षित एवं अनुशासित परिसर",
         feat3Title: "सर्वांगीण विकास",
         feat3Sub: "पढ़ाई के साथ संस्कार और प्रतिभा विकास",
         fullAddress: "रावण भांठा, आरंड रोड, बासिन, गरियाबंद, छत्तीसगढ़ 493992",
@@ -2673,9 +2975,8 @@
         aboutHomeDesc: "ज्ञानोवा हाइट्स स्कूल (बासिन, गरियाबंद, छत्तीसगढ़ - 493992) नर्सरी से कक्षा 4थी तक के बच्चों को उच्च स्तरीय प्रारंभिक एवं प्राथमिक शिक्षा, उत्तम संस्कार और आधुनिक स्मार्ट शिक्षण पद्धति प्रदान करने के लिए समर्पित है।",
         knowMoreBtn: "अधिक जानें",
         checkResultBtn: "रिजल्ट देखें",
-        dailyHomeworkBtn: "आज का होमवर्क",
         classExplorerTitle: "हमारी कक्षाएं (नर्सरी से कक्षा 4थी)",
-        classExplorerSub: "विषय, समय और आयु सीमा देखने के लिए किसी भी कक्षा पर टैप करें",
+        classExplorerSub: "विषय, फीस और आयु सीमा देखने के लिए किसी भी कक्षा पर टैप करें",
         clsNursery: "नर्सरी",
         clsLkg: "एल.के.जी.",
         clsUkg: "यू.के.जी.",
@@ -2715,26 +3016,34 @@
         acadCard6: "प्रत्येक बच्चे पर व्यक्तिगत ध्यान",
         timetableHeading: "दैनिक विद्यालय दिनचर्या एवं समय-सारणी",
         feeStructTitle: "कक्षावार फीस विवरण (सत्र 2026-27)",
-        feeStructSub: "नर्सरी से कक्षा 4थी तक के लिए पारदर्शी एवं किफायती शुल्क संरचना",
+        feeStructSub: "मासिक शुल्क (Monthly) या पूरे सत्र का एकमुश्त (One-Time Ekmust) विकल्प चुनें",
         sessionBadge: "सत्र 2026-27",
-        instantUpiBadge: "ऑनलाइन यूपीआई फीस पेमेंट",
+        instantUpiBadge: "स्कूल आधिकारिक UPI QR",
         scanToPayTitle: "स्कूल फीस जमा करने हेतु QR स्कैन करें",
         scanToPaySub: "PhonePe, Google Pay, Paytm एवं सभी UPI ऐप मान्य हैं",
         upiIdLbl: "स्कूल UPI ID:",
-        upiAfterPayNote: "पेमेंट करने के बाद दाईं ओर फॉर्म भरकर अपनी तुरंत पक्की फीस रसीद डाउनलोड करें।",
-        feeFormTitle: "ऑनलाइन फीस रसीद (Receipt) प्राप्त करें",
-        feeFormSub: "भुगतान का विवरण नीचे दर्ज करें और तुरंत अपनी आधिकारिक फीस रसीद प्रिंट करें",
-        feeTypeLbl: "फीस का प्रकार / माह *",
-        amountPaidLbl: "जमा राशि (₹) *",
-        utrRefLbl: "UPI रेफरेंस / UTR नंबर (ऑफिस में नकद जमा पर 'CASH' लिखें) *",
-        generateReceiptBtn: "फीस दर्ज करें एवं पक्की रसीद प्राप्त करें →",
+        upiAfterPayNote: "पेमेंट करने के बाद दाईं ओर फॉर्म सबमिट करें। एडमिन द्वारा जांच करने तक स्टेटस PENDING रहेगा।",
+        feeFormTitle: "फीस भुगतान का विवरण दर्ज करें",
+        feeFormSub: "बच्चे की कक्षा और विकल्प चुनें। निर्धारित शुल्क अपने आप लॉक हो जाएगा।",
+        feeTypeLbl: "भुगतान का विकल्प चुनें (स्कूल एडमिन द्वारा निर्धारित) *",
+        optMonthlyTitle: "मासिक शुल्क (Monthly Fee)",
+        optMonthlySub: "1 माह का शुल्क",
+        optOneTimeTitle: "एकमुश्त सत्र शुल्क (Full Session)",
+        optOneTimeSub: "पूरे वर्ष का एकमुश्त पैकेज",
+        amountPaidLbl: "निर्धारित जमा राशि (Fixed Locked)",
+        utrRefLbl: "UPI रेफरेंस / UTR नंबर (ऑफिस में जमा करने पर 'OFFICE' लिखें) *",
+        generateReceiptBtn: "सत्यापन हेतु फीस विवरण जमा करें →",
+        myDevicePaymentsTitle: "आपकी फीस का स्टेटस (सिर्फ आपके फोन पर दृश्यमान)",
+        myDevicePaymentsSub: "इस फोन से सबमिट की गई फीस नीचे दिखेगी। स्कूल एडमिन द्वारा वेरीफाई करने पर यह PAID हो जाएगी।",
+        privateBadge: "निजी दृश्य (Private)",
+        myDeviceAdmTitle: "आपके प्रवेश आवेदन (सिर्फ आपके फोन पर दृश्यमान)",
         admJoinTitle: "ज्ञानोवा हाइट्स स्कूल से जुड़ें",
         admJoinDesc: "सत्र 2026-27 के लिए नर्सरी से कक्षा 4थी तक प्रवेश प्रारंभ हैं। अपने बच्चे के उज्ज्वल भविष्य के लिए आज ही पंजीयन करें।",
         selectClassEligLbl: "आयु सीमा एवं आवश्यक दस्तावेज देखने के लिए कक्षा चुनें:",
         eligibilityTitle: "उपलब्ध कक्षाएं",
         helpdeskTitle: "प्रवेश सहायता केंद्र",
         onlineFormTitle: "ऑनलाइन प्रवेश आवेदन फॉर्म (2026-27)",
-        onlineFormSub: "फॉर्म सीधे स्कूल एडमिन पैनल में सेव होगा और तुरंत टोकन मिलेगा",
+        onlineFormSub: "फॉर्म स्कूल एडमिन पैनल में सेव होगा और स्टेटस सिर्फ आपके फोन पर दिखेगा",
         studentNameLbl: "विद्यार्थी का पूरा नाम *",
         classApplyingLbl: "कक्षा चुनें *",
         parentPhoneLbl: "अभिभावक का मोबाइल / व्हाट्सएप नंबर *",
@@ -2754,7 +3063,7 @@
         fac5: "कंप्यूटर लैब",
         fac5Desc: "प्राइमरी कक्षाओं से ही डिजिटल कंप्यूटर ज्ञान",
         fac6: "CCTV सुरक्षित परिसर एवं RO पेयजल",
-        fac6Desc: "पूर्ण सुरक्षा एवं शुद्ध पेयजल की व्यवस्था",
+        fac6Desc: "सुरक्षा एवं शुद्ध पेयजल की व्यवस्था",
         stuNotices: "सूचना पटल (Notices)",
         stuHomework: "दैनिक होमवर्क / डायरी",
         stuResults: "परीक्षा परिणाम (Marksheet)",
@@ -2762,7 +3071,7 @@
         stuSyllabus: "पाठ्यक्रम (Syllabus)",
         latestNotices: "नवीनतम सूचनाएं (Notices)",
         getInTouch: "संपर्क सूत्र",
-        getInTouchSub: "अभिभावकों और विद्यार्थियों की सहायता के लिए हम सदैव तत्पर हैं!",
+        getInTouchSub: "अभिभावकों और विद्यार्थियों की सहायता के लिए हम तत्पर हैं!",
         addressHeading: "विद्यालय का पता",
         phoneHeading: "मोबाइल / कॉल करें",
         emailHeading: "आधिकारिक ईमेल",
