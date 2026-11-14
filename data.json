@@ -1,98 +1,81 @@
 {
-  "ticker": "🎉 प्रवेश प्रारंभ (Admissions Open 2026-27): नर्सरी से कक्षा 4थी तक प्रवेश चालू हैं! आज ही ऑनलाइन आवेदन करें या +91 93022 73813 पर संपर्क करें।",
-  "notices": [
-    {
-      "title": "Admission Open for Session 2026-27 (Nursery to Class 4th)",
-      "date": "14 Nov 2026",
-      "isNew": true
-    },
-    {
-      "title": "Half-Yearly Examination Guidelines & Timetable (Nursery - Class IV)",
-      "date": "15 Nov 2026",
-      "isNew": true
-    },
-    {
-      "title": "Parent-Teacher Meeting (PTM) & Science/Art Activity Exhibition",
-      "date": "20 Nov 2026",
-      "isNew": false
-    }
-  ],
-  "homework": {
-    "Nursery": "English: Trace letters A to D in workbook. Rhymes: Learn 'Twinkle Twinkle'.",
-    "LKG": "Hindi: अ से ई तक लिखें। Maths: Count and write numbers 1 to 20.",
-    "UKG": "English: Write 5 three-letter words (CAT, BAT, MAT). Maths: Addition page 14.",
-    "Class 1st": "English: Read Lesson 3. Maths: Learn Multiplication Table of 2 and 3.",
-    "Class 2nd": "Hindi: पाठ 4 के प्रश्न-उत्तर याद करें। Maths: Solve 5 subtraction sums.",
-    "Class 3rd": "EVS: Draw and label parts of a plant. English: Write 5 lines on 'My School'.",
-    "Class 4th": "Maths: Practice Fractions worksheet. Computer: Learn parts of computer & shortcut keys."
+  "visibility": {
+    "stats": true,
+    "students": true,
+    "teachers": true,
+    "fees": true,
+    "timetable": true,
+    "homework": true
   },
+  "stats": {
+    "students": "250+",
+    "teachers": "15+",
+    "classes": "Nursery - 4th",
+    "years": "100% Care"
+  },
+  "ticker": {
+    "en": "🎉 Admissions Open 2026-27: Enrolling now from Nursery to Class 4th! Apply online today or call +91 93022 73813.",
+    "hi": "🎉 प्रवेश प्रारंभ (2026-27): नर्सरी से कक्षा 4थी तक प्रवेश चालू हैं! आज ही ऑनलाइन आवेदन करें या +91 93022 73813 पर संपर्क करें।"
+  },
+  "upi": {
+    "id": "9302273813@ybl",
+    "name": "Gyanova Heights School",
+    "qrImg": ""
+  },
+  "fees": [
+    { "className": "Nursery", "admFee": "₹1,000", "monthlyFee": "₹500", "examFee": "₹300" },
+    { "className": "LKG", "admFee": "₹1,000", "monthlyFee": "₹550", "examFee": "₹300" },
+    { "className": "UKG", "admFee": "₹1,000", "monthlyFee": "₹600", "examFee": "₹300" },
+    { "className": "Class 1st", "admFee": "₹1,200", "monthlyFee": "₹650", "examFee": "₹400" },
+    { "className": "Class 2nd", "admFee": "₹1,200", "monthlyFee": "₹700", "examFee": "₹400" },
+    { "className": "Class 3rd", "admFee": "₹1,500", "monthlyFee": "₹750", "examFee": "₹400" },
+    { "className": "Class 4th", "admFee": "₹1,500", "monthlyFee": "₹800", "examFee": "₹400" }
+  ],
+  "timetable": [
+    { "time": "08:30 AM - 08:50 AM", "titleEn": "Morning Prayer & Assembly", "titleHi": "प्रार्थना सभा एवं राष्ट्रगान", "descEn": "Gayatri Mantra, Thought of the Day, News & Yoga", "descHi": "गायत्री मंत्र, आज का सुविचार, समाचार एवं योग" },
+    { "time": "08:50 AM - 10:50 AM", "titleEn": "Core Subjects (Maths & English)", "titleHi": "मुख्य विषय (गणित एवं अंग्रेजी)", "descEn": "Smart Class Visual Learning, Phonics & Concept Practice", "descHi": "स्मार्ट क्लास शिक्षण, फोक्स एवं अभ्यास" },
+    { "time": "10:50 AM - 11:20 AM", "titleEn": "Nutritious Lunch Break", "titleHi": "टिफिन एवं मध्याह्न अवकाश", "descEn": "Handwash Hygiene & Supervised Tiffin Time", "descHi": "हाथ धुलाई स्वच्छता एवं टिफिन समय" },
+    { "time": "11:20 AM - 01:30 PM", "titleEn": "Hindi, EVS, Computer & Diary", "titleHi": "हिंदी, पर्यावरण, कंप्यूटर एवं डायरी", "descEn": "Activity Learning, Spoken Practice & Homework Check", "descHi": "गतिविधि शिक्षण, संवाद अभ्यास एवं होमवर्क जांच" }
+  ],
+  "syllabus": {
+    "Nursery": "English Phonics (A-Z), Rhymes, Counting (1-50), Colors & Shapes, Hindi Swar (अ-अः), Drawing & Good Habits.",
+    "LKG": "Alphabet Writing (A-Z, अ-ज्ञ), Number Counting (1-100), Picture Reading, Hindi/English Rhymes & Art.",
+    "UKG": "Three-letter Words, Simple Sentences, Addition & Subtraction, Environmental Awareness (EVS) & Spoken English.",
+    "Class 1st": "NCERT English Reader & Grammar, Hindi Vyakaran, Mathematics, EVS, Computer Basics & General Knowledge.",
+    "Class 2nd": "Sentence Building, Multiplication Tables (2 to 12), Hindi Stories, EVS Projects, Computer Paint & Moral Science.",
+    "Class 3rd": "NCERT English, Hindi, Mathematics, Science/EVS, Computer Typing, Moral Values & Basic Olympiad Prep.",
+    "Class 4th": "Advanced Primary Maths, English Grammar & Composition, EVS/Science Experiments, Computer Lab & Navodaya/Olympiad Prep."
+  },
+  "homework": {
+    "Nursery": "Trace letters A to D in workbook & learn 'Twinkle Twinkle' poem.",
+    "LKG": "Write अ से ई तक and count numbers 1 to 30.",
+    "UKG": "Write 5 three-letter words and solve page 12 Maths addition.",
+    "Class 1st": "Read English Lesson 2 and learn Table of 2 & 3.",
+    "Class 2nd": "Learn Hindi Lesson 3 Q&A and solve 5 subtraction sums.",
+    "Class 3rd": "Draw parts of a plant in EVS notebook.",
+    "Class 4th": "Solve Fractions worksheet and revise Computer shortcut keys."
+  },
+  "studentsList": [
+    { "name": "Aarav Sharma", "className": "Class 4th", "roll": "101", "father": "Rajesh Sharma", "badge": "Class Topper", "img": "" },
+    { "name": "Ananya Verma", "className": "Class 2nd", "roll": "102", "father": "Suresh Verma", "badge": "100% Attendance", "img": "" }
+  ],
+  "teachersList": [
+    { "name": "Shri Ramendra Kumar Sharma", "role": "Founder & Director", "qual": "Educationist & Visionary Leader", "subject": "Administration & Moral Guidance", "img": "" }
+  ],
+  "notices": [
+    { "title": "Admission Open for Session 2026-27 (Nursery to Class 4th)", "date": "14 Nov 2026", "isNew": true },
+    { "title": "Half-Yearly Examination Guidelines & Timetable", "date": "15 Nov 2026", "isNew": true }
+  ],
   "results": [
-    {
-      "roll": "101",
-      "name": "Aarav Sharma",
-      "className": "Class 4th",
-      "father": "Rajesh Sharma",
-      "marks": "482 / 500",
-      "percent": "96.4%",
-      "grade": "A+ (Excellent)",
-      "status": "PASSED"
-    },
-    {
-      "roll": "102",
-      "name": "Ananya Verma",
-      "className": "Class 2nd",
-      "father": "Suresh Verma",
-      "marks": "465 / 500",
-      "percent": "93.0%",
-      "grade": "A+ (Outstanding)",
-      "status": "PASSED"
-    }
+    { "roll": "101", "name": "Aarav Sharma", "className": "Class 4th", "father": "Rajesh Sharma", "marks": "482 / 500", "percent": "96.4%", "grade": "A+ (Excellent)", "status": "PASSED" },
+    { "roll": "102", "name": "Ananya Verma", "className": "Class 2nd", "father": "Suresh Verma", "marks": "465 / 500", "percent": "93.0%", "grade": "A+ (Outstanding)", "status": "PASSED" }
   ],
+  "galleryCategories": ["events", "activities", "campus", "celebrations"],
   "gallery": [
-    {
-      "title": "80th Independence Day Celebration",
-      "category": "celebrations",
-      "desc": "Cultural Parade & Flag Hoisting at Gyanova Heights School, Basin",
-      "img": ""
-    },
-    {
-      "title": "Anand Mela School Carnival",
-      "category": "events",
-      "desc": "Student Food & Activity Stalls with Digital QR System",
-      "img": ""
-    },
-    {
-      "title": "Smart Activity Classroom (Nursery - Class 4)",
-      "category": "activities",
-      "desc": "Interactive Digital & Play-Way Learning Environment",
-      "img": ""
-    },
-    {
-      "title": "Gyanova Heights School Campus",
-      "category": "campus",
-      "desc": "Safe CCTV Monitored Campus at Ravan Bhantha, Arand Road, Basin",
-      "img": ""
-    }
+    { "title": "80th Independence Day Celebration", "category": "celebrations", "desc": "Cultural Parade & Flag Hoisting at Gyanova Heights School, Basin", "img": "" },
+    { "title": "Anand Mela School Carnival", "category": "events", "desc": "Student Stalls & Digital Innovation at Gyanova Heights School", "img": "" }
   ],
-  "admissions": [
-    {
-      "token": "GHS-1042",
-      "student": "Vihaan Sahu",
-      "className": "Nursery",
-      "parent": "Kamlesh Sahu",
-      "phone": "9826012345",
-      "address": "Basin, Gariaband",
-      "date": "14 Nov 2026",
-      "status": "Approved"
-    }
-  ],
-  "messages": [
-    {
-      "name": "Mahesh Verma",
-      "phone": "9300011223",
-      "email": "mahesh@example.com",
-      "message": "Namaste sir, Class 1st mein admission ke liye kab aana hoga?",
-      "date": "14 Nov 2026"
-    }
-  ]
+  "admissions": [],
+  "feePayments": [],
+  "messages": []
 }
