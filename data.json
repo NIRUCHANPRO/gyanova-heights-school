@@ -42,64 +42,386 @@
   ],
   "classTimetables": {
     "Nursery": [
-      { "period": "Assembly", "time": "08:30 AM - 08:50 AM", "titleEn": "Prayer & Rhymes Circle", "descEn": "Gayatri Mantra, Action Songs & Good Habits" },
-      { "period": "1st Period", "time": "08:50 AM - 09:35 AM", "titleEn": "English Phonics (A-Z)", "descEn": "Sound Recognition & Picture Flashcards" },
-      { "period": "2nd Period", "time": "09:35 AM - 10:20 AM", "titleEn": "Play-Way Numbers (1-50)", "descEn": "Counting with Beads, Blocks & Shapes" },
-      { "period": "Lunch Break", "time": "10:20 AM - 10:50 AM", "titleEn": "Handwash & Tiffin Time", "descEn": "Supervised Nutritious Meal & Etiquette" },
-      { "period": "3rd Period", "time": "10:50 AM - 11:40 AM", "titleEn": "Hindi Swar (अ-अः) & Storytelling", "descEn": "Smart Screen Animated Moral Stories" },
-      { "period": "4th Period", "time": "11:40 AM - 12:30 PM", "titleEn": "Coloring, Clay & Indoor Play", "descEn": "Motor Skills Development & Diary Note" }
+      {
+        "period": "Assembly",
+        "time": "08:30 AM - 08:50 AM",
+        "titleEn": "Prayer & Rhymes Circle",
+        "titleHi": "प्रार्थना एवं कविता चक्र",
+        "descEn": "Gayatri Mantra, Action Songs & Good Habits",
+        "descHi": "गायत्री मंत्र, एक्शन सॉन्ग और अच्छी आदतें"
+      },
+      {
+        "period": "1st Period",
+        "time": "08:50 AM - 09:35 AM",
+        "titleEn": "English Phonics (A-Z)",
+        "titleHi": "अंग्रेजी फोक्स (A-Z)",
+        "descEn": "Sound Recognition & Picture Flashcards",
+        "descHi": "ध्वनि पहचान एवं चित्र फ्लैशकार्ड"
+      },
+      {
+        "period": "2nd Period",
+        "time": "09:35 AM - 10:20 AM",
+        "titleEn": "Play-Way Numbers (1-50)",
+        "titleHi": "खेल-खेल में गिनती (1-50)",
+        "descEn": "Counting with Beads, Blocks & Shapes",
+        "descHi": "ब्लॉक्स और आकृतियों से गिनती सीखना"
+      },
+      {
+        "period": "Lunch Break",
+        "time": "10:20 AM - 10:50 AM",
+        "titleEn": "Handwash & Tiffin Time",
+        "titleHi": "हाथ धुलाई एवं टिफिन समय",
+        "descEn": "Supervised Nutritious Meal & Etiquette",
+        "descHi": "शिक्षकों की देखरेख में पौष्टिक भोजन"
+      },
+      {
+        "period": "3rd Period",
+        "time": "10:50 AM - 11:40 AM",
+        "titleEn": "Hindi Swar (अ-अः) & Storytelling",
+        "titleHi": "हिंदी स्वर (अ-अः) एवं कहानी",
+        "descEn": "Smart Screen Animated Moral Stories",
+        "descHi": "स्मार्ट स्क्रीन पर शिक्षाप्रद कहानियां"
+      },
+      {
+        "period": "4th Period",
+        "time": "11:40 AM - 12:30 PM",
+        "titleEn": "Coloring, Clay & Indoor Play",
+        "titleHi": "चित्रकला, क्ले आर्ट एवं इंडोर खेल",
+        "descEn": "Motor Skills Development & Diary Note",
+        "descHi": "रचनात्मक खेल एवं डायरी नोट"
+      }
     ],
     "LKG": [
-      { "period": "Assembly", "time": "08:30 AM - 08:50 AM", "titleEn": "Morning Prayer & Yoga", "descEn": "Prayer, National Song & Warm-up" },
-      { "period": "1st Period", "time": "08:50 AM - 09:40 AM", "titleEn": "English Alphabet Writing", "descEn": "Capital & Small Letters (A-Z) Workbook" },
-      { "period": "2nd Period", "time": "09:40 AM - 10:30 AM", "titleEn": "Mathematics (1 to 100)", "descEn": "Number Writing, Missing Numbers & Shapes" },
-      { "period": "Lunch Break", "time": "10:30 AM - 11:00 AM", "titleEn": "Nutritious Tiffin Break", "descEn": "Handwash Hygiene & Lunch" },
-      { "period": "3rd Period", "time": "11:00 AM - 11:45 AM", "titleEn": "Hindi Varnamala (अ से ज्ञ)", "descEn": "Akshar Writing & Hindi Poems" },
-      { "period": "4th Period", "time": "11:45 AM - 12:30 PM", "titleEn": "General Awareness & Art", "descEn": "Fruits, Animals, Colors & Drawing" }
+      {
+        "period": "Assembly",
+        "time": "08:30 AM - 08:50 AM",
+        "titleEn": "Morning Prayer & Yoga",
+        "titleHi": "प्रार्थना सभा एवं बाल योग",
+        "descEn": "Prayer, National Song & Warm-up",
+        "descHi": "प्रार्थना, राष्ट्रगीत एवं हल्का व्यायाम"
+      },
+      {
+        "period": "1st Period",
+        "time": "08:50 AM - 09:40 AM",
+        "titleEn": "English Alphabet Writing",
+        "titleHi": "अंग्रेजी वर्णमाला लेखन",
+        "descEn": "Capital & Small Letters (A-Z) Workbook",
+        "descHi": "कैपिटल एवं स्मॉल लेटर्स (A-Z) अभ्यास"
+      },
+      {
+        "period": "2nd Period",
+        "time": "09:40 AM - 10:30 AM",
+        "titleEn": "Mathematics (1 to 100)",
+        "titleHi": "गणित एवं गिनती (1 से 100)",
+        "descEn": "Number Writing, Missing Numbers & Shapes",
+        "descHi": "अंक लेखन, खाली स्थान एवं आकार ज्ञान"
+      },
+      {
+        "period": "Lunch Break",
+        "time": "10:30 AM - 11:00 AM",
+        "titleEn": "Nutritious Tiffin Break",
+        "titleHi": "टिफिन एवं मध्याह्न अवकाश",
+        "descEn": "Handwash Hygiene & Lunch",
+        "descHi": "हाथ धुलाई स्वच्छता एवं टिफिन"
+      },
+      {
+        "period": "3rd Period",
+        "time": "11:00 AM - 11:45 AM",
+        "titleEn": "Hindi Varnamala (अ से ज्ञ)",
+        "titleHi": "हिंदी वर्णमाला (अ से ज्ञ)",
+        "descEn": "Akshar Writing & Hindi Rhymes",
+        "descHi": "अक्षर लेखन एवं हिंदी बाल कविताएं"
+      },
+      {
+        "period": "4th Period",
+        "time": "11:45 AM - 12:30 PM",
+        "titleEn": "General Awareness & Art",
+        "titleHi": "सामान्य ज्ञान एवं चित्रकला",
+        "descEn": "Fruits, Animals, Colors & Drawing",
+        "descHi": "फलों, पशुओं व रंगों की पहचान एवं ड्राइंग"
+      }
     ],
     "UKG": [
-      { "period": "Assembly", "time": "08:30 AM - 08:50 AM", "titleEn": "Morning Assembly", "descEn": "Prayer, Pledge & Spoken English Word of the Day" },
-      { "period": "1st Period", "time": "08:50 AM - 09:40 AM", "titleEn": "English Reader & Phonics", "descEn": "Three-Letter Words, Vowels & Cursive Practice" },
-      { "period": "2nd Period", "time": "09:40 AM - 10:30 AM", "titleEn": "Numbers & Basic Maths", "descEn": "Addition, Subtraction, Tables (2-5) & Number Names" },
-      { "period": "Lunch Break", "time": "10:30 AM - 11:00 AM", "titleEn": "Lunch Break", "descEn": "Supervised Tiffin Time" },
-      { "period": "3rd Period", "time": "11:00 AM - 11:50 AM", "titleEn": "Hindi Matra Gyan", "descEn": "Two/Three-letter words & Matra Practice" },
-      { "period": "4th Period", "time": "11:50 AM - 12:45 PM", "titleEn": "EVS, Smart Class & Conversation", "descEn": "Good Manners, Nature Study & Spoken English" }
+      {
+        "period": "Assembly",
+        "time": "08:30 AM - 08:50 AM",
+        "titleEn": "Morning Assembly",
+        "titleHi": "प्रार्थना सभा एवं प्रतिज्ञा",
+        "descEn": "Prayer, Pledge & Spoken English Word of the Day",
+        "descHi": "प्रार्थना, प्रतिज्ञा एवं आज का अंग्रेजी शब्द"
+      },
+      {
+        "period": "1st Period",
+        "time": "08:50 AM - 09:40 AM",
+        "titleEn": "English Reader & Phonics",
+        "titleHi": "अंग्रेजी पठन एवं फोक्स",
+        "descEn": "Three-Letter Words, Vowels & Cursive Practice",
+        "descHi": "तीन अक्षर वाले शब्द, स्वर एवं कर्सिव लेखन"
+      },
+      {
+        "period": "2nd Period",
+        "time": "09:40 AM - 10:30 AM",
+        "titleEn": "Numbers & Basic Maths",
+        "titleHi": "प्रारंभिक गणित एवं पहाड़े",
+        "descEn": "Addition, Subtraction, Tables (2-5) & Number Names",
+        "descHi": "जोड़, घटाव, पहाड़े (2-5) एवं स्पेलिंग"
+      },
+      {
+        "period": "Lunch Break",
+        "time": "10:30 AM - 11:00 AM",
+        "titleEn": "Lunch Break",
+        "titleHi": "मध्याह्न टिफिन अवकाश",
+        "descEn": "Supervised Tiffin Time",
+        "descHi": "अनुशासित टिफिन समय"
+      },
+      {
+        "period": "3rd Period",
+        "time": "11:00 AM - 11:50 AM",
+        "titleEn": "Hindi Matra Gyan",
+        "titleHi": "हिंदी मात्रा एवं शब्द ज्ञान",
+        "descEn": "Two/Three-Letter Words & Matra Practice",
+        "descHi": "दो व तीन अक्षर वाले शब्द एवं मात्रा अभ्यास"
+      },
+      {
+        "period": "4th Period",
+        "time": "11:50 AM - 12:45 PM",
+        "titleEn": "EVS, Smart Class & Conversation",
+        "titleHi": "पर्यावरण, स्मार्ट क्लास एवं संवाद",
+        "descEn": "Good Manners, Nature Study & Spoken English",
+        "descHi": "शिष्टाचार, प्रकृति परिचय एवं स्पोकन इंग्लिश"
+      }
     ],
     "Class 1st": [
-      { "period": "Assembly", "time": "08:30 AM - 08:50 AM", "titleEn": "Prayer, News & Thought", "descEn": "Morning Assembly & PT Exercise" },
-      { "period": "1st Period", "time": "08:50 AM - 09:40 AM", "titleEn": "Mathematics (NCERT)", "descEn": "Addition, Subtraction, Shapes & Mental Maths" },
-      { "period": "2nd Period", "time": "09:40 AM - 10:30 AM", "titleEn": "English Reader & Grammar", "descEn": "Reading Fluency, Nouns, Pronouns & Vocabulary" },
-      { "period": "Lunch Break", "time": "10:30 AM - 11:00 AM", "titleEn": "Tiffin Break", "descEn": "Handwash & Lunch Break" },
-      { "period": "3rd Period", "time": "11:00 AM - 11:50 AM", "titleEn": "Hindi Literature & Vyakaran", "descEn": "Reading, Handwriting & Hindi Grammar" },
-      { "period": "4th Period", "time": "11:50 AM - 12:40 PM", "titleEn": "EVS (Environmental Studies)", "descEn": "Our Body, Family, Plants & Surroundings" },
-      { "period": "5th Period", "time": "12:40 PM - 01:30 PM", "titleEn": "Computer Basics & GK", "descEn": "Parts of Computer, Drawing & Diary Check" }
+      {
+        "period": "Assembly",
+        "time": "08:30 AM - 08:50 AM",
+        "titleEn": "Prayer, News & Thought",
+        "titleHi": "प्रार्थना, समाचार एवं सुविचार",
+        "descEn": "Morning Assembly & PT Exercise",
+        "descHi": "प्रार्थना सभा एवं पी.टी. व्यायाम"
+      },
+      {
+        "period": "1st Period",
+        "time": "08:50 AM - 09:40 AM",
+        "titleEn": "Mathematics (NCERT)",
+        "titleHi": "गणित (NCERT)",
+        "descEn": "Addition, Subtraction, Shapes & Mental Maths",
+        "descHi": "जोड़, घटाव, आकृतियां एवं मेंटल मैथ्स"
+      },
+      {
+        "period": "2nd Period",
+        "time": "09:40 AM - 10:30 AM",
+        "titleEn": "English Reader & Grammar",
+        "titleHi": "अंग्रेजी रीडर एवं ग्रामर",
+        "descEn": "Reading Fluency, Nouns, Pronouns & Vocabulary",
+        "descHi": "धाराप्रवाह पठन, संज्ञा, सर्वनाम एवं शब्दकोश"
+      },
+      {
+        "period": "Lunch Break",
+        "time": "10:30 AM - 11:00 AM",
+        "titleEn": "Tiffin Break",
+        "titleHi": "टिफिन अवकाश",
+        "descEn": "Handwash & Lunch Break",
+        "descHi": "हाथ धुलाई एवं भोजन अवकाश"
+      },
+      {
+        "period": "3rd Period",
+        "time": "11:00 AM - 11:50 AM",
+        "titleEn": "Hindi (Rimjhim & Vyakaran)",
+        "titleHi": "हिंदी (रिमझिम एवं व्याकरण)",
+        "descEn": "Reading, Handwriting & Basic Grammar",
+        "descHi": "कहानी पठन, सुलेख और हिंदी व्याकरण"
+      },
+      {
+        "period": "4th Period",
+        "time": "11:50 AM - 12:40 PM",
+        "titleEn": "EVS (Environmental Studies)",
+        "titleHi": "पर्यावरण अध्ययन (EVS)",
+        "descEn": "Our Body, Family, Plants & Surroundings",
+        "descHi": "हमारा शरीर, परिवार, पेड़-पौधे एवं परिवेश"
+      },
+      {
+        "period": "5th Period",
+        "time": "12:40 PM - 01:30 PM",
+        "titleEn": "Computer Basics & GK",
+        "titleHi": "कंप्यूटर बेसिक्स एवं सामान्य ज्ञान",
+        "descEn": "Parts of Computer, Drawing & Diary Check",
+        "descHi": "कंप्यूटर परिचय, चित्रकला एवं डायरी जांच"
+      }
     ],
     "Class 2nd": [
-      { "period": "Assembly", "time": "08:30 AM - 08:50 AM", "titleEn": "Morning Assembly", "descEn": "Prayer, GK Quiz & National Anthem" },
-      { "period": "1st Period", "time": "08:50 AM - 09:40 AM", "titleEn": "Mathematics", "descEn": "2-Digit Sums, Tables (2-12) & Word Problems" },
-      { "period": "2nd Period", "time": "09:40 AM - 10:30 AM", "titleEn": "English Literature & Grammar", "descEn": "Story Reading, Sentence Making & Spoken English" },
-      { "period": "Lunch Break", "time": "10:30 AM - 11:00 AM", "titleEn": "Tiffin Break", "descEn": "Supervised Lunch Break" },
-      { "period": "3rd Period", "time": "11:00 AM - 11:50 AM", "titleEn": "Hindi Sahitya & Vyakaran", "descEn": "Story Reading, Opposites, Nouns & Writing" },
-      { "period": "4th Period", "time": "11:50 AM - 12:40 PM", "titleEn": "EVS & Activity Project", "descEn": "Seasons, Festivals, Water & Healthy Habits" },
-      { "period": "5th Period", "time": "12:40 PM - 01:30 PM", "titleEn": "Computer Lab (MS Paint) & Moral Values", "descEn": "Practical Computer & Daily Homework Diary" }
+      {
+        "period": "Assembly",
+        "time": "08:30 AM - 08:50 AM",
+        "titleEn": "Morning Assembly",
+        "titleHi": "प्रार्थना सभा एवं प्रश्नोत्तरी",
+        "descEn": "Prayer, GK Quiz & National Anthem",
+        "descHi": "प्रार्थना, सामान्य ज्ञान प्रश्नोत्तरी एवं राष्ट्रगान"
+      },
+      {
+        "period": "1st Period",
+        "time": "08:50 AM - 09:40 AM",
+        "titleEn": "Mathematics",
+        "titleHi": "गणित एवं पहाड़े",
+        "descEn": "2-Digit Sums, Tables (2-12) & Word Problems",
+        "descHi": "दो अंकों के सवाल, पहाड़े (2-12) एवं अभ्यास"
+      },
+      {
+        "period": "2nd Period",
+        "time": "09:40 AM - 10:30 AM",
+        "titleEn": "English Literature & Grammar",
+        "titleHi": "अंग्रेजी साहित्य एवं व्याकरण",
+        "descEn": "Story Reading, Sentence Making & Spoken English",
+        "descHi": "कहानी पठन, वाक्य निर्माण एवं स्पोकन इंग्लिश"
+      },
+      {
+        "period": "Lunch Break",
+        "time": "10:30 AM - 11:00 AM",
+        "titleEn": "Tiffin Break",
+        "titleHi": "टिफिन अवकाश",
+        "descEn": "Supervised Lunch Break",
+        "descHi": "मध्याह्न भोजन अवकाश"
+      },
+      {
+        "period": "3rd Period",
+        "time": "11:00 AM - 11:50 AM",
+        "titleEn": "Hindi Sahitya & Vyakaran",
+        "titleHi": "हिंदी साहित्य एवं व्याकरण",
+        "descEn": "Stories, Opposites, Sangya & Writing",
+        "descHi": "कहानी पठन, विलोम शब्द, संज्ञा एवं सुलेख"
+      },
+      {
+        "period": "4th Period",
+        "time": "11:50 AM - 12:40 PM",
+        "titleEn": "EVS & Activity Project",
+        "titleHi": "पर्यावरण एवं प्रोजेक्ट कार्य",
+        "descEn": "Seasons, Festivals, Water & Healthy Habits",
+        "descHi": "ऋतुएं, त्योहार, जल संरक्षण एवं स्वास्थ्य"
+      },
+      {
+        "period": "5th Period",
+        "time": "12:40 PM - 01:30 PM",
+        "titleEn": "Computer Lab (MS Paint) & Values",
+        "titleHi": "कंप्यूटर लैब (MS Paint) एवं संस्कार",
+        "descEn": "Practical Computer & Daily Homework Diary",
+        "descHi": "कंप्यूटर प्रैक्टिकल एवं दैनिक होमवर्क डायरी"
+      }
     ],
     "Class 3rd": [
-      { "period": "Assembly", "time": "08:30 AM - 08:50 AM", "titleEn": "Assembly & Stage Speech", "descEn": "Prayer, Current Affairs & Student Speech" },
-      { "period": "1st Period", "time": "08:50 AM - 09:40 AM", "titleEn": "Mathematics & Olympiad Prep", "descEn": "Multiplication, Division, Geometry & Logical Maths" },
-      { "period": "2nd Period", "time": "09:40 AM - 10:30 AM", "titleEn": "English NCERT & Spoken", "descEn": "Comprehension, Tenses, Essay & Conversation" },
-      { "period": "Lunch Break", "time": "10:30 AM - 11:00 AM", "titleEn": "Lunch Break", "descEn": "Handwash & Tiffin" },
-      { "period": "3rd Period", "time": "11:00 AM - 11:50 AM", "titleEn": "Environmental Science (EVS)", "descEn": "Science Models, Plants, Solar System & Maps" },
-      { "period": "4th Period", "time": "11:50 AM - 12:40 PM", "titleEn": "Hindi & Moral Education", "descEn": "Hindi Grammar, Letter Writing & Values" },
-      { "period": "5th Period", "time": "12:40 PM - 01:30 PM", "titleEn": "Computer Typing, GK & Sports", "descEn": "WordPad Typing, General Knowledge & Games" }
+      {
+        "period": "Assembly",
+        "time": "08:30 AM - 08:50 AM",
+        "titleEn": "Assembly & Stage Speech",
+        "titleHi": "प्रार्थना सभा एवं मंच भाषण",
+        "descEn": "Prayer, Current Affairs & Student Speech",
+        "descHi": "प्रार्थना, समाचार एवं विद्यार्थी भाषण"
+      },
+      {
+        "period": "1st Period",
+        "time": "08:50 AM - 09:40 AM",
+        "titleEn": "Mathematics & Olympiad Prep",
+        "titleHi": "गणित एवं ओलंपियाड तैयारी",
+        "descEn": "Multiplication, Division, Geometry & Logical Maths",
+        "descHi": "गुणा, भाग, ज्यामिति एवं तार्किक गणित"
+      },
+      {
+        "period": "2nd Period",
+        "time": "09:40 AM - 10:30 AM",
+        "titleEn": "English NCERT & Spoken",
+        "titleHi": "अंग्रेजी (NCERT) एवं स्पोकन",
+        "descEn": "Comprehension, Tenses, Essay & Conversation",
+        "descHi": "गद्यांश, काल (Tenses), निबंध एवं संवाद"
+      },
+      {
+        "period": "Lunch Break",
+        "time": "10:30 AM - 11:00 AM",
+        "titleEn": "Lunch Break",
+        "titleHi": "टिफिन अवकाश",
+        "descEn": "Handwash & Tiffin",
+        "descHi": "हाथ धुलाई एवं टिफिन"
+      },
+      {
+        "period": "3rd Period",
+        "time": "11:00 AM - 11:50 AM",
+        "titleEn": "Environmental Science (EVS)",
+        "titleHi": "पर्यावरण विज्ञान (EVS)",
+        "descEn": "Science Models, Plants, Solar System & Maps",
+        "descHi": "विज्ञान मॉडल, पौधे, सौरमंडल एवं मानचित्र"
+      },
+      {
+        "period": "4th Period",
+        "time": "11:50 AM - 12:40 PM",
+        "titleEn": "Hindi & Sanskrit Basics",
+        "titleHi": "हिंदी व्याकरण एवं नीति श्लोक",
+        "descEn": "Hindi Grammar, Letter Writing & Subhashit",
+        "descHi": "हिंदी व्याकरण, पत्र लेखन एवं सुभाषित"
+      },
+      {
+        "period": "5th Period",
+        "time": "12:40 PM - 01:30 PM",
+        "titleEn": "Computer Typing, GK & Sports",
+        "titleHi": "कंप्यूटर टाइपिंग, सामान्य ज्ञान एवं खेल",
+        "descEn": "WordPad Typing, General Knowledge & Games",
+        "descHi": "कंप्यूटर टाइपिंग, छत्तीसगढ़ सामान्य ज्ञान एवं खेल"
+      }
     ],
     "Class 4th": [
-      { "period": "Assembly", "time": "08:30 AM - 08:50 AM", "titleEn": "Leadership Assembly", "descEn": "Prayer, News Reading, Quiz & Discipline Check" },
-      { "period": "1st Period", "time": "08:50 AM - 09:40 AM", "titleEn": "Advanced Primary Mathematics", "descEn": "Fractions, Decimals, Factors & Navodaya/Olympiad Maths" },
-      { "period": "2nd Period", "time": "09:40 AM - 10:30 AM", "titleEn": "Science & Environmental Studies", "descEn": "Human Body, Force, Matter & Lab Experiments" },
-      { "period": "Lunch Break", "time": "10:30 AM - 11:00 AM", "titleEn": "Lunch Break", "descEn": "Nutritious Tiffin Time" },
-      { "period": "3rd Period", "time": "11:00 AM - 11:50 AM", "titleEn": "English Grammar & Composition", "descEn": "Application Writing, Grammar, Debate & Reading" },
-      { "period": "4th Period", "time": "11:50 AM - 12:40 PM", "titleEn": "Hindi Vyakaran & Social Studies", "descEn": "Essay Writing, Grammar & India GK" },
-      { "period": "5th Period", "time": "12:40 PM - 01:30 PM", "titleEn": "Computer Applications & Reasoning", "descEn": "MS Office Basics, Mental Ability & Diary Check" }
+      {
+        "period": "Assembly",
+        "time": "08:30 AM - 08:50 AM",
+        "titleEn": "Leadership Assembly",
+        "titleHi": "नेतृत्व प्रार्थना सभा",
+        "descEn": "Prayer, News Reading, Quiz & Discipline Check",
+        "descHi": "प्रार्थना, समाचार वाचन, क्विज एवं अनुशासन"
+      },
+      {
+        "period": "1st Period",
+        "time": "08:50 AM - 09:40 AM",
+        "titleEn": "Advanced Primary Mathematics",
+        "titleHi": "उच्च प्राथमिक गणित एवं नवोदय",
+        "descEn": "Fractions, Decimals, Factors & Navodaya/Olympiad Maths",
+        "descHi": "भिन्न, दशमलव, गुणनखंड एवं नवोदय/ओलंपियाड गणित"
+      },
+      {
+        "period": "2nd Period",
+        "time": "09:40 AM - 10:30 AM",
+        "titleEn": "Science & Environmental Studies",
+        "titleHi": "विज्ञान एवं पर्यावरण अध्ययन",
+        "descEn": "Human Body, Force, Matter & Lab Experiments",
+        "descHi": "मानव शरीर, बल, पदार्थ एवं विज्ञान प्रयोग"
+      },
+      {
+        "period": "Lunch Break",
+        "time": "10:30 AM - 11:00 AM",
+        "titleEn": "Lunch Break",
+        "titleHi": "मध्याह्न अवकाश",
+        "descEn": "Nutritious Tiffin Time",
+        "descHi": "पौष्टिक टिफिन अवकाश"
+      },
+      {
+        "period": "3rd Period",
+        "time": "11:00 AM - 11:50 AM",
+        "titleEn": "English Grammar & Composition",
+        "titleHi": "अंग्रेजी व्याकरण एवं रचना",
+        "descEn": "Application Writing, Grammar, Debate & Reading",
+        "descHi": "आवेदन पत्र, ग्रामर, वाद-विवाद एवं पठन"
+      },
+      {
+        "period": "4th Period",
+        "time": "11:50 AM - 12:40 PM",
+        "titleEn": "Hindi Vyakaran & Social Studies",
+        "titleHi": "हिंदी व्याकरण एवं सामाजिक अध्ययन",
+        "descEn": "Essay Writing, Vyakaran & India GK",
+        "descHi": "निबंध लेखन, व्याकरण एवं भारत का सामान्य ज्ञान"
+      },
+      {
+        "period": "5th Period",
+        "time": "12:40 PM - 01:30 PM",
+        "titleEn": "Computer Applications & Reasoning",
+        "titleHi": "कंप्यूटर एप्लीकेशन एवं मानसिक योग्यता",
+        "descEn": "MS Office Basics, Mental Ability & Diary Check",
+        "descHi": "एमएस ऑफिस, रीजनिंग अभ्यास एवं डायरी जांच"
+      }
     ]
   },
   "syllabus": {
@@ -121,24 +443,85 @@
     "Class 4th": "Solve Fractions worksheet and revise Computer shortcut keys."
   },
   "studentsList": [
-    { "name": "Aarav Sharma", "className": "Class 4th", "roll": "101", "father": "Rajesh Sharma", "badge": "Class Topper", "img": "" },
-    { "name": "Ananya Verma", "className": "Class 2nd", "roll": "102", "father": "Suresh Verma", "badge": "Star Performer", "img": "" }
+    {
+      "name": "Aarav Sharma",
+      "className": "Class 4th",
+      "roll": "101",
+      "father": "Rajesh Sharma",
+      "badge": "Class Topper",
+      "img": ""
+    },
+    {
+      "name": "Ananya Verma",
+      "className": "Class 2nd",
+      "roll": "102",
+      "father": "Suresh Verma",
+      "badge": "Star Performer",
+      "img": ""
+    }
   ],
   "teachersList": [
-    { "name": "Shri Ramendra Kumar Sharma", "role": "Founder & Director", "qual": "Educationist & Visionary Leader", "subject": "Management & Moral Guidance", "img": "" }
+    {
+      "name": "Shri Ramendra Kumar Sharma",
+      "role": "Founder & Director",
+      "qual": "Educationist & Visionary Leader",
+      "subject": "Management & Moral Guidance",
+      "img": ""
+    }
   ],
   "notices": [
-    { "title": "Admission Open for Session 2026-27 (Nursery to Class 4th)", "date": "14 Nov 2026", "isNew": true },
-    { "title": "Half-Yearly Examination Guidelines & Timetable", "date": "15 Nov 2026", "isNew": true }
+    {
+      "title": "Admission Open for Session 2026-27 (Nursery to Class 4th)",
+      "date": "14 Nov 2026",
+      "isNew": true
+    },
+    {
+      "title": "Half-Yearly Examination Guidelines & Timetable",
+      "date": "15 Nov 2026",
+      "isNew": true
+    }
   ],
   "results": [
-    { "roll": "101", "name": "Aarav Sharma", "className": "Class 4th", "father": "Rajesh Sharma", "marks": "482 / 500", "percent": "96.4%", "grade": "A+ (Excellent)", "status": "PASSED" },
-    { "roll": "102", "name": "Ananya Verma", "className": "Class 2nd", "father": "Suresh Verma", "marks": "465 / 500", "percent": "93.0%", "grade": "A+ (Outstanding)", "status": "PASSED" }
+    {
+      "roll": "101",
+      "name": "Aarav Sharma",
+      "className": "Class 4th",
+      "father": "Rajesh Sharma",
+      "marks": "482 / 500",
+      "percent": "96.4%",
+      "grade": "A+ (Excellent)",
+      "status": "PASSED"
+    },
+    {
+      "roll": "102",
+      "name": "Ananya Verma",
+      "className": "Class 2nd",
+      "father": "Suresh Verma",
+      "marks": "465 / 500",
+      "percent": "93.0%",
+      "grade": "A+ (Outstanding)",
+      "status": "PASSED"
+    }
   ],
-  "galleryCategories": ["events", "activities", "campus", "celebrations"],
+  "galleryCategories": [
+    "events",
+    "activities",
+    "campus",
+    "celebrations"
+  ],
   "gallery": [
-    { "title": "80th Independence Day Celebration", "category": "celebrations", "desc": "Cultural Parade & Flag Hoisting at Gyanova Heights School, Basin", "img": "" },
-    { "title": "Anand Mela School Carnival", "category": "events", "desc": "Student Stalls & Digital Innovation at Gyanova Heights School", "img": "" }
+    {
+      "title": "80th Independence Day Celebration",
+      "category": "celebrations",
+      "desc": "Cultural Parade & Flag Hoisting at Gyanova Heights School, Basin",
+      "img": ""
+    },
+    {
+      "title": "Anand Mela School Carnival",
+      "category": "events",
+      "desc": "Student Food & Activity Stalls with Digital QR System",
+      "img": ""
+    }
   ],
   "admissions": [],
   "feePayments": [],
