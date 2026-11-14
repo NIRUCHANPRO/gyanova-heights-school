@@ -31,12 +31,77 @@
     { "className": "Class 3rd", "monthlyFee": 750, "oneTimeFee": 7500 },
     { "className": "Class 4th", "monthlyFee": 800, "oneTimeFee": 8000 }
   ],
-  "timetable": [
-    { "time": "08:30 AM - 08:50 AM", "titleEn": "Morning Prayer & Assembly", "titleHi": "प्रार्थना सभा एवं राष्ट्रगान", "descEn": "Gayatri Mantra, Thought of the Day, News & Yoga", "descHi": "गायत्री मंत्र, आज का सुविचार, समाचार एवं योग" },
-    { "time": "08:50 AM - 10:50 AM", "titleEn": "Core Subjects (Maths & English)", "titleHi": "मुख्य विषय (गणित एवं अंग्रेजी)", "descEn": "Smart Class Visual Learning, Phonics & Concept Practice", "descHi": "स्मार्ट क्लास शिक्षण, फोक्स एवं अभ्यास" },
-    { "time": "10:50 AM - 11:20 AM", "titleEn": "Nutritious Lunch Break", "titleHi": "टिफिन एवं मध्याह्न अवकाश", "descEn": "Handwash Hygiene & Supervised Tiffin Time", "descHi": "हाथ धुलाई स्वच्छता एवं टिफिन समय" },
-    { "time": "11:20 AM - 01:30 PM", "titleEn": "Hindi, EVS, Computer & Diary", "titleHi": "हिंदी, पर्यावरण, कंप्यूटर एवं डायरी", "descEn": "Activity Learning, Spoken Practice & Homework Check", "descHi": "गतिविधि शिक्षण, संवाद अभ्यास एवं होमवर्क जांच" }
+  "timetableClasses": [
+    "Nursery",
+    "LKG",
+    "UKG",
+    "Class 1st",
+    "Class 2nd",
+    "Class 3rd",
+    "Class 4th"
   ],
+  "classTimetables": {
+    "Nursery": [
+      { "period": "Assembly", "time": "08:30 AM - 08:50 AM", "titleEn": "Prayer & Rhymes Circle", "descEn": "Gayatri Mantra, Action Songs & Good Habits" },
+      { "period": "1st Period", "time": "08:50 AM - 09:35 AM", "titleEn": "English Phonics (A-Z)", "descEn": "Sound Recognition & Picture Flashcards" },
+      { "period": "2nd Period", "time": "09:35 AM - 10:20 AM", "titleEn": "Play-Way Numbers (1-50)", "descEn": "Counting with Beads, Blocks & Shapes" },
+      { "period": "Lunch Break", "time": "10:20 AM - 10:50 AM", "titleEn": "Handwash & Tiffin Time", "descEn": "Supervised Nutritious Meal & Etiquette" },
+      { "period": "3rd Period", "time": "10:50 AM - 11:40 AM", "titleEn": "Hindi Swar (अ-अः) & Storytelling", "descEn": "Smart Screen Animated Moral Stories" },
+      { "period": "4th Period", "time": "11:40 AM - 12:30 PM", "titleEn": "Coloring, Clay & Indoor Play", "descEn": "Motor Skills Development & Diary Note" }
+    ],
+    "LKG": [
+      { "period": "Assembly", "time": "08:30 AM - 08:50 AM", "titleEn": "Morning Prayer & Yoga", "descEn": "Prayer, National Song & Warm-up" },
+      { "period": "1st Period", "time": "08:50 AM - 09:40 AM", "titleEn": "English Alphabet Writing", "descEn": "Capital & Small Letters (A-Z) Workbook" },
+      { "period": "2nd Period", "time": "09:40 AM - 10:30 AM", "titleEn": "Mathematics (1 to 100)", "descEn": "Number Writing, Missing Numbers & Shapes" },
+      { "period": "Lunch Break", "time": "10:30 AM - 11:00 AM", "titleEn": "Nutritious Tiffin Break", "descEn": "Handwash Hygiene & Lunch" },
+      { "period": "3rd Period", "time": "11:00 AM - 11:45 AM", "titleEn": "Hindi Varnamala (अ से ज्ञ)", "descEn": "Akshar Writing & Hindi Poems" },
+      { "period": "4th Period", "time": "11:45 AM - 12:30 PM", "titleEn": "General Awareness & Art", "descEn": "Fruits, Animals, Colors & Drawing" }
+    ],
+    "UKG": [
+      { "period": "Assembly", "time": "08:30 AM - 08:50 AM", "titleEn": "Morning Assembly", "descEn": "Prayer, Pledge & Spoken English Word of the Day" },
+      { "period": "1st Period", "time": "08:50 AM - 09:40 AM", "titleEn": "English Reader & Phonics", "descEn": "Three-Letter Words, Vowels & Cursive Practice" },
+      { "period": "2nd Period", "time": "09:40 AM - 10:30 AM", "titleEn": "Numbers & Basic Maths", "descEn": "Addition, Subtraction, Tables (2-5) & Number Names" },
+      { "period": "Lunch Break", "time": "10:30 AM - 11:00 AM", "titleEn": "Lunch Break", "descEn": "Supervised Tiffin Time" },
+      { "period": "3rd Period", "time": "11:00 AM - 11:50 AM", "titleEn": "Hindi Matra Gyan", "descEn": "Two/Three-letter words & Matra Practice" },
+      { "period": "4th Period", "time": "11:50 AM - 12:45 PM", "titleEn": "EVS, Smart Class & Conversation", "descEn": "Good Manners, Nature Study & Spoken English" }
+    ],
+    "Class 1st": [
+      { "period": "Assembly", "time": "08:30 AM - 08:50 AM", "titleEn": "Prayer, News & Thought", "descEn": "Morning Assembly & PT Exercise" },
+      { "period": "1st Period", "time": "08:50 AM - 09:40 AM", "titleEn": "Mathematics (NCERT)", "descEn": "Addition, Subtraction, Shapes & Mental Maths" },
+      { "period": "2nd Period", "time": "09:40 AM - 10:30 AM", "titleEn": "English Reader & Grammar", "descEn": "Reading Fluency, Nouns, Pronouns & Vocabulary" },
+      { "period": "Lunch Break", "time": "10:30 AM - 11:00 AM", "titleEn": "Tiffin Break", "descEn": "Handwash & Lunch Break" },
+      { "period": "3rd Period", "time": "11:00 AM - 11:50 AM", "titleEn": "Hindi Literature & Vyakaran", "descEn": "Reading, Handwriting & Hindi Grammar" },
+      { "period": "4th Period", "time": "11:50 AM - 12:40 PM", "titleEn": "EVS (Environmental Studies)", "descEn": "Our Body, Family, Plants & Surroundings" },
+      { "period": "5th Period", "time": "12:40 PM - 01:30 PM", "titleEn": "Computer Basics & GK", "descEn": "Parts of Computer, Drawing & Diary Check" }
+    ],
+    "Class 2nd": [
+      { "period": "Assembly", "time": "08:30 AM - 08:50 AM", "titleEn": "Morning Assembly", "descEn": "Prayer, GK Quiz & National Anthem" },
+      { "period": "1st Period", "time": "08:50 AM - 09:40 AM", "titleEn": "Mathematics", "descEn": "2-Digit Sums, Tables (2-12) & Word Problems" },
+      { "period": "2nd Period", "time": "09:40 AM - 10:30 AM", "titleEn": "English Literature & Grammar", "descEn": "Story Reading, Sentence Making & Spoken English" },
+      { "period": "Lunch Break", "time": "10:30 AM - 11:00 AM", "titleEn": "Tiffin Break", "descEn": "Supervised Lunch Break" },
+      { "period": "3rd Period", "time": "11:00 AM - 11:50 AM", "titleEn": "Hindi Sahitya & Vyakaran", "descEn": "Story Reading, Opposites, Nouns & Writing" },
+      { "period": "4th Period", "time": "11:50 AM - 12:40 PM", "titleEn": "EVS & Activity Project", "descEn": "Seasons, Festivals, Water & Healthy Habits" },
+      { "period": "5th Period", "time": "12:40 PM - 01:30 PM", "titleEn": "Computer Lab (MS Paint) & Moral Values", "descEn": "Practical Computer & Daily Homework Diary" }
+    ],
+    "Class 3rd": [
+      { "period": "Assembly", "time": "08:30 AM - 08:50 AM", "titleEn": "Assembly & Stage Speech", "descEn": "Prayer, Current Affairs & Student Speech" },
+      { "period": "1st Period", "time": "08:50 AM - 09:40 AM", "titleEn": "Mathematics & Olympiad Prep", "descEn": "Multiplication, Division, Geometry & Logical Maths" },
+      { "period": "2nd Period", "time": "09:40 AM - 10:30 AM", "titleEn": "English NCERT & Spoken", "descEn": "Comprehension, Tenses, Essay & Conversation" },
+      { "period": "Lunch Break", "time": "10:30 AM - 11:00 AM", "titleEn": "Lunch Break", "descEn": "Handwash & Tiffin" },
+      { "period": "3rd Period", "time": "11:00 AM - 11:50 AM", "titleEn": "Environmental Science (EVS)", "descEn": "Science Models, Plants, Solar System & Maps" },
+      { "period": "4th Period", "time": "11:50 AM - 12:40 PM", "titleEn": "Hindi & Moral Education", "descEn": "Hindi Grammar, Letter Writing & Values" },
+      { "period": "5th Period", "time": "12:40 PM - 01:30 PM", "titleEn": "Computer Typing, GK & Sports", "descEn": "WordPad Typing, General Knowledge & Games" }
+    ],
+    "Class 4th": [
+      { "period": "Assembly", "time": "08:30 AM - 08:50 AM", "titleEn": "Leadership Assembly", "descEn": "Prayer, News Reading, Quiz & Discipline Check" },
+      { "period": "1st Period", "time": "08:50 AM - 09:40 AM", "titleEn": "Advanced Primary Mathematics", "descEn": "Fractions, Decimals, Factors & Navodaya/Olympiad Maths" },
+      { "period": "2nd Period", "time": "09:40 AM - 10:30 AM", "titleEn": "Science & Environmental Studies", "descEn": "Human Body, Force, Matter & Lab Experiments" },
+      { "period": "Lunch Break", "time": "10:30 AM - 11:00 AM", "titleEn": "Lunch Break", "descEn": "Nutritious Tiffin Time" },
+      { "period": "3rd Period", "time": "11:00 AM - 11:50 AM", "titleEn": "English Grammar & Composition", "descEn": "Application Writing, Grammar, Debate & Reading" },
+      { "period": "4th Period", "time": "11:50 AM - 12:40 PM", "titleEn": "Hindi Vyakaran & Social Studies", "descEn": "Essay Writing, Grammar & India GK" },
+      { "period": "5th Period", "time": "12:40 PM - 01:30 PM", "titleEn": "Computer Applications & Reasoning", "descEn": "MS Office Basics, Mental Ability & Diary Check" }
+    ]
+  },
   "syllabus": {
     "Nursery": "English Phonics (A-Z), Rhymes, Counting (1-50), Colors & Shapes, Hindi Swar (अ-अः), Drawing & Good Habits.",
     "LKG": "Alphabet Writing (A-Z, अ-ज्ञ), Number Counting (1-100), Picture Reading, Hindi/English Rhymes & Art.",
