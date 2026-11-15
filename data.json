@@ -1,5 +1,5 @@
 {
-  "lastUpdated": 1794723917513,
+  "lastUpdated": 1794724047923,
   "timetableVersion": 4,
   "ghRepo": "NIRUCHANPRO/gyanova-heights-school",
   "visibility": {
@@ -474,6 +474,14 @@
     "Class 4th": "Solve Fractions worksheet and revise Computer shortcut keys."
   },
   "studentsList": [
+    {
+      "name": "Jyotirmay Tarak",
+      "className": "Nursery",
+      "roll": "",
+      "father": "Yogesh Kumar Tarak",
+      "badge": "Student",
+      "img": ""
+    },
     {
       "name": "Naitik Yadu",
       "className": "Class 2nd",
