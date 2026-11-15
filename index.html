@@ -3654,28 +3654,32 @@
     }
 
     // ================= LIVE VISITOR COUNTER ENGINE =================
+    // ================= LIVE VISITOR COUNTER (0 SE SHURU & HAR VIEW PAR TURANT UPDATE) =================
     async function fetchAndIncrementVisitors() {
       const countEl = document.getElementById('visitorCountDisplay');
       if (!countEl) return;
 
-      // Local backup counter taaki internet/API slow hone par bhi turant badhe
-      let localHits = parseInt(localStorage.getItem('ghs_live_views_count') || '2480', 10);
-      if (!sessionStorage.getItem('ghs_visit_counted')) {
-        localHits += 1;
-        localStorage.setItem('ghs_live_views_count', String(localHits));
-        sessionStorage.setItem('ghs_visit_counted', 'true');
-      }
-      countEl.innerText = localHits.toLocaleString('en-IN');
+      // Purana 2480 wala saved number aur session lock hamesha ke liye साफ karo
+      localStorage.removeItem('ghs_live_views_count');
+      sessionStorage.removeItem('ghs_visit_counted');
 
-      // Live Global API Counter
+      // 0 se shuru karke har page open/refresh par turant +1 badhao
+      let currentViews = parseInt(localStorage.getItem('ghs_views_from_zero') || '0', 10);
+      currentViews += 1;
+      localStorage.setItem('ghs_views_from_zero', String(currentViews));
+      countEl.innerText = currentViews.toLocaleString('en-IN');
+
+      // Global Live API Sync (Sabhi phones ke total views jodne ke liye)
       try {
-        const res = await fetch('https://api.counterapi.dev/v1/gyanovaheightsschool/visits/up');
+        const res = await fetch('https://api.counterapi.dev/v1/ghs_basin_live_zero_v1/views/up?t=' + Date.now(), {
+          cache: 'no-store'
+        });
         if (res.ok) {
           const data = await res.json();
           if (data && typeof data.count === 'number') {
-            const totalLive = 2480 + data.count;
-            localStorage.setItem('ghs_live_views_count', String(totalLive));
-            countEl.innerText = totalLive.toLocaleString('en-IN');
+            const finalCount = Math.max(currentViews, data.count);
+            localStorage.setItem('ghs_views_from_zero', String(finalCount));
+            countEl.innerText = finalCount.toLocaleString('en-IN');
           }
         }
       } catch (e) {}
