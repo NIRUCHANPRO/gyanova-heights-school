@@ -1,5 +1,5 @@
 {
-  "lastUpdated": 1794723669819,
+  "lastUpdated": 1794723712045,
   "timetableVersion": 4,
   "ghRepo": "NIRUCHANPRO/gyanova-heights-school",
   "visibility": {
@@ -474,6 +474,14 @@
     "Class 4th": "Solve Fractions worksheet and revise Computer shortcut keys."
   },
   "studentsList": [
+    {
+      "name": "Tejaswi Sahu",
+      "className": "LKG",
+      "roll": "",
+      "father": "Ugesh Kumar Sahu",
+      "badge": "Student",
+      "img": ""
+    },
     {
       "name": "Tushar Yadav",
       "className": "LKG",
