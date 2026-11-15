@@ -1586,64 +1586,66 @@
     });
 
     // Official Gyanova Heights School Timetable (From School Chart Photo & Subject List)
+    // Official School Class-Wise Timetables (09:15 AM to 01:20 PM)
     const defaultClassWiseTimetables = {
       "Nursery": [
-        { period: "Prayer", time: "09:15 AM - 09:30 AM", titleEn: "Morning Prayer & Assembly", titleHi: "प्रार्थना सभा (Prayer)", descEn: "Morning Prayer & Attendance", descHi: "सामूहिक प्रार्थना एवं उपस्थिति" },
+        { period: "Prayer", time: "09:15 AM - 09:30 AM", titleEn: "Prayer", titleHi: "प्रार्थना (Prayer)", descEn: "Morning Assembly (09:15 to 09:30)", descHi: "सामूहिक प्रार्थना (09:15 से 09:30)" },
         { period: "1st Period", time: "09:30 AM - 10:20 AM", titleEn: "English", titleHi: "अंग्रेजी (English)", descEn: "Teacher: Soni Mam", descHi: "शिक्षिका: सोनी मैम (Soni Mam)" },
         { period: "2nd Period", time: "10:20 AM - 11:10 AM", titleEn: "Maths", titleHi: "गणित (Maths)", descEn: "Teacher: Yadav Mam", descHi: "शिक्षिका: यादव मैम (Yadav Mam)" },
-        { period: "Lunch Break", time: "11:10 AM - 11:40 AM", titleEn: "LUNCH BREAK", titleHi: "मध्याह्न टिफिन अवकाश (LUNCH)", descEn: "Handwash & Nutritious Tiffin Time", descHi: "हाथ धुलाई एवं टिफिन समय" },
+        { period: "Lunch Break", time: "11:10 AM - 11:40 AM", titleEn: "LUNCH BREAK", titleHi: "टिफिन अवकाश (LUNCH)", descEn: "Lunch Time (11:10 to 11:40)", descHi: "मध्याह्न भोजन अवकाश (11:10 से 11:40)" },
         { period: "3rd Period", time: "11:40 AM - 12:30 PM", titleEn: "Hindi", titleHi: "हिंदी (Hindi)", descEn: "Teacher: Sen Mam", descHi: "शिक्षिका: सेन मैम (Sen Mam)" },
-        { period: "4th Period", time: "12:30 PM - 01:20 PM", titleEn: "Hindi & English Rhymes", titleHi: "हिंदी एवं अंग्रेजी कविताएं (Rhymes)", descEn: "Teacher: H.K.S. Mam & Soni Mam", descHi: "शिक्षिका: एच.के.एस. मैम एवं सोनी मैम" }
+        { period: "4th Period", time: "12:30 PM - 01:20 PM", titleEn: "Hindi & English Rhymes", titleHi: "हिंदी एवं अंग्रेजी कविताएं (Rhymes)", descEn: "Teacher: H.K.S. Mam and Soni Mam", descHi: "शिक्षिका: एच.के.एस. मैम एवं सोनी मैम" }
       ],
       "LKG": [
-        { period: "Prayer", time: "09:15 AM - 09:30 AM", titleEn: "Morning Prayer & Assembly", titleHi: "प्रार्थना सभा (Prayer)", descEn: "Morning Prayer & Attendance", descHi: "सामूहिक प्रार्थना एवं उपस्थिति" },
+        { period: "Prayer", time: "09:15 AM - 09:30 AM", titleEn: "Prayer", titleHi: "प्रार्थना (Prayer)", descEn: "Morning Assembly (09:15 to 09:30)", descHi: "सामूहिक प्रार्थना (09:15 से 09:30)" },
         { period: "1st Period", time: "09:30 AM - 10:20 AM", titleEn: "Maths", titleHi: "गणित (Maths)", descEn: "Teacher: Soni Mam", descHi: "शिक्षिका: सोनी मैम (Soni Mam)" },
         { period: "2nd Period", time: "10:20 AM - 11:10 AM", titleEn: "English", titleHi: "अंग्रेजी (English)", descEn: "Teacher: Yadav Mam", descHi: "शिक्षिका: यादव मैम (Yadav Mam)" },
-        { period: "Lunch Break", time: "11:10 AM - 11:40 AM", titleEn: "LUNCH BREAK", titleHi: "मध्याह्न टिफिन अवकाश (LUNCH)", descEn: "Handwash & Nutritious Tiffin Time", descHi: "हाथ धुलाई एवं टिफिन समय" },
+        { period: "Lunch Break", time: "11:10 AM - 11:40 AM", titleEn: "LUNCH BREAK", titleHi: "टिफिन अवकाश (LUNCH)", descEn: "Lunch Time (11:10 to 11:40)", descHi: "मध्याह्न भोजन अवकाश (11:10 से 11:40)" },
         { period: "3rd Period", time: "11:40 AM - 12:30 PM", titleEn: "Hindi", titleHi: "हिंदी (Hindi)", descEn: "Teacher: Yadav Mam", descHi: "शिक्षिका: यादव मैम (Yadav Mam)" },
-        { period: "4th Period", time: "12:30 PM - 01:20 PM", titleEn: "Hindi & English Rhymes", titleHi: "हिंदी एवं अंग्रेजी कविताएं (Rhymes)", descEn: "Teacher: H.K.S. Mam & Soni Mam", descHi: "शिक्षिका: एच.के.एस. मैम एवं सोनी मैम" }
+        { period: "4th Period", time: "12:30 PM - 01:20 PM", titleEn: "Hindi & English Rhymes", titleHi: "हिंदी एवं अंग्रेजी कविताएं (Rhymes)", descEn: "Teacher: H.K.S. Mam and Soni Mam", descHi: "शिक्षिका: एच.के.एस. मैम एवं सोनी मैम" }
       ],
       "UKG": [
-        { period: "Prayer", time: "09:15 AM - 09:30 AM", titleEn: "Morning Prayer & Assembly", titleHi: "प्रार्थना सभा (Prayer)", descEn: "Morning Prayer & Attendance", descHi: "सामूहिक प्रार्थना एवं उपस्थिति" },
+        { period: "Prayer", time: "09:15 AM - 09:30 AM", titleEn: "Prayer", titleHi: "प्रार्थना (Prayer)", descEn: "Morning Assembly (09:15 to 09:30)", descHi: "सामूहिक प्रार्थना (09:15 से 09:30)" },
         { period: "1st Period", time: "09:30 AM - 10:20 AM", titleEn: "English", titleHi: "अंग्रेजी (English)", descEn: "Teacher: Soni Mam", descHi: "शिक्षिका: सोनी मैम (Soni Mam)" },
         { period: "2nd Period", time: "10:20 AM - 11:10 AM", titleEn: "Maths", titleHi: "गणित (Maths)", descEn: "Teacher: Yadav Mam", descHi: "शिक्षिका: यादव मैम (Yadav Mam)" },
-        { period: "Lunch Break", time: "11:10 AM - 11:40 AM", titleEn: "LUNCH BREAK", titleHi: "मध्याह्न टिफिन अवकाश (LUNCH)", descEn: "Handwash & Nutritious Tiffin Time", descHi: "हाथ धुलाई एवं टिफिन समय" },
+        { period: "Lunch Break", time: "11:10 AM - 11:40 AM", titleEn: "LUNCH BREAK", titleHi: "टिफिन अवकाश (LUNCH)", descEn: "Lunch Time (11:10 to 11:40)", descHi: "मध्याह्न भोजन अवकाश (11:10 से 11:40)" },
         { period: "3rd Period", time: "11:40 AM - 12:30 PM", titleEn: "Hindi", titleHi: "हिंदी (Hindi)", descEn: "Teacher: Sen Mam", descHi: "शिक्षिका: सेन मैम (Sen Mam)" },
-        { period: "4th Period", time: "12:30 PM - 01:20 PM", titleEn: "Hindi & English Rhymes", titleHi: "हिंदी एवं अंग्रेजी कविताएं (Rhymes)", descEn: "Teacher: H.K.S. Mam & Soni Mam", descHi: "शिक्षिका: एच.के.एस. मैम एवं सोनी मैम" }
+        { period: "4th Period", time: "12:30 PM - 01:20 PM", titleEn: "Hindi & English Rhymes", titleHi: "हिंदी एवं अंग्रेजी कविताएं (Rhymes)", descEn: "Teacher: H.K.S. Mam and Soni Mam", descHi: "शिक्षिका: एच.के.एस. मैम एवं सोनी मैम" }
       ],
       "Class 1st": [
-        { period: "Prayer", time: "09:15 AM - 09:30 AM", titleEn: "Morning Prayer & Assembly", titleHi: "प्रार्थना सभा (Prayer)", descEn: "Morning Prayer & Attendance", descHi: "सामूहिक प्रार्थना एवं उपस्थिति" },
+        { period: "Prayer", time: "09:15 AM - 09:30 AM", titleEn: "Prayer", titleHi: "प्रार्थना (Prayer)", descEn: "Morning Assembly (09:15 to 09:30)", descHi: "सामूहिक प्रार्थना (09:15 से 09:30)" },
         { period: "1st Period", time: "09:30 AM - 10:20 AM", titleEn: "Hindi", titleHi: "हिंदी (Hindi)", descEn: "Teacher: H.K.S. Mam", descHi: "शिक्षिका: एच.के.एस. मैम (H.K.S. Mam)" },
         { period: "2nd Period", time: "10:20 AM - 11:10 AM", titleEn: "English", titleHi: "अंग्रेजी (English)", descEn: "Teacher: Sen Mam", descHi: "शिक्षिका: सेन मैम (Sen Mam)" },
-        { period: "Lunch Break", time: "11:10 AM - 11:40 AM", titleEn: "LUNCH BREAK", titleHi: "मध्याह्न टिफिन अवकाश (LUNCH)", descEn: "Handwash & Nutritious Tiffin Time", descHi: "हाथ धुलाई एवं टिफिन समय" },
+        { period: "Lunch Break", time: "11:10 AM - 11:40 AM", titleEn: "LUNCH BREAK", titleHi: "टिफिन अवकाश (LUNCH)", descEn: "Lunch Time (11:10 to 11:40)", descHi: "मध्याह्न भोजन अवकाश (11:10 से 11:40)" },
         { period: "3rd Period", time: "11:40 AM - 12:30 PM", titleEn: "Maths", titleHi: "गणित (Maths)", descEn: "Teacher: K.K.S. Sir", descHi: "शिक्षक: के.के.एस. सर (K.K.S. Sir)" },
         { period: "4th Period", time: "12:30 PM - 01:20 PM", titleEn: "Social Studies", titleHi: "सामाजिक अध्ययन (Social Studies)", descEn: "Teacher: Yadav Mam", descHi: "शिक्षिका: यादव मैम (Yadav Mam)" }
       ],
       "Class 2nd": [
-        { period: "Prayer", time: "09:15 AM - 09:30 AM", titleEn: "Morning Prayer & Assembly", titleHi: "प्रार्थना सभा (Prayer)", descEn: "Morning Prayer & Attendance", descHi: "सामूहिक प्रार्थना एवं उपस्थिति" },
+        { period: "Prayer", time: "09:15 AM - 09:30 AM", titleEn: "Prayer", titleHi: "प्रार्थना (Prayer)", descEn: "Morning Assembly (09:15 to 09:30)", descHi: "सामूहिक प्रार्थना (09:15 से 09:30)" },
         { period: "1st Period", time: "09:30 AM - 10:20 AM", titleEn: "Hindi", titleHi: "हिंदी (Hindi)", descEn: "Teacher: H.K.S. Mam", descHi: "शिक्षिका: एच.के.एस. मैम (H.K.S. Mam)" },
         { period: "2nd Period", time: "10:20 AM - 11:10 AM", titleEn: "English", titleHi: "अंग्रेजी (English)", descEn: "Teacher: Sen Mam", descHi: "शिक्षिका: सेन मैम (Sen Mam)" },
-        { period: "Lunch Break", time: "11:10 AM - 11:40 AM", titleEn: "LUNCH BREAK", titleHi: "मध्याह्न टिफिन अवकाश (LUNCH)", descEn: "Handwash & Nutritious Tiffin Time", descHi: "हाथ धुलाई एवं टिफिन समय" },
+        { period: "Lunch Break", time: "11:10 AM - 11:40 AM", titleEn: "LUNCH BREAK", titleHi: "टिफिन अवकाश (LUNCH)", descEn: "Lunch Time (11:10 to 11:40)", descHi: "मध्याह्न भोजन अवकाश (11:10 से 11:40)" },
         { period: "3rd Period", time: "11:40 AM - 12:30 PM", titleEn: "Maths", titleHi: "गणित (Maths)", descEn: "Teacher: K.K.S. Sir", descHi: "शिक्षक: के.के.एस. सर (K.K.S. Sir)" },
         { period: "4th Period", time: "12:30 PM - 01:20 PM", titleEn: "Social Studies", titleHi: "सामाजिक अध्ययन (Social Studies)", descEn: "Teacher: Yadav Mam", descHi: "शिक्षिका: यादव मैम (Yadav Mam)" }
       ],
       "Class 3rd": [
-        { period: "Prayer", time: "09:15 AM - 09:30 AM", titleEn: "Morning Prayer & Assembly", titleHi: "प्रार्थना सभा (Prayer)", descEn: "Morning Prayer & Attendance", descHi: "सामूहिक प्रार्थना एवं उपस्थिति" },
+        { period: "Prayer", time: "09:15 AM - 09:30 AM", titleEn: "Prayer", titleHi: "प्रार्थना (Prayer)", descEn: "Morning Assembly (09:15 to 09:30)", descHi: "सामूहिक प्रार्थना (09:15 से 09:30)" },
         { period: "1st Period", time: "09:30 AM - 10:20 AM", titleEn: "Maths", titleHi: "गणित (Maths)", descEn: "Teacher: K.K.S. Sir", descHi: "शिक्षक: के.के.एस. सर (K.K.S. Sir)" },
         { period: "2nd Period", time: "10:20 AM - 11:10 AM", titleEn: "English", titleHi: "अंग्रेजी (English)", descEn: "Teacher: K.K.S. Sir", descHi: "शिक्षक: के.के.एस. सर (K.K.S. Sir)" },
-        { period: "Lunch Break", time: "11:10 AM - 11:40 AM", titleEn: "LUNCH BREAK", titleHi: "मध्याह्न टिफिन अवकाश (LUNCH)", descEn: "Handwash & Nutritious Tiffin Time", descHi: "हाथ धुलाई एवं टिफिन समय" },
+        { period: "Lunch Break", time: "11:10 AM - 11:40 AM", titleEn: "LUNCH BREAK", titleHi: "टिफिन अवकाश (LUNCH)", descEn: "Lunch Time (11:10 to 11:40)", descHi: "मध्याह्न भोजन अवकाश (11:10 से 11:40)" },
         { period: "3rd Period", time: "11:40 AM - 12:30 PM", titleEn: "Hindi", titleHi: "हिंदी (Hindi)", descEn: "Teacher: Soni Mam", descHi: "शिक्षिका: सोनी मैम (Soni Mam)" },
         { period: "4th Period", time: "12:30 PM - 01:20 PM", titleEn: "Environmental Science", titleHi: "पर्यावरण अध्ययन (EVS)", descEn: "Teacher: Sen Mam", descHi: "शिक्षिका: सेन मैम (Sen Mam)" }
       ],
       "Class 4th": [
-        { period: "Prayer", time: "09:15 AM - 09:30 AM", titleEn: "Morning Prayer & Assembly", titleHi: "प्रार्थना सभा (Prayer)", descEn: "Morning Prayer & Attendance", descHi: "सामूहिक प्रार्थना एवं उपस्थिति" },
+        { period: "Prayer", time: "09:15 AM - 09:30 AM", titleEn: "Prayer", titleHi: "प्रार्थना (Prayer)", descEn: "Morning Assembly (09:15 to 09:30)", descHi: "सामूहिक प्रार्थना (09:15 से 09:30)" },
         { period: "1st Period", time: "09:30 AM - 10:20 AM", titleEn: "Maths", titleHi: "गणित (Maths)", descEn: "Teacher: K.K.S. Sir", descHi: "शिक्षक: के.के.एस. सर (K.K.S. Sir)" },
         { period: "2nd Period", time: "10:20 AM - 11:10 AM", titleEn: "English", titleHi: "अंग्रेजी (English)", descEn: "Teacher: K.K.S. Sir", descHi: "शिक्षक: के.के.एस. सर (K.K.S. Sir)" },
-        { period: "Lunch Break", time: "11:10 AM - 11:40 AM", titleEn: "LUNCH BREAK", titleHi: "मध्याह्न टिफिन अवकाश (LUNCH)", descEn: "Handwash & Nutritious Tiffin Time", descHi: "हाथ धुलाई एवं टिफिन समय" },
+        { period: "Lunch Break", time: "11:10 AM - 11:40 AM", titleEn: "LUNCH BREAK", titleHi: "टिफिन अवकाश (LUNCH)", descEn: "Lunch Time (11:10 to 11:40)", descHi: "मध्याह्न भोजन अवकाश (11:10 से 11:40)" },
         { period: "3rd Period", time: "11:40 AM - 12:30 PM", titleEn: "Hindi", titleHi: "हिंदी (Hindi)", descEn: "Teacher: Soni Mam", descHi: "शिक्षिका: सोनी मैम (Soni Mam)" },
         { period: "4th Period", time: "12:30 PM - 01:20 PM", titleEn: "Environmental Science", titleHi: "पर्यावरण अध्ययन (EVS)", descEn: "Teacher: Sen Mam", descHi: "शिक्षिका: सेन मैम (Sen Mam)" }
       ]
     };
+
 
     // Master School Database
     let schoolData = {
@@ -1763,20 +1765,20 @@
     }
 
     // Ensure Official Class-Wise Timetable Structure Exists & Upgrades Cleanly
+    // Ensure Class-Wise Timetable Structure Exists & Replaces Old 08:30 AM Routine
     function ensureClassTimetableStructure() {
-      if ((schoolData.timetableVersion || 0) < CURRENT_TIMETABLE_VERSION) {
-        schoolData.classTimetables = JSON.parse(JSON.stringify(defaultClassWiseTimetables));
-        schoolData.timetableClasses = ["Nursery", "LKG", "UKG", "Class 1st", "Class 2nd", "Class 3rd", "Class 4th"];
-        schoolData.timetableVersion = CURRENT_TIMETABLE_VERSION;
-      }
-      if (!schoolData.classTimetables || typeof schoolData.classTimetables !== 'object') {
+      if (
+        !schoolData.classTimetables ||
+        typeof schoolData.classTimetables !== 'object' ||
+        schoolData.classTimetables?.["Nursery"]?.[0]?.time?.includes("08:30")
+      ) {
         schoolData.classTimetables = JSON.parse(JSON.stringify(defaultClassWiseTimetables));
       }
       if (!Array.isArray(schoolData.timetableClasses) || schoolData.timetableClasses.length === 0) {
         schoolData.timetableClasses = Object.keys(schoolData.classTimetables);
       }
       schoolData.timetableClasses.forEach(cls => {
-        if (!Array.isArray(schoolData.classTimetables[cls]) || schoolData.classTimetables[cls].length === 0) {
+        if (!Array.isArray(schoolData.classTimetables[cls])) {
           schoolData.classTimetables[cls] = defaultClassWiseTimetables[cls]
             ? JSON.parse(JSON.stringify(defaultClassWiseTimetables[cls]))
             : [];
@@ -1786,6 +1788,7 @@
         activeFrontendTtClass = schoolData.timetableClasses[0] || 'Nursery';
       }
     }
+
 
     // Inject Extra Timetable UI (Prayer Banner + Full School Master Timetable Grid + Restore Button)
     function injectTimetableEnhancementsDOM() {
