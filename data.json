@@ -1,5 +1,5 @@
 {
-  "lastUpdated": 1794724462683,
+  "lastUpdated": 1794724493551,
   "timetableVersion": 4,
   "ghRepo": "NIRUCHANPRO/gyanova-heights-school",
   "visibility": {
@@ -474,6 +474,14 @@
     "Class 4th": "Solve Fractions worksheet and revise Computer shortcut keys."
   },
   "studentsList": [
+    {
+      "name": "Kunal Sen",
+      "className": "Class 1st",
+      "roll": "",
+      "father": "Punam Kumar Sen",
+      "badge": "Student",
+      "img": ""
+    },
     {
       "name": "Bhavya Patel",
       "className": "Class 3rd",
