@@ -1547,84 +1547,112 @@
     </div>
   </footer>
   <!-- ================= PART 1 ENDS HERE — PASTE PART 2 DIRECTLY BELOW THIS LINE ================= -->
-  <!-- ================= PART 2 STARTS HERE — PASTE DIRECTLY BELOW PART 1 ================= -->
+    <!-- ================= PART 2 STARTS HERE — PASTE DIRECTLY BELOW PART 1 ================= -->
   <script>
     let currentLang = 'en';
     let currentClassKey = 'nursery';
     let selectedFeePlan = 'monthly'; // 'monthly' or 'onetime'
     let activeFrontendTtClass = 'Nursery';
+    const CURRENT_TIMETABLE_VERSION = 4;
+    const STORAGE_KEY = 'ghs_master_erp_v6';
+    let autoSyncTimer = null;
 
-    // Default Class-Wise Timetables (Distinct Subjects & Periods for Nursery to Class 4th)
+    // Cross-Tab Instant Live Sync Channel
+    const liveChannel = ('BroadcastChannel' in window) ? new BroadcastChannel('ghs_live_sync_channel') : null;
+    if (liveChannel) {
+      liveChannel.onmessage = (ev) => {
+        if (ev.data && ev.data.lastUpdated && ev.data.lastUpdated > (schoolData.lastUpdated || 0)) {
+          schoolData = ev.data;
+          renderAllContent();
+          showClassInfo(currentClassKey);
+          updateLockedFeeAmount();
+        }
+      };
+    }
+    window.addEventListener('storage', (ev) => {
+      if (ev.key === STORAGE_KEY && ev.newValue) {
+        try {
+          const parsed = JSON.parse(ev.newValue);
+          if ((parsed.lastUpdated || 0) > (schoolData.lastUpdated || 0)) {
+            schoolData = parsed;
+            renderAllContent();
+            showClassInfo(currentClassKey);
+            updateLockedFeeAmount();
+          }
+        } catch (e) {}
+      }
+    });
+
+    // Official Gyanova Heights School Timetable (From School Chart Photo & Subject List)
     const defaultClassWiseTimetables = {
       "Nursery": [
-        { period: "Assembly", time: "08:30 AM - 08:50 AM", titleEn: "Prayer & Rhymes Circle", titleHi: "प्रार्थना एवं कविता चक्र", descEn: "Gayatri Mantra, Action Songs & Good Habits", descHi: "गायत्री मंत्र, एक्शन सॉन्ग और अच्छी आदतें" },
-        { period: "1st Period", time: "08:50 AM - 09:35 AM", titleEn: "English Phonics (A-Z)", titleHi: "अंग्रेजी फोक्स (A-Z)", descEn: "Sound Recognition & Picture Flashcards", descHi: "ध्वनि पहचान एवं चित्र फ्लैशकार्ड" },
-        { period: "2nd Period", time: "09:35 AM - 10:20 AM", titleEn: "Play-Way Numbers (1-50)", titleHi: "खेल-खेल में गिनती (1-50)", descEn: "Counting with Beads, Blocks & Shapes", descHi: "ब्लॉक्स और आकृतियों से गिनती सीखना" },
-        { period: "Lunch Break", time: "10:20 AM - 10:50 AM", titleEn: "Handwash & Tiffin Time", titleHi: "हाथ धुलाई एवं टिफिन समय", descEn: "Supervised Nutritious Meal & Etiquette", descHi: "शिक्षकों की देखरेख में पौष्टिक भोजन" },
-        { period: "3rd Period", time: "10:50 AM - 11:40 AM", titleEn: "Hindi Swar (अ-अः) & Storytelling", titleHi: "हिंदी स्वर (अ-अः) एवं कहानी", descEn: "Smart Screen Animated Moral Stories", descHi: "स्मार्ट स्क्रीन पर शिक्षाप्रद कहानियां" },
-        { period: "4th Period", time: "11:40 AM - 12:30 PM", titleEn: "Coloring, Clay & Indoor Play", titleHi: "चित्रकला, क्ले आर्ट एवं इंडोर खेल", descEn: "Motor Skills Development & Diary Note", descHi: "रचनात्मक खेल एवं डायरी नोट" }
+        { period: "Prayer", time: "09:15 AM - 09:30 AM", titleEn: "Morning Prayer & Assembly", titleHi: "प्रार्थना सभा (Prayer)", descEn: "Morning Prayer & Attendance", descHi: "सामूहिक प्रार्थना एवं उपस्थिति" },
+        { period: "1st Period", time: "09:30 AM - 10:20 AM", titleEn: "English", titleHi: "अंग्रेजी (English)", descEn: "Teacher: Soni Mam", descHi: "शिक्षिका: सोनी मैम (Soni Mam)" },
+        { period: "2nd Period", time: "10:20 AM - 11:10 AM", titleEn: "Maths", titleHi: "गणित (Maths)", descEn: "Teacher: Yadav Mam", descHi: "शिक्षिका: यादव मैम (Yadav Mam)" },
+        { period: "Lunch Break", time: "11:10 AM - 11:40 AM", titleEn: "LUNCH BREAK", titleHi: "मध्याह्न टिफिन अवकाश (LUNCH)", descEn: "Handwash & Nutritious Tiffin Time", descHi: "हाथ धुलाई एवं टिफिन समय" },
+        { period: "3rd Period", time: "11:40 AM - 12:30 PM", titleEn: "Hindi", titleHi: "हिंदी (Hindi)", descEn: "Teacher: Sen Mam", descHi: "शिक्षिका: सेन मैम (Sen Mam)" },
+        { period: "4th Period", time: "12:30 PM - 01:20 PM", titleEn: "Hindi & English Rhymes", titleHi: "हिंदी एवं अंग्रेजी कविताएं (Rhymes)", descEn: "Teacher: H.K.S. Mam & Soni Mam", descHi: "शिक्षिका: एच.के.एस. मैम एवं सोनी मैम" }
       ],
       "LKG": [
-        { period: "Assembly", time: "08:30 AM - 08:50 AM", titleEn: "Morning Prayer & Yoga", titleHi: "प्रार्थना सभा एवं बाल योग", descEn: "Prayer, National Song & Warm-up", descHi: "प्रार्थना, राष्ट्रगीत एवं हल्का व्यायाम" },
-        { period: "1st Period", time: "08:50 AM - 09:40 AM", titleEn: "English Alphabet Writing", titleHi: "अंग्रेजी वर्णमाला लेखन", descEn: "Capital & Small Letters (A-Z) Workbook", descHi: "कैपिटल एवं स्मॉल लेटर्स (A-Z) अभ्यास" },
-        { period: "2nd Period", time: "09:40 AM - 10:30 AM", titleEn: "Mathematics (1 to 100)", titleHi: "गणित एवं गिनती (1 से 100)", descEn: "Number Writing, Missing Numbers & Shapes", descHi: "अंक लेखन, खाली स्थान एवं आकार ज्ञान" },
-        { period: "Lunch Break", time: "10:30 AM - 11:00 AM", titleEn: "Nutritious Tiffin Break", titleHi: "टिफिन एवं मध्याह्न अवकाश", descEn: "Handwash Hygiene & Lunch", descHi: "हाथ धुलाई स्वच्छता एवं टिफिन" },
-        { period: "3rd Period", time: "11:00 AM - 11:45 AM", titleEn: "Hindi Varnamala (अ से ज्ञ)", titleHi: "हिंदी वर्णमाला (अ से ज्ञ)", descEn: "Akshar Writing & Hindi Rhymes", descHi: "अक्षर लेखन एवं हिंदी बाल कविताएं" },
-        { period: "4th Period", time: "11:45 AM - 12:30 PM", titleEn: "General Awareness & Art", titleHi: "सामान्य ज्ञान एवं चित्रकला", descEn: "Fruits, Animals, Colors & Drawing", descHi: "फलों, पशुओं व रंगों की पहचान एवं ड्राइंग" }
+        { period: "Prayer", time: "09:15 AM - 09:30 AM", titleEn: "Morning Prayer & Assembly", titleHi: "प्रार्थना सभा (Prayer)", descEn: "Morning Prayer & Attendance", descHi: "सामूहिक प्रार्थना एवं उपस्थिति" },
+        { period: "1st Period", time: "09:30 AM - 10:20 AM", titleEn: "Maths", titleHi: "गणित (Maths)", descEn: "Teacher: Soni Mam", descHi: "शिक्षिका: सोनी मैम (Soni Mam)" },
+        { period: "2nd Period", time: "10:20 AM - 11:10 AM", titleEn: "English", titleHi: "अंग्रेजी (English)", descEn: "Teacher: Yadav Mam", descHi: "शिक्षिका: यादव मैम (Yadav Mam)" },
+        { period: "Lunch Break", time: "11:10 AM - 11:40 AM", titleEn: "LUNCH BREAK", titleHi: "मध्याह्न टिफिन अवकाश (LUNCH)", descEn: "Handwash & Nutritious Tiffin Time", descHi: "हाथ धुलाई एवं टिफिन समय" },
+        { period: "3rd Period", time: "11:40 AM - 12:30 PM", titleEn: "Hindi", titleHi: "हिंदी (Hindi)", descEn: "Teacher: Yadav Mam", descHi: "शिक्षिका: यादव मैम (Yadav Mam)" },
+        { period: "4th Period", time: "12:30 PM - 01:20 PM", titleEn: "Hindi & English Rhymes", titleHi: "हिंदी एवं अंग्रेजी कविताएं (Rhymes)", descEn: "Teacher: H.K.S. Mam & Soni Mam", descHi: "शिक्षिका: एच.के.एस. मैम एवं सोनी मैम" }
       ],
       "UKG": [
-        { period: "Assembly", time: "08:30 AM - 08:50 AM", titleEn: "Morning Assembly", titleHi: "प्रार्थना सभा एवं प्रतिज्ञा", descEn: "Prayer, Pledge & Spoken English Word of the Day", descHi: "प्रार्थना, प्रतिज्ञा एवं आज का अंग्रेजी शब्द" },
-        { period: "1st Period", time: "08:50 AM - 09:40 AM", titleEn: "English Reader & Phonics", titleHi: "अंग्रेजी पठन एवं फोक्स", descEn: "Three-Letter Words, Vowels & Cursive Practice", descHi: "तीन अक्षर वाले शब्द, स्वर एवं कर्सिव लेखन" },
-        { period: "2nd Period", time: "09:40 AM - 10:30 AM", titleEn: "Numbers & Basic Maths", titleHi: "प्रारंभिक गणित एवं पहाड़े", descEn: "Addition, Subtraction, Tables (2-5) & Number Names", descHi: "जोड़, घटाव, पहाड़े (2-5) एवं स्पेलिंग" },
-        { period: "Lunch Break", time: "10:30 AM - 11:00 AM", titleEn: "Lunch Break", titleHi: "मध्याह्न टिफिन अवकाश", descEn: "Supervised Tiffin Time", descHi: "अनुशासित टिफिन समय" },
-        { period: "3rd Period", time: "11:00 AM - 11:50 AM", titleEn: "Hindi Matra Gyan", titleHi: "हिंदी मात्रा एवं शब्द ज्ञान", descEn: "Two/Three-Letter Words & Matra Practice", descHi: "दो व तीन अक्षर वाले शब्द एवं मात्रा अभ्यास" },
-        { period: "4th Period", time: "11:50 AM - 12:45 PM", titleEn: "EVS, Smart Class & Conversation", titleHi: "पर्यावरण, स्मार्ट क्लास एवं संवाद", descEn: "Good Manners, Nature Study & Spoken English", descHi: "शिष्टाचार, प्रकृति परिचय एवं स्पोकन इंग्लिश" }
+        { period: "Prayer", time: "09:15 AM - 09:30 AM", titleEn: "Morning Prayer & Assembly", titleHi: "प्रार्थना सभा (Prayer)", descEn: "Morning Prayer & Attendance", descHi: "सामूहिक प्रार्थना एवं उपस्थिति" },
+        { period: "1st Period", time: "09:30 AM - 10:20 AM", titleEn: "English", titleHi: "अंग्रेजी (English)", descEn: "Teacher: Soni Mam", descHi: "शिक्षिका: सोनी मैम (Soni Mam)" },
+        { period: "2nd Period", time: "10:20 AM - 11:10 AM", titleEn: "Maths", titleHi: "गणित (Maths)", descEn: "Teacher: Yadav Mam", descHi: "शिक्षिका: यादव मैम (Yadav Mam)" },
+        { period: "Lunch Break", time: "11:10 AM - 11:40 AM", titleEn: "LUNCH BREAK", titleHi: "मध्याह्न टिफिन अवकाश (LUNCH)", descEn: "Handwash & Nutritious Tiffin Time", descHi: "हाथ धुलाई एवं टिफिन समय" },
+        { period: "3rd Period", time: "11:40 AM - 12:30 PM", titleEn: "Hindi", titleHi: "हिंदी (Hindi)", descEn: "Teacher: Sen Mam", descHi: "शिक्षिका: सेन मैम (Sen Mam)" },
+        { period: "4th Period", time: "12:30 PM - 01:20 PM", titleEn: "Hindi & English Rhymes", titleHi: "हिंदी एवं अंग्रेजी कविताएं (Rhymes)", descEn: "Teacher: H.K.S. Mam & Soni Mam", descHi: "शिक्षिका: एच.के.एस. मैम एवं सोनी मैम" }
       ],
       "Class 1st": [
-        { period: "Assembly", time: "08:30 AM - 08:50 AM", titleEn: "Prayer, News & Thought", titleHi: "प्रार्थना, समाचार एवं सुविचार", descEn: "Morning Assembly & PT Exercise", descHi: "प्रार्थना सभा एवं पी.टी. व्यायाम" },
-        { period: "1st Period", time: "08:50 AM - 09:40 AM", titleEn: "Mathematics (NCERT)", titleHi: "गणित (NCERT)", descEn: "Addition, Subtraction, Shapes & Mental Maths", descHi: "जोड़, घटाव, आकृतियां एवं मेंटल मैथ्स" },
-        { period: "2nd Period", time: "09:40 AM - 10:30 AM", titleEn: "English Reader & Grammar", titleHi: "अंग्रेजी रीडर एवं ग्रामर", descEn: "Reading Fluency, Nouns, Pronouns & Vocabulary", descHi: "धाराप्रवाह पठन, संज्ञा, सर्वनाम एवं शब्दकोश" },
-        { period: "Lunch Break", time: "10:30 AM - 11:00 AM", titleEn: "Tiffin Break", titleHi: "टिफिन अवकाश", descEn: "Handwash & Lunch Break", descHi: "हाथ धुलाई एवं भोजन अवकाश" },
-        { period: "3rd Period", time: "11:00 AM - 11:50 AM", titleEn: "Hindi (Rimjhim & Vyakaran)", titleHi: "हिंदी (रिमझिम एवं व्याकरण)", descEn: "Reading, Handwriting & Basic Grammar", descHi: "कहानी पठन, सुलेख और हिंदी व्याकरण" },
-        { period: "4th Period", time: "11:50 AM - 12:40 PM", titleEn: "EVS (Environmental Studies)", titleHi: "पर्यावरण अध्ययन (EVS)", descEn: "Our Body, Family, Plants & Surroundings", descHi: "हमारा शरीर, परिवार, पेड़-पौधे एवं परिवेश" },
-        { period: "5th Period", time: "12:40 PM - 01:30 PM", titleEn: "Computer Basics & GK", titleHi: "कंप्यूटर बेसिक्स एवं सामान्य ज्ञान", descEn: "Parts of Computer, Drawing & Diary Check", descHi: "कंप्यूटर परिचय, चित्रकला एवं डायरी जांच" }
+        { period: "Prayer", time: "09:15 AM - 09:30 AM", titleEn: "Morning Prayer & Assembly", titleHi: "प्रार्थना सभा (Prayer)", descEn: "Morning Prayer & Attendance", descHi: "सामूहिक प्रार्थना एवं उपस्थिति" },
+        { period: "1st Period", time: "09:30 AM - 10:20 AM", titleEn: "Hindi", titleHi: "हिंदी (Hindi)", descEn: "Teacher: H.K.S. Mam", descHi: "शिक्षिका: एच.के.एस. मैम (H.K.S. Mam)" },
+        { period: "2nd Period", time: "10:20 AM - 11:10 AM", titleEn: "English", titleHi: "अंग्रेजी (English)", descEn: "Teacher: Sen Mam", descHi: "शिक्षिका: सेन मैम (Sen Mam)" },
+        { period: "Lunch Break", time: "11:10 AM - 11:40 AM", titleEn: "LUNCH BREAK", titleHi: "मध्याह्न टिफिन अवकाश (LUNCH)", descEn: "Handwash & Nutritious Tiffin Time", descHi: "हाथ धुलाई एवं टिफिन समय" },
+        { period: "3rd Period", time: "11:40 AM - 12:30 PM", titleEn: "Maths", titleHi: "गणित (Maths)", descEn: "Teacher: K.K.S. Sir", descHi: "शिक्षक: के.के.एस. सर (K.K.S. Sir)" },
+        { period: "4th Period", time: "12:30 PM - 01:20 PM", titleEn: "Social Studies", titleHi: "सामाजिक अध्ययन (Social Studies)", descEn: "Teacher: Yadav Mam", descHi: "शिक्षिका: यादव मैम (Yadav Mam)" }
       ],
       "Class 2nd": [
-        { period: "Assembly", time: "08:30 AM - 08:50 AM", titleEn: "Morning Assembly", titleHi: "प्रार्थना सभा एवं प्रश्नोत्तरी", descEn: "Prayer, GK Quiz & National Anthem", descHi: "प्रार्थना, सामान्य ज्ञान प्रश्नोत्तरी एवं राष्ट्रगान" },
-        { period: "1st Period", time: "08:50 AM - 09:40 AM", titleEn: "Mathematics", titleHi: "गणित एवं पहाड़े", descEn: "2-Digit Sums, Tables (2-12) & Word Problems", descHi: "दो अंकों के सवाल, पहाड़े (2-12) एवं अभ्यास" },
-        { period: "2nd Period", time: "09:40 AM - 10:30 AM", titleEn: "English Literature & Grammar", titleHi: "अंग्रेजी साहित्य एवं व्याकरण", descEn: "Story Reading, Sentence Making & Spoken English", descHi: "कहानी पठन, वाक्य निर्माण एवं स्पोकन इंग्लिश" },
-        { period: "Lunch Break", time: "10:30 AM - 11:00 AM", titleEn: "Tiffin Break", titleHi: "टिफिन अवकाश", descEn: "Supervised Lunch Break", descHi: "मध्याह्न भोजन अवकाश" },
-        { period: "3rd Period", time: "11:00 AM - 11:50 AM", titleEn: "Hindi Sahitya & Vyakaran", titleHi: "हिंदी साहित्य एवं व्याकरण", descEn: "Stories, Opposites, Sangya & Writing", descHi: "कहानी पठन, विलोम शब्द, संज्ञा एवं सुलेख" },
-        { period: "4th Period", time: "11:50 AM - 12:40 PM", titleEn: "EVS & Activity Project", titleHi: "पर्यावरण एवं प्रोजेक्ट कार्य", descEn: "Seasons, Festivals, Water & Healthy Habits", descHi: "ऋतुएं, त्योहार, जल संरक्षण एवं स्वास्थ्य" },
-        { period: "5th Period", time: "12:40 PM - 01:30 PM", titleEn: "Computer Lab (MS Paint) & Values", titleHi: "कंप्यूटर लैब (MS Paint) एवं संस्कार", descEn: "Practical Computer & Daily Homework Diary", descHi: "कंप्यूटर प्रैक्टिकल एवं दैनिक होमवर्क डायरी" }
+        { period: "Prayer", time: "09:15 AM - 09:30 AM", titleEn: "Morning Prayer & Assembly", titleHi: "प्रार्थना सभा (Prayer)", descEn: "Morning Prayer & Attendance", descHi: "सामूहिक प्रार्थना एवं उपस्थिति" },
+        { period: "1st Period", time: "09:30 AM - 10:20 AM", titleEn: "Hindi", titleHi: "हिंदी (Hindi)", descEn: "Teacher: H.K.S. Mam", descHi: "शिक्षिका: एच.के.एस. मैम (H.K.S. Mam)" },
+        { period: "2nd Period", time: "10:20 AM - 11:10 AM", titleEn: "English", titleHi: "अंग्रेजी (English)", descEn: "Teacher: Sen Mam", descHi: "शिक्षिका: सेन मैम (Sen Mam)" },
+        { period: "Lunch Break", time: "11:10 AM - 11:40 AM", titleEn: "LUNCH BREAK", titleHi: "मध्याह्न टिफिन अवकाश (LUNCH)", descEn: "Handwash & Nutritious Tiffin Time", descHi: "हाथ धुलाई एवं टिफिन समय" },
+        { period: "3rd Period", time: "11:40 AM - 12:30 PM", titleEn: "Maths", titleHi: "गणित (Maths)", descEn: "Teacher: K.K.S. Sir", descHi: "शिक्षक: के.के.एस. सर (K.K.S. Sir)" },
+        { period: "4th Period", time: "12:30 PM - 01:20 PM", titleEn: "Social Studies", titleHi: "सामाजिक अध्ययन (Social Studies)", descEn: "Teacher: Yadav Mam", descHi: "शिक्षिका: यादव मैम (Yadav Mam)" }
       ],
       "Class 3rd": [
-        { period: "Assembly", time: "08:30 AM - 08:50 AM", titleEn: "Assembly & Stage Speech", titleHi: "प्रार्थना सभा एवं मंच भाषण", descEn: "Prayer, Current Affairs & Student Speech", descHi: "प्रार्थना, समाचार एवं विद्यार्थी भाषण" },
-        { period: "1st Period", time: "08:50 AM - 09:40 AM", titleEn: "Mathematics & Olympiad Prep", titleHi: "गणित एवं ओलंपियाड तैयारी", descEn: "Multiplication, Division, Geometry & Logical Maths", descHi: "गुणा, भाग, ज्यामिति एवं तार्किक गणित" },
-        { period: "2nd Period", time: "09:40 AM - 10:30 AM", titleEn: "English NCERT & Spoken", titleHi: "अंग्रेजी (NCERT) एवं स्पोकन", descEn: "Comprehension, Tenses, Essay & Conversation", descHi: "गद्यांश, काल (Tenses), निबंध एवं संवाद" },
-        { period: "Lunch Break", time: "10:30 AM - 11:00 AM", titleEn: "Lunch Break", titleHi: "टिफिन अवकाश", descEn: "Handwash & Tiffin", descHi: "हाथ धुलाई एवं टिफिन" },
-        { period: "3rd Period", time: "11:00 AM - 11:50 AM", titleEn: "Environmental Science (EVS)", titleHi: "पर्यावरण विज्ञान (EVS)", descEn: "Science Models, Plants, Solar System & Maps", descHi: "विज्ञान मॉडल, पौधे, सौरमंडल एवं मानचित्र" },
-        { period: "4th Period", time: "11:50 AM - 12:40 PM", titleEn: "Hindi & Sanskrit Basics", titleHi: "हिंदी व्याकरण एवं नीति श्लोक", descEn: "Hindi Grammar, Letter Writing & Subhashit", descHi: "हिंदी व्याकरण, पत्र लेखन एवं सुभाषित" },
-        { period: "5th Period", time: "12:40 PM - 01:30 PM", titleEn: "Computer Typing, GK & Sports", titleHi: "कंप्यूटर टाइपिंग, सामान्य ज्ञान एवं खेल", descEn: "WordPad Typing, General Knowledge & Games", descHi: "कंप्यूटर टाइपिंग, छत्तीसगढ़ सामान्य ज्ञान एवं खेल" }
+        { period: "Prayer", time: "09:15 AM - 09:30 AM", titleEn: "Morning Prayer & Assembly", titleHi: "प्रार्थना सभा (Prayer)", descEn: "Morning Prayer & Attendance", descHi: "सामूहिक प्रार्थना एवं उपस्थिति" },
+        { period: "1st Period", time: "09:30 AM - 10:20 AM", titleEn: "Maths", titleHi: "गणित (Maths)", descEn: "Teacher: K.K.S. Sir", descHi: "शिक्षक: के.के.एस. सर (K.K.S. Sir)" },
+        { period: "2nd Period", time: "10:20 AM - 11:10 AM", titleEn: "English", titleHi: "अंग्रेजी (English)", descEn: "Teacher: K.K.S. Sir", descHi: "शिक्षक: के.के.एस. सर (K.K.S. Sir)" },
+        { period: "Lunch Break", time: "11:10 AM - 11:40 AM", titleEn: "LUNCH BREAK", titleHi: "मध्याह्न टिफिन अवकाश (LUNCH)", descEn: "Handwash & Nutritious Tiffin Time", descHi: "हाथ धुलाई एवं टिफिन समय" },
+        { period: "3rd Period", time: "11:40 AM - 12:30 PM", titleEn: "Hindi", titleHi: "हिंदी (Hindi)", descEn: "Teacher: Soni Mam", descHi: "शिक्षिका: सोनी मैम (Soni Mam)" },
+        { period: "4th Period", time: "12:30 PM - 01:20 PM", titleEn: "Environmental Science", titleHi: "पर्यावरण अध्ययन (EVS)", descEn: "Teacher: Sen Mam", descHi: "शिक्षिका: सेन मैम (Sen Mam)" }
       ],
       "Class 4th": [
-        { period: "Assembly", time: "08:30 AM - 08:50 AM", titleEn: "Leadership Assembly", titleHi: "नेतृत्व प्रार्थना सभा", descEn: "Prayer, News Reading, Quiz & Discipline Check", descHi: "प्रार्थना, समाचार वाचन, क्विज एवं अनुशासन" },
-        { period: "1st Period", time: "08:50 AM - 09:40 AM", titleEn: "Advanced Primary Mathematics", titleHi: "उच्च प्राथमिक गणित एवं नवोदय", descEn: "Fractions, Decimals, Factors & Navodaya/Olympiad Maths", descHi: "भिन्न, दशमलव, गुणनखंड एवं नवोदय/ओलंपियाड गणित" },
-        { period: "2nd Period", time: "09:40 AM - 10:30 AM", titleEn: "Science & Environmental Studies", titleHi: "विज्ञान एवं पर्यावरण अध्ययन", descEn: "Human Body, Force, Matter & Lab Experiments", descHi: "मानव शरीर, बल, पदार्थ एवं विज्ञान प्रयोग" },
-        { period: "Lunch Break", time: "10:30 AM - 11:00 AM", titleEn: "Lunch Break", titleHi: "मध्याह्न अवकाश", descEn: "Nutritious Tiffin Time", descHi: "पौष्टिक टिफिन अवकाश" },
-        { period: "3rd Period", time: "11:00 AM - 11:50 AM", titleEn: "English Grammar & Composition", titleHi: "अंग्रेजी व्याकरण एवं रचना", descEn: "Application Writing, Grammar, Debate & Reading", descHi: "आवेदन पत्र, ग्रामर, वाद-विवाद एवं पठन" },
-        { period: "4th Period", time: "11:50 AM - 12:40 PM", titleEn: "Hindi Vyakaran & Social Studies", titleHi: "हिंदी व्याकरण एवं सामाजिक अध्ययन", descEn: "Essay Writing, Vyakaran & India GK", descHi: "निबंध लेखन, व्याकरण एवं भारत का सामान्य ज्ञान" },
-        { period: "5th Period", time: "12:40 PM - 01:30 PM", titleEn: "Computer Applications & Reasoning", titleHi: "कंप्यूटर एप्लीकेशन एवं मानसिक योग्यता", descEn: "MS Office Basics, Mental Ability & Diary Check", descHi: "एमएस ऑफिस, रीजनिंग अभ्यास एवं डायरी जांच" }
+        { period: "Prayer", time: "09:15 AM - 09:30 AM", titleEn: "Morning Prayer & Assembly", titleHi: "प्रार्थना सभा (Prayer)", descEn: "Morning Prayer & Attendance", descHi: "सामूहिक प्रार्थना एवं उपस्थिति" },
+        { period: "1st Period", time: "09:30 AM - 10:20 AM", titleEn: "Maths", titleHi: "गणित (Maths)", descEn: "Teacher: K.K.S. Sir", descHi: "शिक्षक: के.के.एस. सर (K.K.S. Sir)" },
+        { period: "2nd Period", time: "10:20 AM - 11:10 AM", titleEn: "English", titleHi: "अंग्रेजी (English)", descEn: "Teacher: K.K.S. Sir", descHi: "शिक्षक: के.के.एस. सर (K.K.S. Sir)" },
+        { period: "Lunch Break", time: "11:10 AM - 11:40 AM", titleEn: "LUNCH BREAK", titleHi: "मध्याह्न टिफिन अवकाश (LUNCH)", descEn: "Handwash & Nutritious Tiffin Time", descHi: "हाथ धुलाई एवं टिफिन समय" },
+        { period: "3rd Period", time: "11:40 AM - 12:30 PM", titleEn: "Hindi", titleHi: "हिंदी (Hindi)", descEn: "Teacher: Soni Mam", descHi: "शिक्षिका: सोनी मैम (Soni Mam)" },
+        { period: "4th Period", time: "12:30 PM - 01:20 PM", titleEn: "Environmental Science", titleHi: "पर्यावरण अध्ययन (EVS)", descEn: "Teacher: Sen Mam", descHi: "शिक्षिका: सेन मैम (Sen Mam)" }
       ]
     };
 
     // Master School Database
     let schoolData = {
+      lastUpdated: 0,
+      timetableVersion: CURRENT_TIMETABLE_VERSION,
+      ghRepo: "",
       visibility: { stats: true, students: true, teachers: true, fees: true, timetable: true, homework: true },
       stats: { students: "250+", teachers: "15+", classes: "Nursery - 4th", years: "Safe CCTV" },
       ticker: {
-        en: "🎉 Admissions Open 2026-27: Enrolling now from Nursery to Class 4th! Apply online today or call +91 93022 73813.",
-        hi: "🎉 प्रवेश प्रारंभ (2026-27): नर्सरी से कक्षा 4थी तक प्रवेश चालू हैं! आज ही ऑनलाइन आवेदन करें या +91 93022 73813 पर संपर्क करें।"
+        en: "🎉 Admissions Open 2026-27: Enrolling now from Nursery to Class 4th! School Timing: 09:15 AM to 01:20 PM. Call +91 93022 73813.",
+        hi: "🎉 प्रवेश प्रारंभ (2026-27): नर्सरी से कक्षा 4थी तक प्रवेश चालू हैं! विद्यालय समय: सुबह 09:15 से दोपहर 01:20 तक। संपर्क: +91 93022 73813"
       },
       upi: { id: "9302273813@ybl", name: "Gyanova Heights School", qrImg: "" },
       fees: [
@@ -1639,33 +1667,38 @@
       timetableClasses: ["Nursery", "LKG", "UKG", "Class 1st", "Class 2nd", "Class 3rd", "Class 4th"],
       classTimetables: JSON.parse(JSON.stringify(defaultClassWiseTimetables)),
       syllabus: {
-        "Nursery": "English Phonics (A-Z), Rhymes, Counting (1-50), Colors & Shapes, Hindi Swar (अ-अः), Drawing & Good Habits.",
-        "LKG": "Alphabet Writing (A-Z, अ-ज्ञ), Number Counting (1-100), Picture Reading, Hindi/English Rhymes & Art.",
-        "UKG": "Three-letter Words, Simple Sentences, Addition & Subtraction, Environmental Awareness (EVS) & Spoken English.",
-        "Class 1st": "NCERT English Reader & Grammar, Hindi Vyakaran, Mathematics, EVS, Computer Basics & General Knowledge.",
-        "Class 2nd": "Sentence Building, Multiplication Tables (2 to 12), Hindi Stories, EVS Projects, Computer Paint & Moral Science.",
-        "Class 3rd": "NCERT English, Hindi, Mathematics, Science/EVS, Computer Typing, Moral Values & Basic Olympiad Prep.",
-        "Class 4th": "Advanced Primary Maths, English Grammar & Composition, EVS/Science Experiments, Computer Lab & Navodaya/Olympiad Prep."
+        "Nursery": "English, Maths, Hindi & English Rhymes ( Oral & Written Foundation ).",
+        "LKG": "Maths, English, Hindi & Hindi-English Rhymes.",
+        "UKG": "English, Maths, Hindi & Hindi-English Rhymes.",
+        "Class 1st": "Hindi, English, Maths & Social Studies (NCERT Pattern).",
+        "Class 2nd": "Hindi, English, Maths & Social Studies (NCERT Pattern).",
+        "Class 3rd": "Maths, English, Hindi & Environmental Science (EVS).",
+        "Class 4th": "Maths, English, Hindi & Environmental Science (EVS)."
       },
       homework: {
-        "Nursery": "Trace letters A to D in workbook & learn 'Twinkle Twinkle' poem.",
-        "LKG": "Write अ से ई तक and count numbers 1 to 30.",
-        "UKG": "Write 5 three-letter words and solve page 12 Maths addition.",
-        "Class 1st": "Read English Lesson 2 and learn Table of 2 & 3.",
-        "Class 2nd": "Learn Hindi Lesson 3 Q&A and solve 5 subtraction sums.",
-        "Class 3rd": "Draw parts of a plant in EVS notebook.",
-        "Class 4th": "Solve Fractions worksheet and revise Computer shortcut keys."
+        "Nursery": "English & Hindi Rhymes revision and trace letters in workbook.",
+        "LKG": "Maths counting practice and English alphabet writing.",
+        "UKG": "English 3-letter words and Maths addition practice.",
+        "Class 1st": "Hindi reading lesson 2 and Social Studies oral Q&A.",
+        "Class 2nd": "English grammar worksheet and Maths table of 2 to 10.",
+        "Class 3rd": "Maths exercise sums and Environmental Science (EVS) diagram.",
+        "Class 4th": "Maths worksheet, English comprehension & EVS chapter revision."
       },
       studentsList: [
         { name: "Aarav Sharma", className: "Class 4th", roll: "101", father: "Rajesh Sharma", badge: "Class Topper", img: "" },
         { name: "Ananya Verma", className: "Class 2nd", roll: "102", father: "Suresh Verma", badge: "Star Performer", img: "" }
       ],
       teachersList: [
-        { name: "Shri Ramendra Kumar Sharma", role: "Founder & Director", qual: "Educationist & Visionary Leader", subject: "Management & Moral Guidance", img: "" }
+        { name: "Shri Ramendra Kumar Sharma", role: "Founder & Director", qual: "Educationist & Visionary Leader", subject: "Management & Moral Guidance", img: "" },
+        { name: "K.K.S. Sir", role: "Senior Primary Faculty", qual: "Mathematics & English Specialist", subject: "Maths & English (Class 1st - 4th)", img: "" },
+        { name: "H.K.S. Mam", role: "Primary & Pre-Primary Faculty", qual: "Hindi & Rhymes Specialist", subject: "Hindi (1st-2nd) & Rhymes (Nursery-UKG)", img: "" },
+        { name: "Soni Mam", role: "Foundational & Primary Faculty", qual: "Early Childhood & Language Expert", subject: "English, Maths, Hindi & Rhymes", img: "" },
+        { name: "Yadav Mam", role: "Foundational & Primary Faculty", qual: "Primary Education Specialist", subject: "Maths, English, Hindi & Social Studies", img: "" },
+        { name: "Sen Mam", role: "Primary & EVS Faculty", qual: "Language & Environmental Studies", subject: "English, Hindi & Environmental Science", img: "" }
       ],
       notices: [
         { title: "Admission Open for Session 2026-27 (Nursery to Class 4th)", date: "14 Nov 2026", isNew: true },
-        { title: "Half-Yearly Examination Guidelines & Timetable", date: "15 Nov 2026", isNew: true }
+        { title: "Updated School Timetable (09:15 AM to 01:20 PM) Released", date: "15 Nov 2026", isNew: true }
       ],
       results: [
         { roll: "101", name: "Aarav Sharma", className: "Class 4th", father: "Rajesh Sharma", marks: "482 / 500", percent: "96.4%", grade: "A+ (Excellent)", status: "PASSED" },
@@ -1680,6 +1713,30 @@
       feePayments: [],
       messages: []
     };
+
+    // Instant Floating Status Toast (Shows immediate feedback on every Admin action)
+    function showInstantStatusToast(msg, isCloud = false) {
+      let toast = document.getElementById('ghsInstantToast');
+      if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'ghsInstantToast';
+        toast.className = 'fixed top-4 right-4 z-[999] px-4 py-2.5 rounded-xl font-extrabold text-xs sm:text-sm shadow-2xl border-2 transition-all duration-300 flex items-center gap-2 no-print';
+        document.body.appendChild(toast);
+      }
+      toast.className = `fixed top-4 right-4 z-[999] px-4 py-2.5 rounded-xl font-extrabold text-xs sm:text-sm shadow-2xl border-2 transition-all duration-300 flex items-center gap-2 no-print ${
+        isCloud ? 'bg-emerald-900 text-gold-300 border-gold-400' : 'bg-royal-950 text-gold-400 border-gold-500'
+      }`;
+      toast.innerHTML = `<i class="fa-solid ${isCloud ? 'fa-cloud-check text-emerald-400' : 'fa-bolt text-gold-400'}"></i> <span>${msg}</span>`;
+      toast.style.opacity = '1';
+      toast.style.transform = 'translateY(0)';
+      clearTimeout(window._toastTimer);
+      window._toastTimer = setTimeout(() => {
+        if (toast) {
+          toast.style.opacity = '0';
+          toast.style.transform = 'translateY(-10px)';
+        }
+      }, 3200);
+    }
 
     // Normalize 2-Option Fee Structure
     function normalizeFeeData() {
@@ -1703,8 +1760,13 @@
       });
     }
 
-    // Ensure Class-Wise Timetable Structure Exists
+    // Ensure Official Class-Wise Timetable Structure Exists & Upgrades Cleanly
     function ensureClassTimetableStructure() {
+      if ((schoolData.timetableVersion || 0) < CURRENT_TIMETABLE_VERSION) {
+        schoolData.classTimetables = JSON.parse(JSON.stringify(defaultClassWiseTimetables));
+        schoolData.timetableClasses = ["Nursery", "LKG", "UKG", "Class 1st", "Class 2nd", "Class 3rd", "Class 4th"];
+        schoolData.timetableVersion = CURRENT_TIMETABLE_VERSION;
+      }
       if (!schoolData.classTimetables || typeof schoolData.classTimetables !== 'object') {
         schoolData.classTimetables = JSON.parse(JSON.stringify(defaultClassWiseTimetables));
       }
@@ -1712,7 +1774,7 @@
         schoolData.timetableClasses = Object.keys(schoolData.classTimetables);
       }
       schoolData.timetableClasses.forEach(cls => {
-        if (!Array.isArray(schoolData.classTimetables[cls])) {
+        if (!Array.isArray(schoolData.classTimetables[cls]) || schoolData.classTimetables[cls].length === 0) {
           schoolData.classTimetables[cls] = defaultClassWiseTimetables[cls]
             ? JSON.parse(JSON.stringify(defaultClassWiseTimetables[cls]))
             : [];
@@ -1720,6 +1782,51 @@
       });
       if (!schoolData.timetableClasses.includes(activeFrontendTtClass)) {
         activeFrontendTtClass = schoolData.timetableClasses[0] || 'Nursery';
+      }
+    }
+
+    // Inject Extra Timetable UI (Prayer Banner + Full School Master Timetable Grid + Restore Button)
+    function injectTimetableEnhancementsDOM() {
+      const ttSec = document.getElementById('section-timetable');
+      const tabsBar = document.getElementById('ttClassTabsBar');
+      const gridContainer = document.getElementById('timetableGridContainer');
+      if (ttSec && tabsBar && !document.getElementById('prayerBannerTop')) {
+        const prayerDiv = document.createElement('div');
+        prayerDiv.id = 'prayerBannerTop';
+        prayerDiv.className = 'bg-gradient-to-r from-gold-500/20 via-gold-400/30 to-gold-500/20 border border-gold-400/60 rounded-xl p-3 text-center flex flex-wrap items-center justify-center gap-3 shadow-md';
+        prayerDiv.innerHTML = `
+          <span class="bg-gold-500 text-royal-950 font-black text-xs px-3 py-1 rounded-full uppercase tracking-wider">
+            <i class="fa-solid fa-hands-praying mr-1"></i> Morning Prayer
+          </span>
+          <span class="font-serifTitle font-extrabold text-gold-300 text-sm sm:text-base">
+            09:15 AM – 09:30 AM (All Classes: Nursery to Class 4th)
+          </span>
+          <span class="bg-emerald-500/20 border border-emerald-400/50 text-emerald-300 font-bold text-xs px-3 py-0.5 rounded-full">
+            <i class="fa-solid fa-utensils mr-1"></i> Lunch: 11:10 AM – 11:40 AM
+          </span>
+        `;
+        ttSec.insertBefore(prayerDiv, tabsBar);
+      }
+
+      if (ttSec && gridContainer && !document.getElementById('masterTimetableChartWrapper')) {
+        const masterWrap = document.createElement('div');
+        masterWrap.id = 'masterTimetableChartWrapper';
+        masterWrap.className = 'pt-5 border-t border-gold-500/30 space-y-3';
+        masterWrap.innerHTML = `
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+            <div>
+              <h4 class="font-serifTitle text-base sm:text-lg font-extrabold text-gold-400">
+                <i class="fa-solid fa-table-list mr-1.5"></i>
+                <span id="masterChartTitleTxt">Complete School Master Time Table (Nursery to Class 4th)</span>
+              </h4>
+              <p class="text-[11px] text-slate-300" id="masterChartSubTxt">
+                Period-Wise Subject & Teacher Schedule (09:15 AM to 01:20 PM)
+              </p>
+            </div>
+          </div>
+          <div id="masterTimetableChartContainer" class="overflow-x-auto rounded-xl border border-gold-500/40 shadow-xl"></div>
+        `;
+        ttSec.appendChild(masterWrap);
       }
     }
 
@@ -1809,32 +1916,76 @@
       lb.classList.remove('flex');
     }
 
-    // Initialize Website & Sync Data
-    async function initSchoolData() {
-      initHeroParticles();
+    // Fetch Live Data Bypassing CDN Cache (Checks both data.json & GitHub Live API)
+    async function fetchLatestRemoteData() {
+      let bestRemote = null;
+
+      // 1. Try direct static data.json with no-store cache bust
       try {
-        const res = await fetch('data.json?t=' + Date.now());
+        const res = await fetch('data.json?t=' + Date.now(), { cache: 'no-store' });
         if (res.ok) {
-          const remoteData = await res.json();
-          schoolData = { ...schoolData, ...remoteData };
+          bestRemote = await res.json();
         }
       } catch (e) {}
 
-      const savedLocal = localStorage.getItem('ghs_master_erp_v5');
-      if (savedLocal) {
+      // 2. If GitHub Repo is configured, also query GitHub API directly to bypass Netlify 60s build delay
+      const repo = localStorage.getItem('ghs_gh_repo') || bestRemote?.ghRepo || schoolData.ghRepo;
+      const token = localStorage.getItem('ghs_gh_token');
+      if (repo) {
         try {
-          const parsed = JSON.parse(savedLocal);
-          schoolData = { ...schoolData, ...parsed };
+          const headers = { 'Accept': 'application/vnd.github.v3.raw' };
+          if (token) headers['Authorization'] = `token ${token}`;
+          const ghRes = await fetch(`https://api.github.com/repos/${repo}/contents/data.json?t=${Date.now()}`, {
+            headers,
+            cache: 'no-store'
+          });
+          if (ghRes.ok) {
+            const ghData = await ghRes.json();
+            if (!bestRemote || (ghData.lastUpdated || 0) >= (bestRemote.lastUpdated || 0)) {
+              bestRemote = ghData;
+            }
+          }
         } catch (e) {}
+      }
+
+      return bestRemote;
+    }
+
+    // Initialize Website & Smart Timestamp Sync
+    async function initSchoolData() {
+      initHeroParticles();
+      injectTimetableEnhancementsDOM();
+
+      let localParsed = null;
+      const savedLocal = localStorage.getItem(STORAGE_KEY) || localStorage.getItem('ghs_master_erp_v5');
+      if (savedLocal) {
+        try { localParsed = JSON.parse(savedLocal); } catch (e) {}
+      }
+
+      const remoteData = await fetchLatestRemoteData();
+
+      // Compare timestamps so stale localStorage NEVER overwrites newer cloud updates,
+      // and immediate local Admin edits NEVER get overwritten by slow CDN cache!
+      if (remoteData && localParsed) {
+        if ((remoteData.lastUpdated || 0) >= (localParsed.lastUpdated || 0)) {
+          schoolData = { ...schoolData, ...remoteData };
+        } else {
+          schoolData = { ...schoolData, ...localParsed };
+        }
+      } else if (remoteData) {
+        schoolData = { ...schoolData, ...remoteData };
+      } else if (localParsed) {
+        schoolData = { ...schoolData, ...localParsed };
       }
 
       normalizeFeeData();
       ensureClassTimetableStructure();
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(schoolData));
 
-      const savedGhRepo = localStorage.getItem('ghs_gh_repo');
-      const savedGhToken = localStorage.getItem('ghs_gh_token');
-      if (savedGhRepo) document.getElementById('ghRepo').value = savedGhRepo;
-      if (savedGhToken) document.getElementById('ghToken').value = savedGhToken;
+      const savedGhRepo = localStorage.getItem('ghs_gh_repo') || schoolData.ghRepo || '';
+      const savedGhToken = localStorage.getItem('ghs_gh_token') || '';
+      if (savedGhRepo && document.getElementById('ghRepo')) document.getElementById('ghRepo').value = savedGhRepo;
+      if (savedGhToken && document.getElementById('ghToken')) document.getElementById('ghToken').value = savedGhToken;
 
       renderAllContent();
       showClassInfo('nursery');
@@ -1846,6 +1997,7 @@
     function renderAllContent() {
       normalizeFeeData();
       ensureClassTimetableStructure();
+      injectTimetableEnhancementsDOM();
       const isHi = currentLang === 'hi';
 
       // 1. Visibility Toggles
@@ -1880,8 +2032,9 @@
       renderStudentsDirectory();
       renderTeachersDirectory();
 
-      // 5. Class-Wise Subject Timetable
+      // 5. Class-Wise Subject Timetable + Master Chart
       renderClassWiseTimetableFrontend();
+      renderMasterTimetableChart();
 
       // 6. Clean 2-Option Fee Structure Cards
       const feeGrid = document.getElementById('feeStructureGrid');
@@ -1959,7 +2112,7 @@
       renderAdminPanelState();
     }
 
-    // ================= CLASS-WISE TIMETABLE FRONTEND & ADMIN FUNCTIONS =================
+    // ================= CLASS-WISE & MASTER TIMETABLE FUNCTIONS =================
     function selectFrontendTimetableClass(clsName) {
       activeFrontendTtClass = clsName;
       renderClassWiseTimetableFrontend();
@@ -1991,20 +2144,94 @@
         return;
       }
 
-      grid.innerHTML = slots.map(t => `
-        <div class="bg-royal-900/90 p-4 rounded-xl border border-gold-500/40 shadow-lg space-y-1.5 hover:border-gold-400 transition">
-          <div class="flex items-center justify-between border-b border-white/10 pb-1.5">
-            <span class="bg-gold-500 text-royal-950 font-extrabold text-[10px] px-2.5 py-0.5 rounded-full uppercase">
-              ${t.period || 'Period'}
-            </span>
-            <span class="text-gold-300 font-bold text-xs">
-              <i class="fa-regular fa-clock mr-1"></i>${t.time}
-            </span>
+      grid.innerHTML = slots.map(t => {
+        const isBreak = (t.period || '').toLowerCase().includes('lunch') || (t.period || '').toLowerCase().includes('prayer');
+        return `
+          <div class="${isBreak ? 'bg-gradient-to-br from-royal-800 to-royal-950 border-gold-400' : 'bg-royal-900/90 border-gold-500/40'} p-4 rounded-xl border shadow-lg space-y-1.5 hover:border-gold-400 transition">
+            <div class="flex items-center justify-between border-b border-white/10 pb-1.5">
+              <span class="bg-gold-500 text-royal-950 font-extrabold text-[10px] px-2.5 py-0.5 rounded-full uppercase">
+                ${t.period || 'Period'}
+              </span>
+              <span class="text-gold-300 font-bold text-xs">
+                <i class="fa-regular fa-clock mr-1"></i>${t.time}
+              </span>
+            </div>
+            <h4 class="font-extrabold text-white text-sm sm:text-base pt-0.5">${isHi ? (t.titleHi || t.titleEn) : t.titleEn}</h4>
+            <p class="text-xs text-gold-300 font-semibold leading-relaxed">${isHi ? (t.descHi || t.descEn || '') : (t.descEn || '')}</p>
           </div>
-          <h4 class="font-extrabold text-white text-sm sm:text-base pt-0.5">${isHi ? (t.titleHi || t.titleEn) : t.titleEn}</h4>
-          <p class="text-xs text-slate-300 leading-relaxed">${isHi ? (t.descHi || t.descEn || '') : (t.descEn || '')}</p>
-        </div>
-      `).join('');
+        `;
+      }).join('');
+    }
+
+    // Complete Master School Timetable Table (Matches Uploaded School Timetable Photo)
+    function renderMasterTimetableChart() {
+      const container = document.getElementById('masterTimetableChartContainer');
+      if (!container) return;
+      const isHi = currentLang === 'hi';
+      const classes = schoolData.timetableClasses || ["Nursery", "LKG", "UKG", "Class 1st", "Class 2nd", "Class 3rd", "Class 4th"];
+
+      const getSlot = (cls, periodKey, fallbackIdx) => {
+        const arr = schoolData.classTimetables[cls] || [];
+        return arr.find(s => (s.period || '').toLowerCase().includes(periodKey)) || arr[fallbackIdx] || { titleEn: '-', descEn: '' };
+      };
+
+      const renderCell = (slot) => {
+        const subj = isHi ? (slot.titleHi || slot.titleEn) : slot.titleEn;
+        const tch = (isHi ? (slot.descHi || slot.descEn) : slot.descEn || '').replace(/^Teacher:\s*/i, '').replace(/^शिक्षिका:\s*/i, '').replace(/^शिक्षक:\s*/i, '');
+        return `
+          <td class="p-2.5 border border-gold-500/30 text-center align-middle">
+            <div class="font-extrabold text-white text-xs sm:text-sm">${subj}</div>
+            ${tch ? `<div class="text-[11px] text-gold-300 font-semibold mt-0.5">${tch}</div>` : ''}
+          </td>
+        `;
+      };
+
+      const periodRows = [
+        { sn: "1.", label: "1st Period", key: "1st", idx: 1, time: "09:30 to 10:20" },
+        { sn: "2.", label: "2nd Period", key: "2nd", idx: 2, time: "10:20 to 11:10" },
+        { isLunch: true, time: "11:10 to 11:40" },
+        { sn: "3.", label: "3rd Period", key: "3rd", idx: 4, time: "11:40 to 12:30" },
+        { sn: "4.", label: "4th Period", key: "4th", idx: 5, time: "12:30 to 01:20" }
+      ];
+
+      container.innerHTML = `
+        <table class="w-full text-left border-collapse text-xs">
+          <thead>
+            <tr class="bg-gold-500 text-royal-950 font-black text-center uppercase">
+              <th colspan="${classes.length + 2}" class="py-2 px-3 text-xs sm:text-sm tracking-wider border-b border-royal-900">
+                <i class="fa-solid fa-hands-praying mr-1"></i> PRAYER — 09:15 AM to 09:30 AM
+              </th>
+            </tr>
+            <tr class="bg-royal-950 text-gold-400 font-extrabold text-center border-b border-gold-500/40">
+              <th class="p-2.5 border border-gold-500/30">S.N.</th>
+              <th class="p-2.5 border border-gold-500/30">Time</th>
+              ${classes.map(c => `<th class="p-2.5 border border-gold-500/30">${c}</th>`).join('')}
+            </tr>
+          </thead>
+          <tbody class="bg-royal-900/80 divide-y divide-gold-500/20">
+            ${periodRows.map(row => {
+              if (row.isLunch) {
+                return `
+                  <tr class="bg-gold-500/20 text-gold-300 font-black text-center">
+                    <td class="p-2 border border-gold-500/30">—</td>
+                    <td class="p-2 border border-gold-500/30 whitespace-nowrap">${row.time}</td>
+                    <td colspan="${classes.length}" class="p-2 border border-gold-500/30 tracking-widest text-sm text-gold-400">
+                      🍱 LUNCH BREAK (11:10 AM to 11:40 AM)
+                    </td>
+                  </tr>
+                `;
+              }
+              return `
+                <tr class="hover:bg-white/5 transition">
+                  <td class="p-2.5 border border-gold-500/30 text-center font-black text-gold-400">${row.sn}</td>
+                  <td class="p-2.5 border border-gold-500/30 text-center font-bold text-gold-200 whitespace-nowrap">${row.time}</td>
+                  ${classes.map(cls => renderCell(getSlot(cls, row.key, row.idx))).join('')}
+                </tr>
+              `;
+            }).join('')}
+          </tbody>
+        </table>
+      `;
     }
 
     function renderAdminTimetableForClass() {
@@ -2058,7 +2285,6 @@
         selectEl.value = newCls;
         renderAdminTimetableForClass();
       }
-      alert('✅ New Class Added to Timetable: ' + newCls);
     }
 
     function deleteCurrentTimetableClassAdmin() {
@@ -2163,7 +2389,7 @@
         phone,
         utr,
         date: dateStr,
-        status: 'Pending' // Remains Pending until Admin manually marks Paid
+        status: 'Pending'
       };
 
       if (!schoolData.feePayments) schoolData.feePayments = [];
@@ -2323,42 +2549,42 @@
       }
     }
 
-    // Interactive Class Explorer on Home Page
+    // Interactive Class Explorer on Home Page (Updated with Official Subjects & 09:15 - 01:20 Timing)
     const classDetailsMap = {
       nursery: {
         clsName: "Nursery",
-        en: { title: "Nursery (Pre-Primary)", age: "Age: 3+ Years", desc: "Play-way motor skills, phonics songs, storytelling, colors & shapes recognition, and joyful habits.", timing: "8:30 AM - 12:30 PM" },
-        hi: { title: "नर्सरी (प्री-प्राइमरी)", age: "आयु: 3+ वर्ष", desc: "खेल-खेल में शिक्षा, फोक्स राइम्स, कहानी, रंगों और आकारों की पहचान एवं उत्तम संस्कार।", timing: "सुबह 8:30 - दोपहर 12:30" }
+        en: { title: "Nursery (Pre-Primary)", age: "Age: 3+ Years", desc: "Subjects: English (Soni Mam), Maths (Yadav Mam), Hindi (Sen Mam) & Hindi-English Rhymes (H.K.S. Mam & Soni Mam).", timing: "09:15 AM - 01:20 PM" },
+        hi: { title: "नर्सरी (प्री-प्राइमरी)", age: "आयु: 3+ वर्ष", desc: "विषय: अंग्रेजी (सोनी मैम), गणित (यादव मैम), हिंदी (सेन मैम) एवं हिंदी-अंग्रेजी राइम्स (एच.के.एस. मैम व सोनी मैम)।", timing: "सुबह 09:15 - दोपहर 01:20" }
       },
       lkg: {
         clsName: "LKG",
-        en: { title: "LKG (Lower Kindergarten)", age: "Age: 4+ Years", desc: "Alphabet writing (A-Z, अ-ज्ञ), number counting (1-50), rhymes, picture reading, and art activities.", timing: "8:30 AM - 12:30 PM" },
-        hi: { title: "एल.के.जी. (LKG)", age: "आयु: 4+ वर्ष", desc: "वर्णमाला लेखन (A-Z, अ-ज्ञ), गिनती (1-50), कविताएं, चित्र पठन और कला गतिविधियां।", timing: "सुबह 8:30 - दोपहर 12:30" }
+        en: { title: "LKG (Lower Kindergarten)", age: "Age: 4+ Years", desc: "Subjects: Maths (Soni Mam), English (Yadav Mam), Hindi (Yadav Mam) & Hindi-English Rhymes (H.K.S. Mam & Soni Mam).", timing: "09:15 AM - 01:20 PM" },
+        hi: { title: "एल.के.जी. (LKG)", age: "आयु: 4+ वर्ष", desc: "विषय: गणित (सोनी मैम), अंग्रेजी (यादव मैम), हिंदी (यादव मैम) एवं हिंदी-अंग्रेजी राइम्स (एच.के.एस. मैम व सोनी मैम)।", timing: "सुबह 09:15 - दोपहर 01:20" }
       },
       ukg: {
         clsName: "UKG",
-        en: { title: "UKG (Upper Kindergarten)", age: "Age: 5+ Years", desc: "English & Hindi word formation, basic addition/subtraction, environmental awareness & spoken confidence.", timing: "8:30 AM - 12:45 PM" },
-        hi: { title: "यू.के.जी. (UKG)", age: "आयु: 5+ वर्ष", desc: "हिंदी एवं अंग्रेजी शब्द निर्माण, जोड़-घटाव, पर्यावरण ज्ञान और अंग्रेजी बोलने का अभ्यास।", timing: "सुबह 8:30 - दोपहर 12:45" }
+        en: { title: "UKG (Upper Kindergarten)", age: "Age: 5+ Years", desc: "Subjects: English (Soni Mam), Maths (Yadav Mam), Hindi (Sen Mam) & Hindi-English Rhymes (H.K.S. Mam & Soni Mam).", timing: "09:15 AM - 01:20 PM" },
+        hi: { title: "यू.के.जी. (UKG)", age: "आयु: 5+ वर्ष", desc: "विषय: अंग्रेजी (सोनी मैम), गणित (यादव मैम), हिंदी (सेन मैम) एवं हिंदी-अंग्रेजी राइम्स (एच.के.एस. मैम व सोनी मैम)।", timing: "सुबह 09:15 - दोपहर 01:20" }
       },
       c1: {
         clsName: "Class 1st",
-        en: { title: "Class 1st (Primary Wing)", age: "Age: 6+ Years", desc: "NCERT foundational reading, Hindi-English grammar basics, mental maths, EVS, and computer introduction.", timing: "8:30 AM - 1:30 PM" },
-        hi: { title: "कक्षा 1ली (प्राइमरी विंग)", age: "आयु: 6+ वर्ष", desc: "एनसीईआरटी पठन, हिंदी-अंग्रेजी व्याकरण, मेंटल मैथ्स, पर्यावरण अध्ययन और बेसिक कंप्यूटर।", timing: "सुबह 8:30 - दोपहर 1:30" }
+        en: { title: "Class 1st (Primary Wing)", age: "Age: 6+ Years", desc: "Subjects: Hindi (H.K.S. Mam), English (Sen Mam), Maths (K.K.S. Sir) & Social Studies (Yadav Mam).", timing: "09:15 AM - 01:20 PM" },
+        hi: { title: "कक्षा 1ली (प्राइमरी विंग)", age: "आयु: 6+ वर्ष", desc: "विषय: हिंदी (एच.के.एस. मैम), अंग्रेजी (सेन मैम), गणित (के.के.एस. सर) एवं सामाजिक अध्ययन (यादव मैम)।", timing: "सुबह 09:15 - दोपहर 01:20" }
       },
       c2: {
         clsName: "Class 2nd",
-        en: { title: "Class 2nd (Primary Wing)", age: "Age: 7+ Years", desc: "Sentence building, spoken English conversation, multiplication tables (2-12), drawing, and moral values.", timing: "8:30 AM - 1:30 PM" },
-        hi: { title: "कक्षा 2री (प्राइमरी विंग)", age: "आयु: 7+ वर्ष", desc: "वाक्य निर्माण, स्पोकन इंग्लिश संवाद, पहाड़े (2 से 12), चित्रकला और नैतिक शिक्षा।", timing: "सुबह 8:30 - दोपहर 1:30" }
+        en: { title: "Class 2nd (Primary Wing)", age: "Age: 7+ Years", desc: "Subjects: Hindi (H.K.S. Mam), English (Sen Mam), Maths (K.K.S. Sir) & Social Studies (Yadav Mam).", timing: "09:15 AM - 01:20 PM" },
+        hi: { title: "कक्षा 2री (प्राइमरी विंग)", age: "आयु: 7+ वर्ष", desc: "विषय: हिंदी (एच.के.एस. मैम), अंग्रेजी (सेन मैम), गणित (के.के.एस. सर) एवं सामाजिक अध्ययन (यादव मैम)।", timing: "सुबह 09:15 - दोपहर 01:20" }
       },
       c3: {
         clsName: "Class 3rd",
-        en: { title: "Class 3rd (Primary Wing)", age: "Age: 8+ Years", desc: "Subject-wise NCERT learning, hands-on science & EVS projects, computer paint/typing, and Olympiad basics.", timing: "8:30 AM - 1:30 PM" },
-        hi: { title: "कक्षा 3री (प्राइमरी विंग)", age: "आयु: 8+ वर्ष", desc: "विषयवार एनसीईआरटी शिक्षण, विज्ञान एवं पर्यावरण प्रोजेक्ट, कंप्यूटर टाइपिंग और ओलंपियाड तैयारी।", timing: "सुबह 8:30 - दोपहर 1:30" }
+        en: { title: "Class 3rd (Primary Wing)", age: "Age: 8+ Years", desc: "Subjects: Maths (K.K.S. Sir), English (K.K.S. Sir), Hindi (Soni Mam) & Environmental Science (Sen Mam).", timing: "09:15 AM - 01:20 PM" },
+        hi: { title: "कक्षा 3री (प्राइमरी विंग)", age: "आयु: 8+ वर्ष", desc: "विषय: गणित (के.के.एस. सर), अंग्रेजी (के.के.एस. सर), हिंदी (सोनी मैम) एवं पर्यावरण अध्ययन (सेन मैम)।", timing: "सुबह 09:15 - दोपहर 01:20" }
       },
       c4: {
         clsName: "Class 4th",
-        en: { title: "Class 4th (Upper Primary Prep)", age: "Age: 9+ Years", desc: "Strong upper-primary foundation, Navodaya & Maths Olympiad preparation, public speaking, and leadership.", timing: "8:30 AM - 1:30 PM" },
-        hi: { title: "कक्षा 4थी (सीनियर प्राइमरी)", age: "आयु: 9+ वर्ष", desc: "मजबूत शैक्षणिक आधार, नवोदय एवं मैथ्स ओलंपियाड की विशेष तैयारी, मंच संचालन एवं नेतृत्व विकास।", timing: "सुबह 8:30 - दोपहर 1:30" }
+        en: { title: "Class 4th (Upper Primary Prep)", age: "Age: 9+ Years", desc: "Subjects: Maths (K.K.S. Sir), English (K.K.S. Sir), Hindi (Soni Mam) & Environmental Science (Sen Mam).", timing: "09:15 AM - 01:20 PM" },
+        hi: { title: "कक्षा 4थी (सीनियर प्राइमरी)", age: "आयु: 9+ वर्ष", desc: "विषय: गणित (के.के.एस. सर), अंग्रेजी (के.के.एस. सर), हिंदी (सोनी मैम) एवं पर्यावरण अध्ययन (सेन मैम)।", timing: "सुबह 09:15 - दोपहर 01:20" }
       }
     };
 
@@ -2411,7 +2637,7 @@
       if (out) {
         out.innerHTML = `
           <p><i class="fa-solid fa-child-reaching text-royal-700 mr-1.5"></i> <strong>${isHi ? 'निर्धारित आयु:' : 'Recommended Age:'}</strong> ${ageMap[cls]}</p>
-          <p><i class="fa-solid fa-file-shield text-royal-700 mr-1.5"></i> <strong>${isHi ? 'आवश्यक दस्तावेज:' : 'Documents:'}</strong> ${isHi ? 'जन्म प्रमाण पत्र, बच्चे एवं माता-पिता का आधार कार्ड, 4 पासपोर्ट फोटो' : 'Birth Certificate, Child & Parent Aadhaar Copy, 4 Passport Photos'}</p>
+          <p><i class="fa-solid fa-file-shield text-royal-700 mr-1.5"></i> <strong>${isHi ? 'आवश्यक दस्तावेज:' : 'Documents:'}</strong> ${isHi ? 'जन्म प्रमाण पत्र, बच्चे एवं माता-पिता का परिचय पत्र, 4 पासपोर्ट फोटो' : 'Birth Certificate, Child & Parent ID Copy, 4 Passport Photos'}</p>
         `;
       }
     }
@@ -2569,7 +2795,7 @@
       form.reset();
     }
 
-    // ================= MASTER ADMIN PANEL FUNCTIONS (PASSWORD: ghs) =================
+    // ================= MASTER ADMIN PANEL & INSTANT AUTO-SYNC ENGINE =================
     let footerClicks = 0;
     let footerTimer = null;
     function secretFooterClick() {
@@ -2620,11 +2846,34 @@
       }
     }
 
+    // Core Instant Reflection + Automatic Background GitHub Push
     function saveLocalAndRefresh() {
+      schoolData.lastUpdated = Date.now();
+      schoolData.timetableVersion = CURRENT_TIMETABLE_VERSION;
+
+      const repoInput = document.getElementById('ghRepo')?.value.trim() || localStorage.getItem('ghs_gh_repo') || '';
+      if (repoInput) schoolData.ghRepo = repoInput;
+
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(schoolData));
       localStorage.setItem('ghs_master_erp_v5', JSON.stringify(schoolData));
+
+      if (liveChannel) {
+        try { liveChannel.postMessage(schoolData); } catch (e) {}
+      }
+
       renderAllContent();
       showClassInfo(currentClassKey);
       updateLockedFeeAmount();
+      showInstantStatusToast('⚡ Saved & Reflected Instantly on Website!');
+
+      // Automatically push to GitHub in background if Repo & Token are configured
+      const token = document.getElementById('ghToken')?.value.trim() || localStorage.getItem('ghs_gh_token') || '';
+      if (repoInput && token) {
+        clearTimeout(autoSyncTimer);
+        autoSyncTimer = setTimeout(() => {
+          pushToGitHub(true);
+        }, 900);
+      }
     }
 
     function toggleFeePaymentStatusAdmin(idx) {
@@ -2658,7 +2907,6 @@
         years: document.getElementById('stat_in_years').value.trim() || 'Safe CCTV'
       };
       saveLocalAndRefresh();
-      alert('✅ Stats Counter Updated!');
     }
 
     function addGalleryCategoryAdmin() {
@@ -2670,7 +2918,6 @@
       }
       document.getElementById('newGalCategoryInput').value = '';
       saveLocalAndRefresh();
-      alert('✅ New Album Added: ' + cat);
     }
 
     async function uploadGalleryPhotoAdmin() {
@@ -2683,7 +2930,6 @@
       document.getElementById('galTitle').value = '';
       document.getElementById('galFileInput').value = '';
       saveLocalAndRefresh();
-      alert('✅ HD Photo uploaded to Gallery!');
     }
 
     function deleteGalleryAdmin(idx) {
@@ -2742,7 +2988,6 @@
       const qrImg = file ? await compressAndReadImage(file, 500, 0.85) : (schoolData.upi?.qrImg || '');
       schoolData.upi = { id, name: 'Gyanova Heights School', qrImg };
       saveLocalAndRefresh();
-      alert('✅ UPI ID & QR Code Updated!');
     }
 
     function saveFeeStructureAdmin() {
@@ -2753,7 +2998,6 @@
         f.oneTimeFee = oVal;
       });
       saveLocalAndRefresh();
-      alert('✅ Fixed Monthly & One-Time Ekmust Fees Updated!');
     }
 
     function loadSelectedSyllabus() {
@@ -2768,7 +3012,6 @@
       if (!schoolData.syllabus) schoolData.syllabus = {};
       schoolData.syllabus[cls] = text;
       saveLocalAndRefresh();
-      alert('✅ Syllabus updated for ' + cls);
     }
 
     function loadSelectedHomework() {
@@ -2783,7 +3026,6 @@
       if (!schoolData.homework) schoolData.homework = {};
       schoolData.homework[cls] = text;
       saveLocalAndRefresh();
-      alert('✅ Homework updated for ' + cls);
     }
 
     function saveTickerAdmin() {
@@ -2792,7 +3034,6 @@
         hi: document.getElementById('admTickerHi').value.trim()
       };
       saveLocalAndRefresh();
-      alert('✅ Ticker Updated!');
     }
 
     function addNoticeAdmin() {
@@ -2829,7 +3070,6 @@
     }
 
     function renderAdminPanelState() {
-      // Toggles
       const vis = schoolData.visibility || {};
       if (document.getElementById('tog_stats')) {
         document.getElementById('tog_stats').checked = vis.stats !== false;
@@ -2839,7 +3079,6 @@
         document.getElementById('tog_timetable').checked = vis.timetable !== false;
       }
 
-      // Stats
       if (schoolData.stats && document.getElementById('stat_in_students')) {
         document.getElementById('stat_in_students').value = schoolData.stats.students || '';
         document.getElementById('stat_in_teachers').value = schoolData.stats.teachers || '';
@@ -2847,7 +3086,6 @@
         document.getElementById('stat_in_years').value = schoolData.stats.years || '';
       }
 
-      // 2-Option Fee Editor
       const feeEd = document.getElementById('adminFeeEditorList');
       if (feeEd && schoolData.fees) {
         feeEd.innerHTML = schoolData.fees.map((f, i) => `
@@ -2862,7 +3100,6 @@
         document.getElementById('admUpiId').value = schoolData.upi?.id || '9302273813@ybl';
       }
 
-      // Fee Payments Inbox with Manual Pending <-> Paid Toggle
       const feeInbox = document.getElementById('adminFeePaymentsContainer');
       if (feeInbox) {
         const list = schoolData.feePayments || [];
@@ -2895,7 +3132,6 @@
         }).join('');
       }
 
-      // Admissions Inbox
       const admBox = document.getElementById('adminAdmissionsContainer');
       if (admBox) {
         const list = schoolData.admissions || [];
@@ -2918,7 +3154,6 @@
         }).join('');
       }
 
-      // Messages Inbox
       const msgBox = document.getElementById('adminMessagesContainer');
       if (msgBox) {
         const list = schoolData.messages || [];
@@ -2930,7 +3165,6 @@
         `).join('');
       }
 
-      // Gallery Category Dropdown & Thumbs
       const galCatSelect = document.getElementById('galCat');
       if (galCatSelect) {
         galCatSelect.innerHTML = (schoolData.galleryCategories || ["events", "activities", "campus", "celebrations"])
@@ -2947,7 +3181,6 @@
         `).join('');
       }
 
-      // Students & Teachers Lists
       const stuListEl = document.getElementById('adminStudentsDirList');
       if (stuListEl) {
         stuListEl.innerHTML = (schoolData.studentsList || []).map((s, i) => `
@@ -2967,10 +3200,8 @@
         `).join('');
       }
 
-      // Class-Wise Timetable Admin Render
       renderAdminTimetableForClass();
 
-      // Ticker, Notices & Results
       if (document.getElementById('admTickerEn')) {
         document.getElementById('admTickerEn').value = schoolData.ticker?.en || '';
         document.getElementById('admTickerHi').value = schoolData.ticker?.hi || '';
@@ -3016,21 +3247,27 @@
       a.click();
     }
 
-    async function pushToGitHub() {
-      const repo = document.getElementById('ghRepo').value.trim();
-      const token = document.getElementById('ghToken').value.trim();
+    async function pushToGitHub(isBackgroundAuto = false) {
+      const repo = document.getElementById('ghRepo')?.value.trim() || localStorage.getItem('ghs_gh_repo') || '';
+      const token = document.getElementById('ghToken')?.value.trim() || localStorage.getItem('ghs_gh_token') || '';
       const status = document.getElementById('ghSyncStatus');
       if (!repo || !token) {
-        status.innerText = '⚠️ Please enter both GitHub Repo (username/repo) and Token.';
+        if (!isBackgroundAuto && status) {
+          status.innerText = '⚠️ Please enter both GitHub Repo (username/repo) and Token once to enable automatic live sync.';
+        }
         return;
       }
       localStorage.setItem('ghs_gh_repo', repo);
       localStorage.setItem('ghs_gh_token', token);
-      status.innerText = '⏳ Uploading Updated School Database, Timetables & Verified Statuses to GitHub...';
+      schoolData.ghRepo = repo;
+      schoolData.lastUpdated = Date.now();
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(schoolData));
+
+      if (status) status.innerText = '⏳ Auto-Syncing Live Database & Timetable to GitHub...';
       try {
         const apiUrl = `https://api.github.com/repos/${repo}/contents/data.json`;
         let sha = '';
-        const getRes = await fetch(apiUrl, { headers: { Authorization: `token ${token}` } });
+        const getRes = await fetch(apiUrl, { headers: { Authorization: `token ${token}` }, cache: 'no-store' });
         if (getRes.ok) {
           const getJson = await getRes.json();
           sha = getJson.sha;
@@ -3040,18 +3277,19 @@
           method: 'PUT',
           headers: { Authorization: `token ${token}`, 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            message: 'Update Gyanova Heights School ERP, Class Timetables & Verified Fee Status',
+            message: 'Auto-Sync Gyanova Heights School Live ERP & Official Timetable',
             content: contentBase64,
             sha: sha || undefined
           })
         });
         if (putRes.ok) {
-          status.innerText = '✅ Live! All Class Timetables, Fee Approvals & Photos pushed to GitHub.';
+          if (status) status.innerText = '✅ Live Everywhere! Auto-Synced to GitHub Cloud.';
+          showInstantStatusToast('☁️ Auto-Synced Live to GitHub Cloud!', true);
         } else {
-          status.innerText = '❌ GitHub Push failed. Check Repo & Token permissions.';
+          if (status) status.innerText = '❌ GitHub Push failed. Check Repo & Token permissions.';
         }
       } catch (err) {
-        status.innerText = '❌ Network Error while connecting to GitHub.';
+        if (status) status.innerText = '❌ Network Error while connecting to GitHub.';
       }
     }
 
@@ -3095,7 +3333,7 @@
         viewTimetableBtn: "Class Timetable",
         checkResultBtn: "Check Results",
         classExplorerTitle: "OUR CLASSES (NURSERY - CLASS 4TH)",
-        classExplorerSub: "Tap any class below to view subjects, fees & age criteria",
+        classExplorerSub: "Tap any class below to view subjects, teachers, fees & timing",
         clsNursery: "Nursery",
         clsLkg: "LKG",
         clsUkg: "UKG",
@@ -3131,10 +3369,10 @@
         acadCard2: "Smart Audio-Visual Learning",
         acadCard3: "Regular Weekly Assessments",
         acadCard4: "Olympiad & Navodaya Prep",
-        acadCard5: "Creative Art, Craft & Phonics",
+        acadCard5: "Creative Art, Craft & Rhymes",
         acadCard6: "Individual Student Care",
         timetableHeading: "Class-Wise Daily Routine & Subject Timetable",
-        timetableSubHeading: "Tap any class below to view its period-wise subjects & daily schedule",
+        timetableSubHeading: "Tap any class below to view its period-wise subjects & teachers (09:15 AM - 01:20 PM)",
         feeStructTitle: "Class-Wise Fee Structure (2026-27)",
         feeStructSub: "Choose between Easy Monthly Fee or One-Time Full Session (Ekmust) Package",
         sessionBadge: "Session 2026-27",
@@ -3238,7 +3476,7 @@
         viewTimetableBtn: "कक्षा टाइम-टेबल",
         checkResultBtn: "रिजल्ट देखें",
         classExplorerTitle: "हमारी कक्षाएं (नर्सरी से कक्षा 4थी)",
-        classExplorerSub: "विषय, फीस और आयु सीमा देखने के लिए किसी भी कक्षा पर टैप करें",
+        classExplorerSub: "विषय, शिक्षक, फीस और समय देखने के लिए किसी भी कक्षा पर टैप करें",
         clsNursery: "नर्सरी",
         clsLkg: "एल.के.जी.",
         clsUkg: "यू.के.जी.",
@@ -3274,10 +3512,10 @@
         acadCard2: "स्मार्ट ऑडियो-विजुअल शिक्षण",
         acadCard3: "नियमित साप्ताहिक मूल्यांकन",
         acadCard4: "नवोदय एवं ओलंपियाड तैयारी",
-        acadCard5: "आर्ट, क्राफ्ट एवं फोक्स",
+        acadCard5: "आर्ट, क्राफ्ट एवं कविताएं",
         acadCard6: "प्रत्येक बच्चे पर व्यक्तिगत ध्यान",
         timetableHeading: "कक्षावार दैनिक दिनचर्या एवं विषय समय-सारणी",
-        timetableSubHeading: "किसी भी कक्षा के पीरियड और विषय देखने के लिए नीचे कक्षा चुनें",
+        timetableSubHeading: "किसी भी कक्षा के पीरियड, विषय और शिक्षक देखने के लिए नीचे कक्षा चुनें (09:15 AM - 01:20 PM)",
         feeStructTitle: "कक्षावार फीस विवरण (सत्र 2026-27)",
         feeStructSub: "मासिक शुल्क (Monthly) या पूरे सत्र का एकमुश्त (One-Time Ekmust) विकल्प चुनें",
         sessionBadge: "सत्र 2026-27",
