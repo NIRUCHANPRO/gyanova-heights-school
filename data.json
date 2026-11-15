@@ -1,5 +1,5 @@
 {
-  "lastUpdated": 1794724820083,
+  "lastUpdated": 1794724864076,
   "timetableVersion": 4,
   "ghRepo": "NIRUCHANPRO/gyanova-heights-school",
   "visibility": {
@@ -474,6 +474,14 @@
     "Class 4th": "Solve Fractions worksheet and revise Computer shortcut keys."
   },
   "studentsList": [
+    {
+      "name": "Jayushi Chandniha",
+      "className": "Class 3rd",
+      "roll": "",
+      "father": "Prakash Kumar Chandniha",
+      "badge": "Student",
+      "img": ""
+    },
     {
       "name": "Niti Chandniha",
       "className": "Class 1st",
