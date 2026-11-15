@@ -1535,14 +1535,26 @@
       <div class="text-xs text-slate-300 space-y-1">
         <p><i class="fa-solid fa-location-dot text-gold-400 mr-1"></i> <span data-i18n="fullAddress">Ravan Bhantha, Arand Road, Basin, Gariaband, Chhattisgarh - 493992</span></p>
         <p><i class="fa-solid fa-phone text-gold-400 mr-1"></i> +91 93022 73813 | <i class="fa-solid fa-envelope text-gold-400 mx-1"></i> gyanovaheightsschool@gmail.com</p>
-        <div class="pt-2 flex items-center justify-center md:justify-end gap-3">
-          <span id="secretCopyright" onclick="secretFooterClick()" class="cursor-pointer select-none text-slate-400">
-            © 2026 Gyanova Heights School. All Rights Reserved.
-          </span>
-          <button onclick="openAdminModal()" class="text-[11px] text-gold-400 hover:underline font-bold">
-            <i class="fa-solid fa-lock text-[10px]"></i> <span data-i18n="staffLoginBtn">Admin Login</span>
+        <!-- Live Visitors Counter & Admin Login Bar -->
+        <div class="pt-3 pb-20 md:pb-2 flex flex-wrap items-center justify-center md:justify-end gap-2.5">
+          <!-- Live Visitor Badge -->
+          <div class="inline-flex items-center gap-2 bg-royal-900/95 text-gold-300 px-3.5 py-1.5 rounded-full border border-gold-500/50 text-xs font-bold shadow-lg">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+            <i class="fa-solid fa-eye text-gold-400"></i>
+            <span>Live Views: <strong id="visitorCountDisplay" class="text-white font-black tracking-wide">...</strong></span>
+          </div>
+
+          <!-- Admin Login Button -->
+          <button type="button" onclick="openAdminModal()" class="relative z-50 gold-gradient-btn px-4 py-1.5 rounded-full text-xs font-extrabold shadow-lg flex items-center gap-1.5">
+            <i class="fa-solid fa-lock"></i> <span data-i18n="staffLoginBtn">Admin Login</span>
           </button>
         </div>
+        <div class="pt-1 text-center md:text-right">
+          <span id="secretCopyright" onclick="secretFooterClick()" class="cursor-pointer select-none text-slate-400 text-[11px]">
+            © 2026 Gyanova Heights School. All Rights Reserved.
+          </span>
+        </div>
+
 
 
       </div>
@@ -3641,7 +3653,39 @@
       updateEligibilityCalc();
     }
 
-    window.addEventListener('DOMContentLoaded', initSchoolData);
+    // ================= LIVE VISITOR COUNTER ENGINE =================
+    async function fetchAndIncrementVisitors() {
+      const countEl = document.getElementById('visitorCountDisplay');
+      if (!countEl) return;
+
+      // Local backup counter taaki internet/API slow hone par bhi turant badhe
+      let localHits = parseInt(localStorage.getItem('ghs_live_views_count') || '2480', 10);
+      if (!sessionStorage.getItem('ghs_visit_counted')) {
+        localHits += 1;
+        localStorage.setItem('ghs_live_views_count', String(localHits));
+        sessionStorage.setItem('ghs_visit_counted', 'true');
+      }
+      countEl.innerText = localHits.toLocaleString('en-IN');
+
+      // Live Global API Counter
+      try {
+        const res = await fetch('https://api.counterapi.dev/v1/gyanovaheightsschool/visits/up');
+        if (res.ok) {
+          const data = await res.json();
+          if (data && typeof data.count === 'number') {
+            const totalLive = 2480 + data.count;
+            localStorage.setItem('ghs_live_views_count', String(totalLive));
+            countEl.innerText = totalLive.toLocaleString('en-IN');
+          }
+        }
+      } catch (e) {}
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      initSchoolData();
+      fetchAndIncrementVisitors();
+    });
   </script>
 </body>
 </html>
+
