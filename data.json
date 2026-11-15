@@ -1,5 +1,5 @@
 {
-  "lastUpdated": 1794727902906,
+  "lastUpdated": 1794734418345,
   "timetableVersion": 4,
   "ghRepo": "NIRUCHANPRO/gyanova-heights-school",
   "visibility": {
@@ -748,7 +748,8 @@
     "events",
     "activities",
     "campus",
-    "celebrations"
+    "celebrations",
+    "news"
   ],
   "gallery": [],
   "admissions": [],
