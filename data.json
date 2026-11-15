@@ -1,5 +1,5 @@
 {
-  "lastUpdated": 1794723588120,
+  "lastUpdated": 1794723645670,
   "timetableVersion": 4,
   "ghRepo": "NIRUCHANPRO/gyanova-heights-school",
   "visibility": {
@@ -474,6 +474,14 @@
     "Class 4th": "Solve Fractions worksheet and revise Computer shortcut keys."
   },
   "studentsList": [
+    {
+      "name": "Jhil Sahu",
+      "className": "Class 2nd",
+      "roll": "",
+      "father": "Maheshwar Sahu",
+      "badge": "Student",
+      "img": ""
+    },
     {
       "name": "Priyansh Sahu",
       "className": "Class 1st",
