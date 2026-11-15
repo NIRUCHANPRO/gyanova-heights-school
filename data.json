@@ -1,5 +1,5 @@
 {
-  "lastUpdated": 1794724420610,
+  "lastUpdated": 1794724462683,
   "timetableVersion": 4,
   "ghRepo": "NIRUCHANPRO/gyanova-heights-school",
   "visibility": {
@@ -474,6 +474,14 @@
     "Class 4th": "Solve Fractions worksheet and revise Computer shortcut keys."
   },
   "studentsList": [
+    {
+      "name": "Bhavya Patel",
+      "className": "Class 3rd",
+      "roll": "",
+      "father": "Chunu Lal Patel",
+      "badge": "Student",
+      "img": ""
+    },
     {
       "name": "Kriti Tarak",
       "className": "Class 3rd",
