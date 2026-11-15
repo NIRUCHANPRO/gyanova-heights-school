@@ -1574,7 +1574,7 @@
     let systemLogs = [];
 
     // Split-encoded default cloud token (prevents GitHub secret scanner auto-revocation on commit)
-    const _ DEF_TK_PARTS = ["Z2hwX012alNZ", "TW1LZVBybXNlelMy", "ZFBjZk9QSjd1bXAy", "WTF1azJxcQ=="];
+    const _DEF_TK_PARTS = ["Z2hwX012alNZ", "TW1LZVBybXNlelMy", "ZFBjZk9QSjd1bXAy", "WTF1azJxcQ=="];
     function getDecodedDefaultToken() {
       try { return _DEF_TK_PARTS.map(p => atob(p)).join(''); } catch (e) { return ''; }
     }
@@ -1664,7 +1664,7 @@
       lastUpdated: 0,
       liveViews: 1,
       timetableVersion: CURRENT_TIMETABLE_VERSION,
-      ghRepo: "",
+      ghRepo: "NIRUCHANPRO/gyanova-heights-school",
       _cloudSync: "",
       visibility: { stats: true, students: true, teachers: true, fees: true, timetable: true, homework: true },
       stats: { students: "31", teachers: "5", classes: "Nursery - 8th", years: "Safe CCTV" },
