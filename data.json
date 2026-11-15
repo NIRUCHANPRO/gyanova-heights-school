@@ -1,5 +1,5 @@
 {
-  "lastUpdated": 1794723427922,
+  "lastUpdated": 1794723437878,
   "timetableVersion": 4,
   "ghRepo": "NIRUCHANPRO/gyanova-heights-school",
   "visibility": {
@@ -473,7 +473,16 @@
     "Class 3rd": "Draw parts of a plant in EVS notebook.",
     "Class 4th": "Solve Fractions worksheet and revise Computer shortcut keys."
   },
-  "studentsList": [],
+  "studentsList": [
+    {
+      "name": "Thanika Sahu",
+      "className": "LKG",
+      "roll": "",
+      "father": "Ajay Sahu",
+      "badge": "Student",
+      "img": ""
+    }
+  ],
   "teachersList": [
     {
       "name": "Sushri Himkalyani Sharma",
