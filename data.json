@@ -1,5 +1,5 @@
 {
-  "lastUpdated": 1794723762586,
+  "lastUpdated": 1794723917513,
   "timetableVersion": 4,
   "ghRepo": "NIRUCHANPRO/gyanova-heights-school",
   "visibility": {
@@ -474,6 +474,22 @@
     "Class 4th": "Solve Fractions worksheet and revise Computer shortcut keys."
   },
   "studentsList": [
+    {
+      "name": "Naitik Yadu",
+      "className": "Class 2nd",
+      "roll": "",
+      "father": "Ashish Kumar Yadu",
+      "badge": "Student",
+      "img": ""
+    },
+    {
+      "name": "Vaishnavi Nirmalkar",
+      "className": "LKG",
+      "roll": "",
+      "father": "Domeshwar Kumar Nirmalkar",
+      "badge": "Student",
+      "img": ""
+    },
     {
       "name": "Hetaksh Sahu",
       "className": "LKG",
