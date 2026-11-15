@@ -1535,14 +1535,15 @@
       <div class="text-xs text-slate-300 space-y-1">
         <p><i class="fa-solid fa-location-dot text-gold-400 mr-1"></i> <span data-i18n="fullAddress">Ravan Bhantha, Arand Road, Basin, Gariaband, Chhattisgarh - 493992</span></p>
         <p><i class="fa-solid fa-phone text-gold-400 mr-1"></i> +91 93022 73813 | <i class="fa-solid fa-envelope text-gold-400 mx-1"></i> gyanovaheightsschool@gmail.com</p>
-        <div class="pt-2 flex items-center justify-center md:justify-end gap-3">
+        <div class="pt-3 pb-20 md:pb-2 flex flex-col sm:flex-row items-center justify-center md:justify-start gap-3">
           <span id="secretCopyright" onclick="secretFooterClick()" class="cursor-pointer select-none text-slate-400">
             © 2026 Gyanova Heights School. All Rights Reserved.
           </span>
-          <button onclick="openAdminModal()" class="text-[11px] text-gold-400 hover:underline font-bold">
-            <i class="fa-solid fa-lock text-[10px]"></i> <span data-i18n="staffLoginBtn">Admin Login</span>
+          <button type="button" onclick="openAdminModal()" class="relative z-50 gold-gradient-btn px-4 py-2 rounded-full text-xs font-extrabold shadow-lg flex items-center gap-1.5">
+            <i class="fa-solid fa-lock"></i> <span data-i18n="staffLoginBtn">Admin Login</span>
           </button>
         </div>
+
       </div>
     </div>
   </footer>
@@ -2531,13 +2532,18 @@
       const cats = schoolData.galleryCategories || ["events", "activities", "campus", "celebrations"];
       const bar = document.getElementById('galleryFilterBar');
       if (bar) {
-        bar.innerHTML = `<button onclick="filterGallery('all')" class="gal-btn bg-royal-800 text-white px-5 py-1.5 rounded-full text-xs sm:text-sm font-bold">${currentLang === 'hi' ? 'सभी (All)' : 'All'}</button>` +
-          cats.map(c => `<button onclick="filterGallery('${c}')" class="gal-btn bg-white text-royal-800 border border-royal-800 px-4 py-1.5 rounded-full text-xs sm:text-sm font-bold capitalize">${c}</button>`).join('');
+        bar.innerHTML = `<button type="button" data-filter="all" onclick="filterGallery('all', this)" class="gal-btn bg-royal-800 text-white px-5 py-1.5 rounded-full text-xs sm:text-sm font-bold shadow cursor-pointer transition">${currentLang === 'hi' ? 'सभी (All)' : 'All'}</button>` +
+          cats.map(c => `<button type="button" data-filter="${c.toLowerCase().trim()}" onclick="filterGallery('${c.replace(/'/g, "\\'")}', this)" class="gal-btn bg-white text-royal-800 border border-royal-800 px-4 py-1.5 rounded-full text-xs sm:text-sm font-bold capitalize cursor-pointer transition">${c}</button>`).join('');
       }
       const galGrid = document.getElementById('galleryGrid');
       if (galGrid) {
-        galGrid.innerHTML = (schoolData.gallery || []).map(g => `
-          <div class="gal-item ${g.category} rounded-2xl royal-glow-card overflow-hidden">
+        const list = schoolData.gallery || [];
+        if (list.length === 0) {
+          galGrid.innerHTML = `<div class="col-span-full text-center py-8 text-slate-500 font-bold text-sm">No photos uploaded yet.</div>`;
+          return;
+        }
+        galGrid.innerHTML = list.map(g => `
+          <div data-cat="${(g.category || '').toLowerCase().trim()}" class="gal-item rounded-2xl royal-glow-card overflow-hidden">
             ${g.img ? `<img src="${g.img}" alt="${g.title}" onclick="openLightbox(this.src, '${(g.desc || g.title).replace(/'/g, "\\'")}')" class="w-full h-56 object-cover cursor-pointer hover:scale-105 transition duration-300" />` : `
             <div class="h-56 bg-gradient-to-br from-royal-900 to-royal-700 flex flex-col items-center justify-center text-white p-4 text-center">
               <i class="fa-solid fa-camera-retro text-4xl text-gold-400 mb-2"></i>
@@ -2548,6 +2554,8 @@
         `).join('');
       }
     }
+
+      
 
     // Interactive Class Explorer on Home Page (Updated with Official Subjects & 09:15 - 01:20 Timing)
     const classDetailsMap = {
@@ -2735,11 +2743,43 @@
       `;
     }
 
-    function filterGallery(cat) {
-      document.querySelectorAll('.gal-item').forEach(item => {
-        item.style.display = (cat === 'all' || item.classList.contains(cat)) ? 'block' : 'none';
+    function filterGallery(cat, btnEl) {
+      const target = (cat || 'all').toLowerCase().trim();
+
+      // Active button color update
+      document.querySelectorAll('.gal-btn').forEach(b => {
+        const isMatch = btnEl ? (b === btnEl) : (b.getAttribute('data-filter') === target);
+        b.className = isMatch
+          ? 'gal-btn bg-royal-800 text-white px-5 py-1.5 rounded-full text-xs sm:text-sm font-bold capitalize shadow cursor-pointer transition'
+          : 'gal-btn bg-white text-royal-800 border border-royal-800 px-4 py-1.5 rounded-full text-xs sm:text-sm font-bold capitalize cursor-pointer transition';
       });
+
+      // Show matching photos
+      let visibleCount = 0;
+      document.querySelectorAll('.gal-item').forEach(item => {
+        const itemCat = (item.getAttribute('data-cat') || '').toLowerCase().trim();
+        const show = (target === 'all' || itemCat === target);
+        item.style.display = show ? 'block' : 'none';
+        if (show) visibleCount++;
+      });
+
+      // Empty category message
+      let emptyMsg = document.getElementById('galEmptyNotice');
+      const galGrid = document.getElementById('galleryGrid');
+      if (visibleCount === 0 && galGrid) {
+        if (!emptyMsg) {
+          emptyMsg = document.createElement('div');
+          emptyMsg.id = 'galEmptyNotice';
+          emptyMsg.className = 'col-span-full text-center py-8 text-slate-500 font-bold text-sm';
+          galGrid.appendChild(emptyMsg);
+        }
+        emptyMsg.innerText = currentLang === 'hi' ? 'इस एल्बम में अभी कोई फोटो नहीं है।' : 'No photos in this album yet.';
+        emptyMsg.style.display = 'block';
+      } else if (emptyMsg) {
+        emptyMsg.style.display = 'none';
+      }
     }
+
 
     function handleAdmissionSubmit(e) {
       e.preventDefault();
