@@ -1,5 +1,5 @@
 {
-  "lastUpdated": 1794724737846,
+  "lastUpdated": 1794724767465,
   "timetableVersion": 4,
   "ghRepo": "NIRUCHANPRO/gyanova-heights-school",
   "visibility": {
@@ -474,6 +474,14 @@
     "Class 4th": "Solve Fractions worksheet and revise Computer shortcut keys."
   },
   "studentsList": [
+    {
+      "name": "Gourav Ratre",
+      "className": "LKG",
+      "roll": "",
+      "father": "Pramod Kumar Ratre",
+      "badge": "Student",
+      "img": ""
+    },
     {
       "name": "Nancy Gayakwad",
       "className": "LKG",
