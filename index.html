@@ -3518,10 +3518,35 @@
     }
 
     // Bulletproof GitHub Cloud Push (Auto-Detects Repo, Retries on SHA Conflict, Works on All Devices)
+    // Helper: Badi photo ko upload se pehle halka (Fast Mobile Sync) karne ke liye
+    function optimizeBase64Img(dataUrl, maxW = 520, qual = 0.65) {
+      return new Promise((resolve) => {
+        if (!dataUrl || dataUrl.length < 65000) { resolve(dataUrl); return; }
+        const img = new Image();
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          let w = img.width, h = img.height;
+          if (w > maxW) { h = Math.round((h * maxW) / w); w = maxW; }
+          canvas.width = w; canvas.height = h;
+          canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+          resolve(canvas.toDataURL('image/jpeg', qual));
+        };
+        img.onerror = () => resolve(dataUrl);
+        img.src = dataUrl;
+      });
+    }
+
+    // Fast & Lightweight GitHub Cloud Push (Works Smoothly on Mobile 4G)
     async function pushToGitHub(isBackgroundAuto = false, reason = 'Manual Sync') {
+      if (isPushingNow) return;
       const status = document.getElementById('ghSyncStatus');
       const token = getActiveGitHubToken();
-      let repo = await resolveGitHubRepo(token);
+      let repo = cleanRepoName(
+        document.getElementById('ghRepo')?.value ||
+        localStorage.getItem('ghs_gh_repo') ||
+        schoolData.ghRepo ||
+        'NIRUCHANPRO/gyanova-heights-school'
+      );
 
       if (!repo || !token) {
         const msg = '⚠️ GitHub Repo or Token missing! Go to "Save to GitHub Live" tab in Admin.';
@@ -3531,57 +3556,88 @@
       }
 
       isPushingNow = true;
-      localStorage.setItem('ghs_gh_repo', repo);
-      localStorage.setItem('ghs_gh_token', token);
+      delete schoolData._cloudSync; // Prevents GitHub 409 Secret Scanner error
       schoolData.ghRepo = repo;
-      delete schoolData._cloudSync;
       schoolData.lastUpdated = Date.now();
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(schoolData));
-
-
-      if (status) status.innerText = `⏳ Syncing "${reason}" to GitHub (${repo})...`;
-      addSystemLog(`☁️ Uploading to GitHub (${repo})...`, 'info');
 
       try {
-        const apiUrl = `https://api.github.com/repos/${repo}/contents/data.json`;
-        let sha = '';
-        const getRes = await fetch(apiUrl + '?t=' + Date.now(), {
-          headers: { Authorization: `token ${token}`, Accept: 'application/vnd.github.v3+json' }
-        });
-        if (getRes.ok) {
-          const getJson = await getRes.json();
-          sha = getJson.sha;
+        // 1. Auto-optimize heavy gallery photos so mobile 4G never times out
+        if (Array.isArray(schoolData.gallery)) {
+          for (let i = 0; i < schoolData.gallery.length; i++) {
+            if (schoolData.gallery[i].img && schoolData.gallery[i].img.length > 65000) {
+              schoolData.gallery[i].img = await optimizeBase64Img(schoolData.gallery[i].img, 520, 0.65);
+            }
+          }
         }
 
-        const contentBase64 = btoa(unescape(encodeURIComponent(JSON.stringify(schoolData, null, 2))));
-        const putRes = await fetch(apiUrl, {
-          method: 'PUT',
-          headers: {
-            Authorization: `token ${token}`,
-            Accept: 'application/vnd.github.v3+json',
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            message: `Live Sync: ${reason} (${new Date().toLocaleTimeString('en-IN')})`,
-            content: contentBase64,
-            sha: sha || undefined
-          })
-        });
+        localStorage.setItem('ghs_gh_repo', repo);
+        localStorage.setItem('ghs_gh_token', token);
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(schoolData));
 
-        if (putRes.ok) {
+        if (status) status.innerText = `⏳ Fast-Syncing "${reason}" to GitHub (${repo})...`;
+        addSystemLog(`☁️ Fast-Uploading to GitHub (${repo})...`, 'info');
+
+        // 2. Get file SHA via 1KB root folder check (instead of downloading full 300KB data.json!)
+        let sha = '';
+        const dirRes = await fetch(`https://api.github.com/repos/${repo}/contents`, {
+          headers: { Authorization: `token ${token}`, Accept: 'application/vnd.github.v3+json' }
+        });
+        if (dirRes.ok) {
+          const dirList = await dirRes.json();
+          const foundFile = Array.isArray(dirList) && dirList.find(f => f.name === 'data.json');
+          if (foundFile) sha = foundFile.sha;
+        }
+
+        // 3. Minified JSON + Safe Chunked Base64 Encoding (Saves ~40% upload size)
+        const jsonStr = JSON.stringify(schoolData);
+        const utf8Bytes = new TextEncoder().encode(jsonStr);
+        let binaryStr = '';
+        const chunkSize = 8192;
+        for (let i = 0; i < utf8Bytes.length; i += chunkSize) {
+          binaryStr += String.fromCharCode.apply(null, utf8Bytes.subarray(i, i + chunkSize));
+        }
+        const contentBase64 = btoa(binaryStr);
+
+        // 4. Upload to GitHub with automatic retry on mobile network blip
+        const apiUrl = `https://api.github.com/repos/${repo}/contents/data.json`;
+        let putRes = null;
+        for (let attempt = 1; attempt <= 2; attempt++) {
+          try {
+            putRes = await fetch(apiUrl, {
+              method: 'PUT',
+              headers: {
+                Authorization: `token ${token}`,
+                Accept: 'application/vnd.github.v3+json',
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                message: `Live Sync: ${reason}`,
+                content: contentBase64,
+                sha: sha || undefined
+              })
+            });
+            if (putRes.ok || putRes.status !== 500) break;
+          } catch (netErr) {
+            if (attempt === 2) throw netErr;
+            addSystemLog(`🔄 Mobile network slow, retrying upload (Attempt 2)...`, 'info');
+            await new Promise(r => setTimeout(r, 1200));
+          }
+        }
+
+        if (putRes && putRes.ok) {
           localStorage.removeItem('ghs_pending_push_ts');
           const okMsg = `✅ LIVE EVERYWHERE! Synced "${reason}" to GitHub (${repo}).`;
           if (status) status.innerText = okMsg;
           addSystemLog(okMsg, 'success');
           showInstantStatusToast('☁️ Live on All Devices! (Synced to GitHub)', true);
         } else {
-          const errJson = await putRes.json().catch(() => ({}));
-          const errMsg = `❌ GitHub Push Error (${putRes.status}): ${errJson.message || 'Check Token repo permission'}`;
+          const errJson = putRes ? await putRes.json().catch(() => ({})) : {};
+          const errMsg = `❌ GitHub Error (${putRes ? putRes.status : 'No Response'}): ${errJson.message || 'Check Token/Repo'}`;
           if (status) status.innerText = errMsg;
           addSystemLog(errMsg, 'error');
         }
       } catch (err) {
-        const netMsg = '❌ Network Error while connecting to GitHub API.';
+        const netMsg = `❌ Connection Error (${err.message || 'Check internet / Token'}). Retrying in background...`;
         if (status) status.innerText = netMsg;
         addSystemLog(netMsg, 'error');
       } finally {
