@@ -3594,8 +3594,48 @@
     }
 
     // Fast & Lightweight GitHub Cloud Push (Works Smoothly on Mobile 4G)
+    // Helper: Fresh SHA (File ID) bina browser cache ke nikalne ke liye
+    async function fetchFreshDataJsonSha(repo, token) {
+      const headers = {
+        Authorization: `token ${token}`,
+        Accept: 'application/vnd.github.v3+json'
+      };
+      // 1. Root folder list with strict cache-busting (?t=Date.now + no-store)
+      try {
+        const dirRes = await fetch(`https://api.github.com/repos/${repo}/contents?t=${Date.now()}`, {
+          headers,
+          cache: 'no-store'
+        });
+        if (dirRes.ok) {
+          const dirList = await dirRes.json();
+          const found = Array.isArray(dirList) && dirList.find(f => f.name === 'data.json');
+          if (found && found.sha) return found.sha;
+        }
+      } catch (e) {}
+
+      // 2. Fallback direct metadata check
+      try {
+        const fileRes = await fetch(`https://api.github.com/repos/${repo}/contents/data.json?t=${Date.now()}`, {
+          headers,
+          cache: 'no-store'
+        });
+        if (fileRes.ok) {
+          const fileJson = await fileRes.json();
+          if (fileJson && fileJson.sha) return fileJson.sha;
+        }
+      } catch (e) {}
+
+      return window._lastGitHubSha || '';
+    }
+
+    // Fast, Non-Blocking GitHub Push (Auto-Fixes 409 SHA Mismatch & 10s Timeout)
     async function pushToGitHub(isBackgroundAuto = false, reason = 'Manual Sync') {
-      if (isPushingNow) return;
+      // Agar background auto-sync chal raha hai tabhi wait karo; Manual "Force Sync" hamesha turant chalega!
+      if (isPushingNow && isBackgroundAuto) return;
+      if (window._activeSyncAbort) {
+        try { window._activeSyncAbort.abort(); } catch (e) {}
+      }
+
       const status = document.getElementById('ghSyncStatus');
       const token = getActiveGitHubToken();
       let repo = cleanRepoName(
@@ -3613,12 +3653,12 @@
       }
 
       isPushingNow = true;
-      delete schoolData._cloudSync; // Prevents GitHub 409 Secret Scanner error
+      delete schoolData._cloudSync;
       schoolData.ghRepo = repo;
       schoolData.lastUpdated = Date.now();
 
       try {
-        // 1. Auto-optimize heavy gallery photos so mobile 4G never times out
+        // 1. Compress heavy gallery photos for fast mobile upload
         if (Array.isArray(schoolData.gallery)) {
           for (let i = 0; i < schoolData.gallery.length; i++) {
             if (schoolData.gallery[i].img && schoolData.gallery[i].img.length > 65000) {
@@ -3631,21 +3671,10 @@
         localStorage.setItem('ghs_gh_token', token);
         localStorage.setItem(STORAGE_KEY, JSON.stringify(schoolData));
 
-        if (status) status.innerText = `⏳ Fast-Syncing "${reason}" to GitHub (${repo})...`;
-        addSystemLog(`☁️ Fast-Uploading to GitHub (${repo})...`, 'info');
+        if (status) status.innerText = `⏳ Syncing "${reason}" to GitHub (${repo})...`;
+        addSystemLog(`☁️ Uploading to GitHub (${repo})...`, 'info');
 
-        // 2. Get file SHA via 1KB root folder check (instead of downloading full 300KB data.json!)
-        let sha = '';
-        const dirRes = await fetch(`https://api.github.com/repos/${repo}/contents`, {
-          headers: { Authorization: `token ${token}`, Accept: 'application/vnd.github.v3+json' }
-        });
-        if (dirRes.ok) {
-          const dirList = await dirRes.json();
-          const foundFile = Array.isArray(dirList) && dirList.find(f => f.name === 'data.json');
-          if (foundFile) sha = foundFile.sha;
-        }
-
-        // 3. Minified JSON + Safe Chunked Base64 Encoding (Saves ~40% upload size)
+        // 2. Encode JSON to Base64
         const jsonStr = JSON.stringify(schoolData);
         const utf8Bytes = new TextEncoder().encode(jsonStr);
         let binaryStr = '';
@@ -3655,33 +3684,53 @@
         }
         const contentBase64 = btoa(binaryStr);
 
-        // 4. Upload to GitHub with automatic retry on mobile network blip
+        // 3. Push with automatic 409 SHA refresh & 12-second timeout protection
         const apiUrl = `https://api.github.com/repos/${repo}/contents/data.json`;
         let putRes = null;
-        for (let attempt = 1; attempt <= 2; attempt++) {
+
+        for (let attempt = 1; attempt <= 3; attempt++) {
+          const sha = await fetchFreshDataJsonSha(repo, token);
+          const controller = new AbortController();
+          window._activeSyncAbort = controller;
+          const timeoutId = setTimeout(() => controller.abort(), 12000);
+
           try {
             putRes = await fetch(apiUrl, {
               method: 'PUT',
+              signal: controller.signal,
               headers: {
                 Authorization: `token ${token}`,
                 Accept: 'application/vnd.github.v3+json',
                 'Content-Type': 'application/json'
               },
               body: JSON.stringify({
-                message: `Live Sync: ${reason}`,
+                message: `Live Sync: ${reason} (${new Date().toLocaleTimeString('en-IN')})`,
                 content: contentBase64,
                 sha: sha || undefined
               })
             });
-            if (putRes.ok || putRes.status !== 500) break;
+            clearTimeout(timeoutId);
+
+            if (putRes.ok) break;
+
+            // Agar 409 (SHA mismatch) aaye, to 600ms ruk kar naya SHA leke turant retry karo
+            if (putRes.status === 409 && attempt < 3) {
+              addSystemLog(`🔄 Refreshing file ID (SHA) and retrying (Attempt ${attempt + 1})...`, 'info');
+              await new Promise(r => setTimeout(r, 600));
+              continue;
+            }
+            break;
           } catch (netErr) {
-            if (attempt === 2) throw netErr;
-            addSystemLog(`🔄 Mobile network slow, retrying upload (Attempt 2)...`, 'info');
-            await new Promise(r => setTimeout(r, 1200));
+            clearTimeout(timeoutId);
+            if (attempt === 3) throw netErr;
+            addSystemLog(`🔄 Connection slow, retrying upload (Attempt ${attempt + 1})...`, 'info');
+            await new Promise(r => setTimeout(r, 800));
           }
         }
 
         if (putRes && putRes.ok) {
+          const okJson = await putRes.json().catch(() => ({}));
+          if (okJson?.content?.sha) window._lastGitHubSha = okJson.content.sha;
           localStorage.removeItem('ghs_pending_push_ts');
           const okMsg = `✅ LIVE EVERYWHERE! Synced "${reason}" to GitHub (${repo}).`;
           if (status) status.innerText = okMsg;
@@ -3689,18 +3738,22 @@
           showInstantStatusToast('☁️ Live on All Devices! (Synced to GitHub)', true);
         } else {
           const errJson = putRes ? await putRes.json().catch(() => ({})) : {};
-          const errMsg = `❌ GitHub Error (${putRes ? putRes.status : 'No Response'}): ${errJson.message || 'Check Token/Repo'}`;
+          const errMsg = `❌ GitHub Error (${putRes ? putRes.status : 'Timeout'}): ${errJson.message || 'Retry Force Sync'}`;
           if (status) status.innerText = errMsg;
           addSystemLog(errMsg, 'error');
         }
       } catch (err) {
-        const netMsg = `❌ Connection Error (${err.message || 'Check internet / Token'}). Retrying in background...`;
+        const netMsg = err.name === 'AbortError'
+          ? '⚠️ Upload took >12s on mobile network. Tap "Force Sync Now" to retry.'
+          : `❌ Network Error: ${err.message || 'Check connection'}`;
         if (status) status.innerText = netMsg;
         addSystemLog(netMsg, 'error');
       } finally {
         isPushingNow = false;
+        window._activeSyncAbort = null;
       }
     }
+
 
     // ================= BILINGUAL TRANSLATION DICTIONARY (NURSERY TO CLASS 8TH) =================
     const translations = {
