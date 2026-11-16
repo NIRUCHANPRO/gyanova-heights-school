@@ -1,5 +1,6 @@
 {
-  "lastUpdated": 1794758119397,
+  "lastUpdated": 1794794250896,
+  "liveViews": 9,
   "timetableVersion": 4,
   "ghRepo": "NIRUCHANPRO/gyanova-heights-school",
   "visibility": {
@@ -60,6 +61,26 @@
       "className": "Class 4th",
       "monthlyFee": 1300,
       "oneTimeFee": 6500
+    },
+    {
+      "className": "Class 5th",
+      "monthlyFee": 1350,
+      "oneTimeFee": 6750
+    },
+    {
+      "className": "Class 6th",
+      "monthlyFee": 1400,
+      "oneTimeFee": 7000
+    },
+    {
+      "className": "Class 7th",
+      "monthlyFee": 1450,
+      "oneTimeFee": 7250
+    },
+    {
+      "className": "Class 8th",
+      "monthlyFee": 1500,
+      "oneTimeFee": 7500
     }
   ],
   "timetableClasses": [
@@ -69,7 +90,11 @@
     "Class 1st",
     "Class 2nd",
     "Class 3rd",
-    "Class 4th"
+    "Class 4th",
+    "Class 5th",
+    "Class 6th",
+    "Class 7th",
+    "Class 8th"
   ],
   "classTimetables": {
     "Nursery": [
@@ -421,7 +446,11 @@
         "descEn": "Teacher: Sen Mam",
         "descHi": "शिक्षिका: सेन मैम (Sen Mam)"
       }
-    ]
+    ],
+    "Class 5th": [],
+    "Class 6th": [],
+    "Class 7th": [],
+    "Class 8th": []
   },
   "syllabus": {
     "Nursery": "English Phonics (A-Z), Rhymes, Counting (1-50), Colors & Shapes, Hindi Swar (अ-अः), Drawing & Good Habits.",
@@ -430,7 +459,11 @@
     "Class 1st": "NCERT English Reader & Grammar, Hindi Vyakaran, Mathematics, EVS, Computer Basics & General Knowledge.",
     "Class 2nd": "Sentence Building, Multiplication Tables (2 to 12), Hindi Stories, EVS Projects, Computer Paint & Moral Science.",
     "Class 3rd": "NCERT English, Hindi, Mathematics, Science/EVS, Computer Typing, Moral Values & Basic Olympiad Prep.",
-    "Class 4th": "Advanced Primary Maths, English Grammar & Composition, EVS/Science Experiments, Computer Lab & Navodaya/Olympiad Prep."
+    "Class 4th": "Advanced Primary Maths, English Grammar & Composition, EVS/Science Experiments, Computer Lab & Navodaya/Olympiad Prep.",
+    "Class 5th": "NCERT Curriculum for Class 5th (Maths, Science/EVS, English, Hindi & Social Studies).",
+    "Class 6th": "NCERT Curriculum for Class 6th (Maths, Science/EVS, English, Hindi & Social Studies).",
+    "Class 7th": "NCERT Curriculum for Class 7th (Maths, Science/EVS, English, Hindi & Social Studies).",
+    "Class 8th": "NCERT Curriculum for Class 8th (Maths, Science/EVS, English, Hindi & Social Studies)."
   },
   "homework": {
     "Nursery": "Trace letters A to D in workbook & learn 'Twinkle Twinkle' poem.",
@@ -439,7 +472,11 @@
     "Class 1st": "Read English Lesson 2 and learn Table of 2 & 3.",
     "Class 2nd": "Learn Hindi Lesson 3 Q&A and solve 5 subtraction sums.",
     "Class 3rd": "Draw parts of a plant in EVS notebook.",
-    "Class 4th": "Solve Fractions worksheet and revise Computer shortcut keys."
+    "Class 4th": "Solve Fractions worksheet and revise Computer shortcut keys.",
+    "Class 5th": "Complete daily classwork & revise chapter exercises for Class 5th.",
+    "Class 6th": "Complete daily classwork & revise chapter exercises for Class 6th.",
+    "Class 7th": "Complete daily classwork & revise chapter exercises for Class 7th.",
+    "Class 8th": "Complete daily classwork & revise chapter exercises for Class 8th."
   },
   "studentsList": [
     {
