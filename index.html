@@ -4194,82 +4194,89 @@
 
     // ================= GLOBAL CLOUD LIVE VISITOR COUNTER (SAME COUNT ON ALL DEVICES) =================
     // ================= 100% SHARED GITHUB CLOUD LIVE VIEWS (SAME ON ALL DEVICES) =================
+    // ================= SHARED CLOUD LIVE VISITOR COUNTER =================
     async function fetchAndIncrementVisitors() {
       const countEl = document.getElementById('visitorCountDisplay');
       if (!countEl) return;
 
-      // 1. Har phone ka alag-alag localStorage counter hamesha ke liye band karo
-      localStorage.removeItem('ghs_live_views_count');
-      localStorage.removeItem('ghs_views_from_zero');
-      sessionStorage.removeItem('ghs_visit_counted');
+      // Jab tak network se count aaye, turant default/saved number dikhao taaki "..." par na atke
+      countEl.innerText = (schoolData.liveViews || 1).toLocaleString('en-IN');
 
       const repo = 'NIRUCHANPRO/gyanova-heights-school';
-      const _tkParts = ['Z2hwX012alNZ', 'TW1LZVBybXNlelMy', 'ZFBjZk9QSjd1bXAy', 'WTF1azJxcQ=='];
-      let token = localStorage.getItem('ghs_gh_token') || '';
-      if (!token) {
-        try { token = _tkParts.map(p => atob(p)).join(''); } catch (e) {}
-      }
-
+      const token = (typeof getActiveGitHubToken === 'function' ? getActiveGitHubToken() : '') || '';
       const apiUrl = `https://api.github.com/repos/${repo}/contents/views.json`;
+
       const headers = {
         Accept: 'application/vnd.github.v3+json',
         'Content-Type': 'application/json'
       };
       if (token) headers.Authorization = `token ${token}`;
 
-      for (let attempt = 1; attempt <= 2; attempt++) {
-        try {
-          // 2. GitHub se sabke liye common views.json read karo
-          let sha = '';
-          let sharedViews = 0;
+      try {
+        let sha = '';
+        let sharedViews = schoolData.liveViews || 1;
 
-          const getRes = await fetch(`${apiUrl}?t=${Date.now()}`, {
-            headers,
-            cache: 'no-store'
-          });
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 5000);
 
-          if (getRes.ok) {
-            const fileData = await getRes.json();
-            sha = fileData.sha || '';
-            if (fileData.content) {
-              const parsed = JSON.parse(atob(fileData.content.replace(/\s/g, '')));
-              sharedViews = parseInt(parsed.count, 10) || 0;
-            }
-          } else if (getRes.status !== 404) {
-            break;
+        const getRes = await fetch(`${apiUrl}?t=${Date.now()}`, {
+          headers,
+          cache: 'no-store',
+          signal: controller.signal
+        });
+        clearTimeout(timeoutId);
+
+        if (getRes.ok) {
+          const fileData = await getRes.json();
+          sha = fileData.sha || '';
+          if (fileData.content) {
+            const parsed = JSON.parse(atob(fileData.content.replace(/\s/g, '')));
+            sharedViews = parseInt(parsed.count, 10) || sharedViews;
           }
-
-          // 3. Common count mein +1 jodo aur screen par dikhao
-          sharedViews += 1;
-          countEl.innerText = sharedViews.toLocaleString('en-IN');
-
-          // 4. Wapas GitHub views.json mein save kar do ([skip ci] se Netlify bar-bar rebuild nahi hoga)
-          if (token) {
-            const newContent = btoa(JSON.stringify({ count: sharedViews, updated: Date.now() }));
-            const putRes = await fetch(apiUrl, {
-              method: 'PUT',
-              headers,
-              body: JSON.stringify({
-                message: `View +1 (${sharedViews}) [skip ci] [skip netlify]`,
-                content: newContent,
-                sha: sha || undefined
-              })
-            });
-
-            // Agar 2 phone ek hi second par khule hon (409), to turant dobara sync karo
-            if (putRes.status === 409 && attempt === 1) {
-              await new Promise(r => setTimeout(r, 400));
-              continue;
-            }
-          }
-          return;
-        } catch (err) {
-          if (attempt === 2) countEl.innerText = '1';
         }
+
+        sharedViews += 1;
+        schoolData.liveViews = sharedViews;
+        countEl.innerText = sharedViews.toLocaleString('en-IN');
+
+        if (token) {
+          const newContent = btoa(JSON.stringify({ count: sharedViews, updated: Date.now() }));
+          await fetch(apiUrl, {
+            method: 'PUT',
+            headers,
+            body: JSON.stringify({
+              message: `View +1 (${sharedViews}) [skip ci] [skip netlify]`,
+              content: newContent,
+              sha: sha || undefined
+            })
+          });
+        }
+      } catch (err) {
+        // Agar mobile network slow ho to bhi page rukega nahi
+        countEl.innerText = (schoolData.liveViews || 1).toLocaleString('en-IN');
       }
     }
 
+    // ================= INSTANT STARTUP (PEHLE STUDENTS DIKHAO, FIR CLOUD SYNC KARO) =================
+    window.addEventListener('DOMContentLoaded', () => {
+      // 1. Bina internet ka wait kiye turant 0.01s mein Students, Teachers aur Timetable screen par dikhao
+      try {
+        initHeroParticles();
+        upgradeDOMAndInjectEnhancements();
+        normalizeFeeData();
+        ensureClassTimetableStructure();
+        renderAllContent();
+        showClassInfo('nursery');
+        updateEligibilityCalc();
+        updateLockedFeeAmount();
+      } catch (e) {
+        console.error('Initial render error:', e);
+      }
+
+      // 2. Ab background mein Cloud Data aur Live Views load karo (Ek dusre ko block kiye bina)
+      initSchoolData().catch(err => console.error('Cloud init error:', err));
+      fetchAndIncrementVisitors().catch(err => console.error('Visitor counter error:', err));
+    });
   </script>
 </body>
 </html>
-
