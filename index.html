@@ -1352,17 +1352,19 @@
           </div>
 
           <div class="bg-slate-50 p-4 rounded-xl border space-y-3">
-            <h4 class="font-bold text-royal-800 text-sm">Direct HD Photo Upload to Gallery</h4>
+            <h4 class="font-bold text-royal-800 text-sm">Direct HD Photo or YouTube Video Upload</h4>
             <div class="grid sm:grid-cols-3 gap-3">
-              <input type="text" id="galTitle" placeholder="Photo Title / Caption *" class="px-3 py-2 rounded border" />
+              <input type="text" id="galTitle" placeholder="Photo / Video Title *" class="px-3 py-2 rounded border" />
               <select id="galCat" class="px-3 py-2 rounded border font-semibold"></select>
               <input type="file" id="galFileInput" accept="image/*" class="w-full text-xs bg-white p-1.5 rounded border" />
+              <input type="url" id="galVideoUrl" placeholder="🎬 Optional: Paste YouTube Video / Shorts / Unlisted Link here (Leave empty for Photo)" class="sm:col-span-3 px-3 py-2 rounded border border-royal-700/40 bg-white text-xs font-semibold" />
             </div>
             <button onclick="uploadGalleryPhotoAdmin()" class="gold-gradient-btn px-5 py-2.5 rounded-lg font-extrabold text-xs">
-              <i class="fa-solid fa-upload mr-1"></i> Upload HD Photo
+              <i class="fa-solid fa-cloud-arrow-up mr-1"></i> Upload HD Photo / Video
             </button>
             <div id="adminGalleryList" class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-3 max-h-60 overflow-y-auto"></div>
           </div>
+
         </div>
 
         <!-- TAB 5: STUDENTS & TEACHERS PHOTO UPLOAD -->
@@ -2743,6 +2745,14 @@
       `).join('');
     }
 
+    // Helper: YouTube Normal / Shorts / Share link se Video ID nikalne ke liye
+    function extractYouTubeId(url) {
+      if (!url) return '';
+      const regExp = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?|shorts|live)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/i;
+      const match = String(url).match(regExp);
+      return match ? match[1] : '';
+    }
+
     function renderGallerySection() {
       const cats = schoolData.galleryCategories || ["events", "activities", "campus", "celebrations"];
       const bar = document.getElementById('galleryFilterBar');
@@ -2754,21 +2764,46 @@
       if (galGrid) {
         const list = schoolData.gallery || [];
         if (list.length === 0) {
-          galGrid.innerHTML = `<div class="col-span-full text-center py-8 text-slate-500 font-bold text-sm">No photos uploaded yet.</div>`;
+          galGrid.innerHTML = `<div class="col-span-full text-center py-8 text-slate-500 font-bold text-sm">No photos or videos uploaded yet.</div>`;
           return;
         }
-        galGrid.innerHTML = list.map(g => `
-          <div data-cat="${(g.category || '').toLowerCase().trim()}" class="gal-item rounded-2xl royal-glow-card overflow-hidden">
-            ${g.img ? `<img src="${g.img}" alt="${g.title}" onclick="openLightbox(this.src, '${(g.desc || g.title).replace(/'/g, "\\'")}')" class="w-full h-56 object-cover cursor-pointer hover:scale-105 transition duration-300" />` : `
-            <div class="h-56 bg-gradient-to-br from-royal-900 to-royal-700 flex flex-col items-center justify-center text-white p-4 text-center">
-              <i class="fa-solid fa-camera-retro text-4xl text-gold-400 mb-2"></i>
-              <span class="font-bold">${g.title}</span>
-            </div>`}
-            <div class="p-3.5 text-xs text-royal-900 text-center font-bold bg-white">${g.desc || g.title}</div>
-          </div>
-        `).join('');
+        galGrid.innerHTML = list.map(g => {
+          const ytId = g.ytId || extractYouTubeId(g.videoUrl);
+          let mediaHtml = '';
+          if (ytId) {
+            mediaHtml = `
+              <div class="relative w-full h-56 bg-black">
+                <iframe src="https://www.youtube.com/embed/${ytId}?rel=0&modestbranding=1"
+                        title="${(g.title || 'School Video').replace(/"/g, '&quot;')}"
+                        class="w-full h-full border-0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowfullscreen loading="lazy"></iframe>
+              </div>`;
+          } else if (g.videoUrl) {
+            mediaHtml = `<video src="${g.videoUrl}" controls preload="metadata" class="w-full h-56 object-cover bg-black"></video>`;
+          } else if (g.img) {
+            mediaHtml = `<img src="${g.img}" alt="${g.title}" onclick="openLightbox(this.src, '${(g.desc || g.title).replace(/'/g, "\\'")}')" class="w-full h-56 object-cover cursor-pointer hover:scale-105 transition duration-300" />`;
+          } else {
+            mediaHtml = `
+              <div class="h-56 bg-gradient-to-br from-royal-900 to-royal-700 flex flex-col items-center justify-center text-white p-4 text-center">
+                <i class="fa-solid fa-camera-retro text-4xl text-gold-400 mb-2"></i>
+                <span class="font-bold">${g.title}</span>
+              </div>`;
+          }
+
+          return `
+            <div data-cat="${(g.category || '').toLowerCase().trim()}" class="gal-item rounded-2xl royal-glow-card overflow-hidden">
+              ${mediaHtml}
+              <div class="p-3.5 text-xs text-royal-900 text-center font-bold bg-white flex items-center justify-center gap-1.5">
+                ${ytId || g.videoUrl ? '<i class="fa-solid fa-circle-play text-red-600 text-sm"></i>' : ''}
+                <span>${g.desc || g.title}</span>
+              </div>
+            </div>
+          `;
+        }).join('');
       }
     }
+
 
     // Interactive Class Explorer on Home Page (Nursery to Class 8th)
     const classDetailsMap = {
@@ -3190,14 +3225,36 @@
       const title = document.getElementById('galTitle').value.trim();
       const category = document.getElementById('galCat').value;
       const file = document.getElementById('galFileInput').files[0];
-      if (!title) { alert('Please enter a Photo Title!'); return; }
+      const videoUrl = document.getElementById('galVideoUrl')?.value.trim() || '';
+
+      if (!title) { alert('Please enter a Photo / Video Title!'); return; }
+
+      if (videoUrl) {
+        const ytId = extractYouTubeId(videoUrl);
+        const thumbImg = ytId ? `https://img.youtube.com/vi/${ytId}/mqdefault.jpg` : '';
+        schoolData.gallery.unshift({
+          title,
+          category,
+          desc: title,
+          videoUrl,
+          ytId,
+          img: thumbImg
+        });
+        document.getElementById('galTitle').value = '';
+        document.getElementById('galVideoUrl').value = '';
+        document.getElementById('galFileInput').value = '';
+        saveLocalAndRefresh(`Uploaded Gallery Video: ${title}`);
+        return;
+      }
+
       addSystemLog(`📸 Compressing & uploading photo: "${title}"...`, 'info');
-      const imgData = file ? await compressAndReadImage(file, 850, 0.80) : '';
+      const imgData = file ? await compressAndReadImage(file, 520, 0.68) : '';
       schoolData.gallery.unshift({ title, category, desc: title, img: imgData });
       document.getElementById('galTitle').value = '';
       document.getElementById('galFileInput').value = '';
       saveLocalAndRefresh(`Uploaded Gallery Photo: ${title}`);
     }
+
 
     function deleteGalleryAdmin(idx) {
       const removed = schoolData.gallery[idx]?.title || 'Photo';
