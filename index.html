@@ -3534,9 +3534,10 @@
       localStorage.setItem('ghs_gh_repo', repo);
       localStorage.setItem('ghs_gh_token', token);
       schoolData.ghRepo = repo;
-      schoolData._cloudSync = btoa(token);
+      delete schoolData._cloudSync;
       schoolData.lastUpdated = Date.now();
       localStorage.setItem(STORAGE_KEY, JSON.stringify(schoolData));
+
 
       if (status) status.innerText = `⏳ Syncing "${reason}" to GitHub (${repo})...`;
       addSystemLog(`☁️ Uploading to GitHub (${repo})...`, 'info');
